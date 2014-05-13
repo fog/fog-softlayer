@@ -1,3 +1,10 @@
+#
+# Author:: Matt Eldridge (<matt.eldridge@us.ibm.com>)
+# © Copyright IBM Corporation 2014.
+#
+# LICENSE: MIT (http://opensource.org/licenses/MIT)
+#
+
 Shindo.tests('Fog::Compute[:softlayer]', ['softlayer']) do
 
   @test_service = Fog::Compute[:softlayer]

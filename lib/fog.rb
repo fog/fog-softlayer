@@ -1,3 +1,10 @@
+#
+# Author:: Matt Eldridge (<matt.eldridge@us.ibm.com>)
+# © Copyright IBM Corporation 2014.
+#
+# LICENSE: MIT (http://opensource.org/licenses/MIT)
+#
+
 # necessary when requiring fog without rubygems while also
 # maintaining ruby 1.8.7 support (can't use require_relative)
 __LIB_DIR__ = File.expand_path(File.dirname(__FILE__))
