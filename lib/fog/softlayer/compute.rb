@@ -101,7 +101,7 @@ module Fog
           # default HTTP method to get if not passed
           http_method = options[:http_method] || :get
           # set the target base url
-          @request_url = options[:softlayer_api_url] || Fog::Softlayer::API_URL
+          @request_url = options[:softlayer_api_url] || Fog::Softlayer::SL_API_URL
           # tack on the username and password
           credentialize_url(@credentials[:username], @credentials[:api_key])
           # set the SoftLayer Service name
