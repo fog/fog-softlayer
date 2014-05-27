@@ -1,6 +1,24 @@
 module Fog
   module Storage
     class Softlayer
+      class Mock
+        def get_containers(options = {})
+          response = Excon::Response.new
+          response.body = _format_containers(@containers)
+          response.status = 200
+          response
+        end
+
+        private
+
+        def _format_containers(containers)
+          containers.map do |name, container|
+            meta = Memory.analyze(container)
+            {'count' => container.length, 'bytes' => meta.bytes, 'name' => name}
+          end
+        end
+      end
+
       class Real
 
         # List existing storage containers

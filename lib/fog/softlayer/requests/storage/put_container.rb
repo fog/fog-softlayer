@@ -1,6 +1,16 @@
 module Fog
   module Storage
     class Softlayer
+      class Mock
+        def put_container(name)
+          @containers[name] = {} unless @containers[name]
+          response = Excon::Response.new
+          response.body = ''
+          response.status = 201
+          response
+        end
+      end
+
       class Real
 
         # Create a new container

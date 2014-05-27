@@ -1,6 +1,30 @@
 module Fog
   module Storage
     class Softlayer
+      class Mock
+        def get_container(container, options = {})
+          if @containers[container]
+            response = Excon::Response.new
+            response.body = @containers[container].map do |name, object|
+              {
+                  'hash' => object.respond_to?(:to_s) ? Digest::MD5.hexdigest(object.to_s) : 'e4d909c290d0fb1ca068ffaddf22cbd0',
+                  'last_modified' => Time.now,
+                  'bytes' => Memory.analyze(container).bytes,
+                  'content/type' => 'application/json'
+              }
+            end
+            response.status = 200
+            response
+          else
+            response = Excon::Response.new
+            response.body = '<html><h1>Not Found</h1><p>The resource could not be found.</p></html>'
+            response.status = 404
+            response.headers = {"Content-Length"=>"70", "Content-Type"=>"text/html; charset=UTF-8", "X-Trans-Id"=>"abcdefghijklmnopqrstuvwx-0123456789", "Date"=>Time.now}
+            response
+          end
+        end
+      end
+
       class Real
 
         # Get details for container and total bytes stored

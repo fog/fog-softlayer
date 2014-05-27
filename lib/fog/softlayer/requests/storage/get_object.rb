@@ -1,6 +1,22 @@
 module Fog
   module Storage
     class Softlayer
+      class Mock
+        def get_object(container, object, &block)
+          if @containers[container] && @containers[container][object]
+            response = Excon::Response.new
+            response.body = @containers[container][object]
+            response.status = 200
+            response
+          else
+            response = Excon::Response.new
+            response.body = '<html><h1>Not Found</h1><p>The resource could not be found.</p></html>'
+            response.status = 404
+            response.headers = {"Content-Length"=>"70", "Content-Type"=>"text/html; charset=UTF-8", "X-Trans-Id"=>"abcdefghijklmnopqrstuvwx-0123456789", "Date"=>Time.now}
+            response
+          end
+        end
+      end
       class Real
 
         # Get details for object
