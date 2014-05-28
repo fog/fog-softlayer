@@ -74,8 +74,7 @@ module Fog
 
       class Real
         attr_reader :auth_url
-        attr_accessor :auth_token
-        attr_accessor :auth_expires
+        attr_accessor :auth_token, :auth_expires
 
         def initialize(options={})
           @api_key = options[:softlayer_api_key]
@@ -178,8 +177,8 @@ module Fog
 
           output[:path] = params[:path] ? "#{@path}/#{params.delete(:path)}".sub(/\/$/, '') : @path
 
-          output.merge!(params)
-          output.merge!(_headers)
+          output = output.deep_merge(params)
+          output.deep_merge(_headers)
         end
 
         def requires_auth?
