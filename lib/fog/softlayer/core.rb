@@ -6,6 +6,7 @@
 #
 require 'fog/core'
 require 'fog/json'
+require 'fog/softlayer/version'
 require 'time'
 
 module Fog
