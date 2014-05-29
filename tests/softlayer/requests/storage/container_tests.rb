@@ -31,7 +31,9 @@ Shindo.tests("Fog::Storage[:softlayer] | container_tests", ["softlayer"]) do
     end
 
     tests("#delete_container") do
-      pending if Fog.mocking?
+      response = @storage.delete_container(@container)
+      data_matches_schema(204) { response.status}
+      data_matches_schema('') { response.body }
     end
 
   end
@@ -39,6 +41,12 @@ Shindo.tests("Fog::Storage[:softlayer] | container_tests", ["softlayer"]) do
   tests('failure') do
     tests("#get_container('swing-and-a-miss')") do
       data_matches_schema(404) { @storage.get_container('foo-bar-baz-bang').status }
+    end
+
+    tests("#delete_container") do
+      response = @storage.delete_container('sdfgsdgsdfgsdfg')
+      data_matches_schema(404) { response.status }
+      data_matches_schema('<html><h1>Not Found</h1><p>The resource could not be found.</p></html>') { response.body }
     end
   end
 end
