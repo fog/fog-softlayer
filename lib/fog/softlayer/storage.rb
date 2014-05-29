@@ -21,7 +21,6 @@ module Fog
       request :get_container
       request :get_containers
       request :get_object
-      request :get_object_http_url
       request :get_object_https_url
       request :head_container
       request :head_containers
