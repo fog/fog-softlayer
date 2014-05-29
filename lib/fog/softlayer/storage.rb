@@ -80,11 +80,11 @@ module Fog
           @username = options[:softlayer_username]
           @cluster = options[:softlayer_cluster]
           @storage_account = options[:softlayer_storage_account] || default_storage_account
-          @temp_url_key = options[:softlayer_temp_url_key]
           @connection_options     = options[:connection_options] || {}
           authenticate
           @persistent = options[:persistent] || false
           @connection = Fog::Core::Connection.new("#{@scheme}://#{@host}:#{@port}", @persistent, @connection_options)
+          @temp_url_key = options[:softlayer_temp_url_key] || get_temp_url_key_for_account
         end
 
         def auth_url
@@ -124,6 +124,37 @@ module Fog
 
         private
 
+        def _auth_headers
+          {
+              :headers => {
+                  'User-Agent' => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}",
+                  'X-Auth-User' => "#{@storage_account}:#{@username}",
+                  'X-Auth-Key'  => @api_key
+              }
+          }
+        end
+
+        def _build_params(params)
+          output = {
+              :method => params.delete(:method) || :get
+          }
+
+          output[:path] = params[:path] ? "#{@path}/#{params.delete(:path)}".sub(/\/$/, '') : @path
+
+          output = output.deep_merge(params)
+          output.deep_merge(_headers)
+        end
+
+        def _headers
+          {
+            :headers => {
+              'Content-Type' => 'application/json',
+              'Accept' => 'application/json',
+              'X-Auth-Token' => @auth_token
+            }
+          }
+        end
+
         def authenticate
           if requires_auth?
             connection = Fog::Core::Connection.new(auth_url, false, _auth_headers)
@@ -150,34 +181,8 @@ module Fog
           slapi.body.map { |store| store['username'] }.first if slapi.body and slapi.body.instance_of? Array
         end
 
-        def _headers
-          { :headers => {
-              'Content-Type' => 'application/json',
-              'Accept' => 'application/json',
-              'X-Auth-Token' => @auth_token
-            }
-          }
-        end
-
-        def _auth_headers
-          {
-              :headers => {
-                  'User-Agent' => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}",
-                  'X-Auth-User' => "#{@storage_account}:#{@username}",
-                  'X-Auth-Key'  => @api_key
-              }
-          }
-        end
-
-        def _build_params(params)
-          output = {
-            :method => params.delete(:method) || :get
-          }
-
-          output[:path] = params[:path] ? "#{@path}/#{params.delete(:path)}".sub(/\/$/, '') : @path
-
-          output = output.deep_merge(params)
-          output.deep_merge(_headers)
+        def get_temp_url_key_for_account
+          request.headers['X-Account-Meta-Temp-Url-Key']
         end
 
         def requires_auth?
@@ -271,12 +276,6 @@ module Fog
           end
         end
       end
-
-
-
-
-
-
 
     end
   end
