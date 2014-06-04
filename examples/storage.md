@@ -42,7 +42,7 @@ These examples all assume you have `~/.fog` which contains the following
   ```ruby
   	dir = @sl.directories.get('a-container')
   	# Pass a string.
-  	dir.files.create(:key => 'data.txt', :body => 'The quick brown fox jumps over the lazy dog.")
+  	dir.files.create(:key => 'data.txt', :body => 'The quick brown fox jumps over the lazy dog.')
   	# From a file.
   	dir.files.create(:key => 'file-data.txt', :body => File.open('/path/to/file-data.txt')
   ```
