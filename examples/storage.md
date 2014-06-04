@@ -91,6 +91,7 @@ These examples all assume you have `~/.fog` which contains the following
 	```ruby
 	  file = @sl.directories.get('a-container').files.get('data.txt')
 	  file.url(Time.now + 300) # url expires in 5 minutes
+	  # => "https://dal05.objectstorage.softlayer.net:443/v1/AUTH_1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a/a-container/data.txt?temp_url_sig=1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a&temp_url_expires=1401901023"
 	```
 	
 1. Delete files/objects from a directory/container.
