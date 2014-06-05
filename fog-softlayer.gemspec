@@ -8,10 +8,11 @@ Gem::Specification.new do |spec|
   spec.version       = Fog::Softlayer::VERSION
   spec.authors       = ["Matt Eldridge"]
   spec.email         = ["matt.eldridge@us.ibm.com"]
+  spec.date          = '2014-06-05'
   spec.description   = %q{Module for the 'fog' gem to support SoftLayer Cloud}
   spec.summary       = %q{This library can be used as a module for `fog` or as standalone provider
                         to use the SoftLayer Cloud in applications}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/softlayer/fog-softlayer"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -23,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'fog-core'
   spec.add_dependency 'fog-json'
 
-  spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency('minitest')
   spec.add_development_dependency('jekyll') unless RUBY_PLATFORM == 'java'
   spec.add_development_dependency('rake')
