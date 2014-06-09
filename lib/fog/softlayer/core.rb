@@ -17,6 +17,7 @@ module Fog
     SL_STORAGE_AUTH_URL = 'objectstorage.softlayer.net/auth/v1.0' unless defined? SL_STORAGE_AUTH_URL
 
     service(:compute, 'Compute')
+    service(:dns, 'DNS')
     service(:storage, 'Storage')
 
     def self.mock_account_id

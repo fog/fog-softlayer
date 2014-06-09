@@ -7,4 +7,5 @@
 require 'fog'
 require 'fog/softlayer'
 require 'fog/softlayer/compute'
+require 'fog/softlayer/dns'
 require 'fog/softlayer/storage'
