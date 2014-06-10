@@ -13,7 +13,8 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :flavor_id => 'm1.small',
         :image_id => '23f7f05f-3657-4330-8772-329ed2e816bc',
         :name => 'test-vm',
-        :domain => 'example.com'
+        :domain => 'example.com',
+        :datacenter => 'dal05'
     }
 
     bmc_opts = {
@@ -21,7 +22,8 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :os_code => 'UBUNTU_LATEST',
         :name => 'test-bmc',
         :domain => 'bare-metal-server.com',
-        :bare_metal => true
+        :bare_metal => true,
+        :datecenter => 'dal05'
     }
 
     @vm = Fog::Compute[:softlayer].servers.new(vm_opts)
