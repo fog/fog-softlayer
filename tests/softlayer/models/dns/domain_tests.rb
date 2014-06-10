@@ -25,8 +25,11 @@ Shindo.tests("Fog::DNS[:softlayer] | Domain model", ["softlayer"]) do
         'host' => '@',
         'type' => 'a'
       }
+      current_serial = @domain.serial
       @domain.create_record(record)
       @domain.records(true)
+      @domain.reload
+      returns(true, "returns serial increased") { (current_serial.to_i + 1) <= @domain.serial }
       returns(4, "returns default plus one created, total 4 records") { @domain.records.count }
       returns("127.0.0.1", "returns the right value for created record") { @domain.records.last.value }
       returns("@", "returns the right name for created record") { @domain.records.last.name }

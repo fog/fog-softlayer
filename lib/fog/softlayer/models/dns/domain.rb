@@ -15,7 +15,7 @@ module Fog
 
         identity  :id,           :type => :integer
         attribute :name,         :aliases => 'domain'
-        attribute :serial
+        attribute :serial,       :type => :integer
         
         # Times
         attribute :updated_at,   :aliases => 'updateDate', :type => :time

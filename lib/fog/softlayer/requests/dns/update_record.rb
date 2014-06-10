@@ -21,6 +21,7 @@ module Fog
           # Get the record
           @domain.first[:resourceRecords].each do |record|
             if record["id"].to_i == record_id.to_i
+              @domain.first[:serial] = (@domain.first[:serial] + 1)
               @record = record
             end  
           end

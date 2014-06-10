@@ -26,6 +26,7 @@ module Fog
           }
           @softlayer_domains.each do |domain|
             if domain[:id].to_i == opts[:domainId]
+              domain[:serial] = domain[:serial].to_i + 1
               domain[:resourceRecords] << new_record
               response = Excon::Response.new
               response.body = new_record

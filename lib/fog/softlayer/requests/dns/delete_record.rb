@@ -14,6 +14,7 @@ module Fog
           @domain = @softlayer_domains.each do |domain|
             domain[:resourceRecords].each do |record|
               if record["id"] == id
+                domain[:serial] = domain[:serial] + 1
                 domain[:resourceRecords].delete(record)
               end
             end
