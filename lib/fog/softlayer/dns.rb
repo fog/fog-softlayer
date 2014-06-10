@@ -35,6 +35,7 @@ module Fog
       request :get_domain
       request :get_domain_by_name
       request :get_domains
+      request :get_record
       request :get_records
       request :update_record
 

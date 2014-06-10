@@ -21,9 +21,17 @@ module Fog
           data = service.get_records(domain.id).body
           load(data)
         end
+        
+        def get(identifier)
+          return nil if identifier.nil? || identifier == ""
+          response = service.get_record(identifier)
+          data = response.body
+          new.merge_attributes(data)
+        rescue Excon::Errors::NotFound
+          nil
+        end
 
         def new(attributes = {})
-          requires :domain
           super({ :domain => domain }.merge!(attributes))
         end
       end

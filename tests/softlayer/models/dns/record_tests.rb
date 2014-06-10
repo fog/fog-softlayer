@@ -22,7 +22,7 @@ Shindo.tests("Fog::DNS[:softlayer] | Record model", ["softlayer"]) do
         'type' => 'a'
       }
       current_serial = @domain.serial
-      @domain.create_record(record)
+      @record = @domain.create_record(record)
       @domain.reload
       @domain.records(true)
       returns(4, "returns default plus one created, total 4 records") { @domain.records.count }
@@ -36,6 +36,18 @@ Shindo.tests("Fog::DNS[:softlayer] | Record model", ["softlayer"]) do
       returns(4, "returns 4 records (no duplicated)") { @domain.records.count }
       returns("192.168.0.1", "returns the right value for updated record") { @domain.records.last.value }
       returns(true, "returns serial increased") { (current_serial + 1) <= @domain.serial }
+    end
+    
+    tests("#get") do
+      @record_get = @service.records.get(@record.id)
+      returns(Fog::DNS::Softlayer::Record) { @record_get.class }
+      
+      tests("after updating the record") do
+        @record_get.value = "192.168.10.1"
+        @record_get.save
+        @record_get.reload
+        returns("192.168.10.1", "returns right value") { @record_get.value }
+      end
     end
     
     tests("#destroy") do
