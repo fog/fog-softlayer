@@ -36,7 +36,7 @@ module Fog
 
         # Metadata
         attribute :account_id,              :aliases => 'accountId', :type => :integer
-        attribute :datacenter
+        attribute :datacenter,              :aliases => 'datacenter', :type => :squash
         attribute :single_tenant,           :aliases => 'dedicatedAccountHostOnlyFlag'
         attribute :global_identifier,       :aliases => 'globalIdentifier'
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
@@ -64,6 +64,15 @@ module Fog
 
         def bare_metal
           attributes[:bare_metal] === 1 ? true : false
+        end
+
+        def datacenter=(name)
+          name = name['name'] if name.is_a?(Hash)
+          attributes[:datacenter] = { :name => name }
+        end
+
+        def datacenter
+          attributes[:datacenter][:name] unless attributes[:datacenter].nil?
         end
 
         def image_id=(uuid)
@@ -241,7 +250,7 @@ module Fog
         end
 
         def validate_attributes
-          requires :name, :domain, :cpu, :ram
+          requires :name, :domain, :cpu, :ram, :datacenter
           requires_one :os_code, :image_id
           requires_one :image_id, :disk
           bare_metal? and image_id and raise ArgumentError, "Bare Metal Cloud does not support booting from Image"
