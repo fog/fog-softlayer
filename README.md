@@ -11,12 +11,13 @@ in other applications.
 
 This release includes support for the following services:
 * Compute
-
-Additional services coming soon:
 * Storage
 * DNS
+
+Additional services coming soon:
 * Image
 * Network
+* Tags
 
 #### Installation
 
