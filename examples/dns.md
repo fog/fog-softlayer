@@ -61,6 +61,19 @@ These examples all assume you have `~/.fog` which contains the following
   @domain = @sl.domains.get(123456)
   @domain.records
   ```
+  
+* Get specific record by id
+
+  ```ruby
+  @domain = @sl.domains.get(123456)
+  @domain.records.get(456789012)
+  ```
+  
+or using the service:
+
+  ```ruby
+  @sl.records.get(456789012)
+  ```
 
 ##### Update Operations
 
