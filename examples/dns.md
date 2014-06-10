@@ -15,7 +15,7 @@ These examples all assume you have `~/.fog` which contains the following
 	@sl = Fog::DNS[:softlayer]
 ```
 
-1. Create Operations
+##### Create Operations
 
 * Create Domain
 
@@ -27,14 +27,14 @@ These examples all assume you have `~/.fog` which contains the following
 
   ```ruby
   record = {
-    'data' => '127.0.0.1',
+    'value' => '127.0.0.1',
     'host' => '@',
     'type' => 'a'
   }
   @domain.create_record(record)
   ```
 
-1. Read Operations
+##### Read Operations
 
 * List all domains
 
@@ -62,7 +62,7 @@ These examples all assume you have `~/.fog` which contains the following
   @domain.records
   ```
 
-1. Update Operations
+##### Update Operations
 
 After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain variable
 
@@ -74,7 +74,7 @@ After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain v
   @domain.records[3].save
   ```
 
-1. Destroy Operations
+##### Destroy Operations
 
 After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain variable
 
