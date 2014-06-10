@@ -1,3 +1,6 @@
+## 0.1.1 2014-06-10
+
+    * Fix Compute model after breaking change to SLAPI. :datecenter is no longer optional.
 ## 0.1.0 2014-06-10
 
     * Add missing get method to Fog::DNS::Softlayer::Record.
