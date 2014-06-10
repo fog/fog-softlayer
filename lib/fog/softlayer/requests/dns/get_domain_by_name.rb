@@ -20,7 +20,7 @@ module Fog
 
       class Real
         def get_domain_by_name(name)
-          request(:dns_domain, "getByDomainName/" + name.to_s)
+          request(:dns_domain, "getByDomainName/" + URI::encode(name.to_s, "-"))
         end
       end
     end

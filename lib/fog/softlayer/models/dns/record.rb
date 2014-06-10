@@ -23,7 +23,7 @@ module Fog
         attribute :retry
          
         def initialize(attributes={})
-          self.domain_id = attributes[:domain].id
+          self.domain_id = attributes[:domain_id]
           super(attributes)
         end
 

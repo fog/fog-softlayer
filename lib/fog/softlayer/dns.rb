@@ -35,7 +35,6 @@ module Fog
       request :get_domain
       request :get_domain_by_name
       request :get_domains
-      request :get_record
       request :get_records
       request :update_record
 
@@ -127,7 +126,7 @@ module Fog
           response
         end
 
-        #private
+        private
 
         def credentialize_url(username, apikey)
           @request_url = "https://#{username}:#{apikey}@#{@request_url}"

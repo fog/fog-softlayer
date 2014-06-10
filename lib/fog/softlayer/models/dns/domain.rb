@@ -23,17 +23,9 @@ module Fog
         def initialize(attributes = {})
           super(attributes)
         end
-
-        def name=(set)
-          attributes[:name] = set
-        end
-
-        def name
-          attributes[:name]
-        end
         
         def records(reload = false)
-          @record = nil if reload
+          @records = nil if reload
           @records ||= begin
             Fog::DNS::Softlayer::Records.new(
               :domain       => self,
@@ -46,7 +38,7 @@ module Fog
           opts.merge!({:domain_id => self.id, :service => service})
           record = Fog::DNS::Softlayer::Record.new(opts)
           record.save
-          records(force = true)
+          records(true)
           record
         end
         

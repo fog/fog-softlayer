@@ -33,6 +33,7 @@ module Fog
           return nil if name.nil? || name == ""
           response = service.get_domain_by_name(name)
           data = response.body
+          return false if data.empty?
           new.merge_attributes(data.first)
         rescue Excon::Errors::NotFound
           nil

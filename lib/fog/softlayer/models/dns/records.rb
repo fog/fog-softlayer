@@ -22,14 +22,6 @@ module Fog
           load(data)
         end
 
-        def get(record_id)
-          requires :domain
-          data = service.get_record(domain.id, record_id)
-          new(data)
-        rescue Excon::Errors::NotFound
-          nil
-        end
-
         def new(attributes = {})
           requires :domain
           super({ :domain => domain }.merge!(attributes))
