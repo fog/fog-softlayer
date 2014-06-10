@@ -10,8 +10,17 @@ module Fog
 
       class Mock
         def delete_record(id)
+          # Get the domain
+          @domain = @softlayer_domains.each do |domain|
+            domain[:resourceRecords].each do |record|
+              if record["id"] == id
+                domain[:resourceRecords].delete(record)
+              end
+            end
+          end
+          
           response = Excon::Response.new
-          response.body = @domains
+          response.body = true
           response.status = 200
           response
         end

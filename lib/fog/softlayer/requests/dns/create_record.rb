@@ -9,11 +9,31 @@ module Fog
     class Softlayer
 
       class Mock
-        def create_record
-          response = Excon::Response.new
-          response.body = @domains
-          response.status = 200
-          response
+        def create_record(opts)
+          new_record = {
+            "id"                => Fog::Mock.random_numbers(8),
+            "data"              => opts[:data],
+            "domainId"          => opts[:domainId],
+            "host"              => opts[:host],
+            "type"              => opts[:type],
+            "minimum"           => nil,
+            "expire"            => nil,
+            "mxPriority"        => nil,
+            "refresh"           => nil,
+            "responsiblePerson" => nil,
+            "retry"             => nil,
+            "ttl"               => nil,
+          }
+          @softlayer_domains.each do |domain|
+            if domain[:id].to_i == opts[:domainId]
+              domain[:resourceRecords] << new_record
+              response = Excon::Response.new
+              response.body = new_record
+              response.status = 200
+              return response
+            end
+          end
+          raise Excon::Errors::NotFound
         end
 
       end

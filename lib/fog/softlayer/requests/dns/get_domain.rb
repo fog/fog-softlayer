@@ -9,11 +9,16 @@ module Fog
     class Softlayer
 
       class Mock
-        def get_domain
-          response = Excon::Response.new
-          response.body = @domains
-          response.status = 200
-          response
+        def get_domain(id)
+          @softlayer_domains.each do |domain|
+            if domain[:id].to_i == id
+              response = Excon::Response.new
+              response.body = domain
+              response.status = 200
+              return response
+            end
+          end
+          raise Excon::Errors::NotFound
         end
 
       end

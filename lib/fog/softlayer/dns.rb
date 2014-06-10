@@ -45,27 +45,10 @@ module Fog
       class Mock
         attr_accessor :default_domain
         include Fog::Softlayer::Compute::Shared
-        attr_accessor :domains
 
         def initialize(args)
-          @domains = []
+          @softlayer_domains = []
           super(args)
-        end
-
-        def request(method, path, parameters = {})
-          _request
-        end
-
-        def request_access_token(connection, credentials)
-          _request
-        end
-
-        def _request
-          raise Fog::Errors::MockNotImplemented
-        end
-
-        def list_domains
-          self.get_domains
         end
 
       end

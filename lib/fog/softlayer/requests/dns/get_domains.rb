@@ -11,9 +11,9 @@ module Fog
       class Mock
         def get_domains
           response = Excon::Response.new
-          response.body = @domains
+          response.body = @softlayer_domains
           response.status = 200
-          response
+          return response
         end
 
       end

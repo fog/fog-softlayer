@@ -10,12 +10,32 @@ module Fog
 
       class Mock
         def update_record(record_id, opts)
+          
+          # Get the domain
+          @domain = @softlayer_domains.each do |domain|
+            if domain[:id].to_i == opts[:domainId]
+              domain
+            end
+          end
+          
+          # Get the record
+          @domain.first[:resourceRecords].each do |record|
+            if record["id"].to_i == record_id.to_i
+              @record = record
+            end  
+          end
+          
+          # Update the data
+          # ps: Separated the update to make easier future refator
+          @record["data"] = opts[:data]
+          @record["host"] = opts[:host]
+          @record["type"] = opts[:type]
+          
           response = Excon::Response.new
-          response.body = @domains
+          response.body = @domain
           response.status = 200
-          response
+          return response
         end
-
       end
 
       class Real

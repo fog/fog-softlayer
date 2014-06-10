@@ -9,11 +9,19 @@ module Fog
     class Softlayer
 
       class Mock
-        def get_domain_by_name
+        def get_domain_by_name(name)
+          @softlayer_domains.each do |domain|
+            if domain[:name] == name
+              response = Excon::Response.new
+              response.body = [ domain ]
+              response.status = 200
+              return response
+            end
+          end
           response = Excon::Response.new
-          response.body = @domains
+          response.body = [ ]
           response.status = 200
-          response
+          return response
         end
 
       end
