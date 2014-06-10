@@ -1,3 +1,8 @@
+## 0.1.0 2014-06-10
+
+    * Add missing get method to Fog::DNS::Softlayer::Record.
+    * Add OS attribute and ssh_password method to Compute model.
+
 ### 0.0.9 2014-06-10
 
  * Initial support for DNS.
