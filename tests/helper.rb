@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'securerandom'
 
 if ENV['COVERAGE'] == 'true' && RUBY_VERSION != "1.9.2"
   require 'coveralls'
@@ -20,6 +21,8 @@ require 'fog/bin' # for available_providers and registered_providers
 Excon.defaults.merge!(:debug_request => true, :debug_response => true)
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'helpers', 'mock_helper'))
+
+Fog.mock! if ENV['FOG_MOCK']
 
 # This overrides the default 600 seconds timeout during live test runs
 if Fog.mocking?
