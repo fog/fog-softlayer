@@ -26,6 +26,7 @@ module Fog
         attribute :os_code,                  :aliases => 'operatingSystemReferenceCode'
         attribute :image_id,                 :type => :squash
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
+        attribute :os,                       :aliases => 'operatingSystem'
 
         # Times
         attribute :created_at,              :aliases => ['createDate', 'provisionDate'], :type => :time
@@ -71,6 +72,10 @@ module Fog
 
         def image_id
           attributes[:image_id][:globalIdentifier] unless attributes[:image_id].nil?
+        end
+
+        def ssh_password
+          self.os['passwords'][0]['password'] if self.id
         end
 
         def ram=(set)
