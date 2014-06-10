@@ -5,7 +5,7 @@ These examples all assume you have `~/.fog` which contains the following
 
    ```yaml  
    :softlayer_username: example-username
-   :softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
+   :softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1
   ```
 
 #### Create a connection to SoftLayer DNS Service
