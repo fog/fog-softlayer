@@ -42,6 +42,12 @@ module Fog
         '%' + $1.unpack('H2' * $1.bytesize).join('%').upcase
       end
     end
+
+    def self.stringify_keys(obj)
+      return obj.inject({}){|memo,(k,v)| memo[k.to_s] =  stringify_keys(v); memo} if obj.is_a? Hash
+      return obj.inject([]){|memo,v    | memo         << stringify_keys(v); memo} if obj.is_a? Array
+      obj
+    end
   end
 end
 

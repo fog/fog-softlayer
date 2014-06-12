@@ -42,23 +42,23 @@ module Fog
             response.status = 200
             # a real response comes back with lots of nil values like this too, it takes 1 - 2 hours for a real BMC server to provision
             response.body = {
-                "accountId" =>  Fog::Softlayer.mock_account_id,
-                "createDate" => Time.now.iso8601,
-                "dedicatedAccountHostOnlyFlag" => false,
-                "domain" => nil,
-                "fullyQualifiedDomainName" => nil,
-                "hostname" => nil,
-                "id" => Fog::Softlayer.mock_vm_id,
-                "lastPowerStateId" => nil,
-                "lastVerifiedDate" => nil,
-                "maxCpu" => nil,
-                "maxCpuUnits" => "CORE",
-                "maxMemory" => nil,
-                "metricPollDate" => nil,
-                "modifyDate" => nil,
-                "startCpus" => nil,
-                "statusId" => 1001,
-                "globalIdentifier" => Fog::Softlayer.mock_global_identifier
+                'accountId' =>  Fog::Softlayer.mock_account_id,
+                'createDate' => Time.now.iso8601,
+                'dedicatedAccountHostOnlyFlag' => false,
+                'domain' => nil,
+                'fullyQualifiedDomainName' => nil,
+                'hostname' => nil,
+                'id' => Fog::Softlayer.mock_vm_id,
+                'lastPowerStateId' => nil,
+                'lastVerifiedDate' => nil,
+                'maxCpu' => nil,
+                'maxCpuUnits' => "CORE",
+                'maxMemory' => nil,
+                'metricPollDate' => nil,
+                'modifyDate' => nil,
+                'startCpus' => nil,
+                'statusId' => 1001,
+                'globalIdentifier' => Fog::Softlayer.mock_global_identifier
             }
           rescue MissingRequiredParameter
             response.status = 500

@@ -72,6 +72,17 @@ class Softlayer
             "globalIdentifier" => String
         }
 
+        TAGS = {
+            'empRecordId'=>nil,
+            'id'=>String,
+            'resourceTableId'=>Integer,
+            'tagId'=> Fog::Nullable::String,
+            'tagTypeId'=>Fog::Nullable::Integer,
+            'usrRecordId'=>Fog::Nullable::Integer,
+            'tag'=>{'accountId'=>Integer, 'id'=>String, 'internal'=>Integer, 'name'=>String},
+            'tagType'=>{'description'=>String, 'keyName'=>String}
+        }
+
       end
 
       module VirtualGuest
@@ -93,6 +104,17 @@ class Softlayer
             "startCpus" => Integer,
             "statusId" => Integer,
             "globalIdentifier" => String
+        }
+
+        TAGS = {
+            'empRecordId'=>nil,
+            'id'=>String,
+            'resourceTableId'=>Integer,
+            'tagId'=> Fog::Nullable::String,
+            'tagTypeId'=>Fog::Nullable::Integer,
+            'usrRecordId'=>Fog::Nullable::Integer,
+            'tag'=>{'accountId'=>Integer, 'id'=>String, 'internal'=>Integer, 'name'=>String},
+            'tagType'=>{'description'=>String, 'keyName'=>String}
         }
 
       end
