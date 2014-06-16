@@ -1,4 +1,4 @@
-### Compute Examples
+### Tags Examples
 
 These examples all assume you have `~/.fog` which contains the following
 
