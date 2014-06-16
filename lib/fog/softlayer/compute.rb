@@ -45,6 +45,7 @@ module Fog
       request :get_bare_metal_server
       request :get_bare_metal_servers
       request :get_bare_metal_tags
+      request :get_references_by_tag_name
       request :get_tag
       request :get_vm_tags
       request :get_vm

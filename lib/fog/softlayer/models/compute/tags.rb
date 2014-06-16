@@ -33,9 +33,6 @@ module Fog
           response = service.get_tag(id)
           data = response.body
           new.merge_attributes(data)
-          #if key
-          #  self.class.new(:service => service).all('key' => key)
-          #end
         end
       end
     end
