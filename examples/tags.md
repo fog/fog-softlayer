@@ -54,7 +54,7 @@ These examples all assume you have `~/.fog` which contains the following
 1. Get servers tagged by multiple tags (tag OR tag OR ...).
 
    ```ruby
-   	@sl.servers.tagged_with(['foo,bar']) # => [<Fog::Compute::Softlayer::Server>, <Fog::Compute::Softlayer::Server>, ...]
+   	@sl.servers.tagged_with(['foo','bar']) # => [<Fog::Compute::Softlayer::Server>, <Fog::Compute::Softlayer::Server>, ...]
    ```
 
 1. List all tags on account.
