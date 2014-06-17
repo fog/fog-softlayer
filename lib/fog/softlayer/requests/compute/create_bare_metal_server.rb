@@ -58,8 +58,7 @@ module Fog
                 'modifyDate' => nil,
                 'startCpus' => nil,
                 'statusId' => 1001,
-                'globalIdentifier' => Fog::Softlayer.mock_global_identifier,
-                'bare_metal' => true
+                'globalIdentifier' => Fog::Softlayer.mock_global_identifier
             }
           rescue MissingRequiredParameter
             response.status = 500
@@ -78,7 +77,6 @@ module Fog
         def create_bare_metal_server(opts)
           raise ArgumentError, "Fog::Compute::Softlayer#create_bare_metal_server expects argument of type Hash" unless opts.kind_of?(Hash)
           response = request(:hardware_server, :create_object, :body => opts, :http_method => :POST)
-          response.body['bare_metal'] = true
         end
 
       end

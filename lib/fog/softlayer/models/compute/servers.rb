@@ -23,14 +23,17 @@ module Fog
 
         ## Get a SoftLayer server.
         #
-        def get(id)
-          return nil if id.nil? || id == ""
-          response = service.get_vm(id)
+
+        def get(identifier)
+          return nil if identifier.nil? || identifier == ""
+          response = service.get_vm(identifier)
+          bare_metal = false
           if response.status == 404 # we didn't find it as a VM, look for a BMC server
-            response = service.get_bare_metal_server(id)
-            response.body['bare_metal'] = true
+            response = service.get_bare_metal_server(identifier)
+            bare_metal = true
           end
           data = response.body
+          data['bare_metal'] = bare_metal
           new.merge_attributes(data)
         rescue Excon::Errors::NotFound
           nil

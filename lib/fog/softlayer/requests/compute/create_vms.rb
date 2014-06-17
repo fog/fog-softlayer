@@ -63,8 +63,7 @@ module Fog
                 'statusId' => 1001,
                 'globalIdentifier' => Fog::Softlayer.mock_global_identifier,
                 'operatingSystem' => {},
-                'tagReferences' => [],
-                'bare_metal' => false
+                'tagReferences' => []
             }
 
             # clobber stubbed values where applicable
@@ -88,9 +87,7 @@ module Fog
       class Real
         def create_vms(opts)
           raise ArgumentError, "Fog::Compute::Softlayer#create_vms expects argument of type Array" unless opts.kind_of?(Array)
-          response = request(:virtual_guest, :create_objects, :body => opts, :http_method => :POST)
-          response.body.map { |vm| vm['bare_metal'] = false }
-          response
+          request(:virtual_guest, :create_objects, :body => opts, :http_method => :POST)
         end
       end
     end

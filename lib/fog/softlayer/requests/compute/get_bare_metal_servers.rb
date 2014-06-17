@@ -20,9 +20,7 @@ module Fog
 
       class Real
         def get_bare_metal_servers
-          response = request(:account, :get_hardware, :query => 'objectMask=mask[datacenter,tagReferences,memory,processorCoreAmount,hardDrives,datacenter,hourlyBillingFlag,operatingSystem.passwords.password]')
-          response.body.map { |bare_metal| bare_metal["bare_metal"] = true }
-          response
+          request(:account, :get_hardware, :query => 'objectMask=mask[datacenter,tagReferences,memory,processorCoreAmount,hardDrives,datacenter,hourlyBillingFlag,operatingSystem.passwords.password]')
         end
       end
     end
