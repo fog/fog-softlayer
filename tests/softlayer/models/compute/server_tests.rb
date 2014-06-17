@@ -14,7 +14,8 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :image_id => '23f7f05f-3657-4330-8772-329ed2e816bc',
         :name => 'test-vm',
         :domain => 'example.com',
-        :datacenter => 'dal05'
+        :datacenter => 'dal05',
+        :bare_metal => false
     }
 
     bmc_opts = {
@@ -22,8 +23,8 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :os_code => 'UBUNTU_LATEST',
         :name => 'test-bmc',
         :domain => 'bare-metal-server.com',
-        :bare_metal => true,
-        :datecenter => 'dal05'
+        :datecenter => 'dal05',
+        :bare_metal => true
     }
 
     @vm = Fog::Compute[:softlayer].servers.new(vm_opts)
@@ -66,7 +67,33 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
   end
 
   tests ("failure") do
-
+    
+    # should not allow Virtual Guests creation without bare_metal flag
+    tests(".new").raises(Exception) do
+      # As we don't have fixture I don't touch original vm_opts
+      nobm_vm_opts = vm_opts.clone
+      nobm_vm_opts.delete(:bare_metal)
+      Fog::Compute[:softlayer].servers.new(nobm_vm_opts)
+    end
+    
+    # should not allow Bare Metal creation without bare_metal flag
+    tests(".new").raises(Exception) do
+      # As we don't have fixture I don't touch original bmc_opts
+      nobm_bmc_opts = bmc_opts.clone
+      nobm_bmc_opts.delete(:bare_metal)
+      Fog::Compute[:softlayer].servers.new(nobm_bmc_opts)
+    end
+    
+    # should not allow a set bare_metal flag manually on Virtual Guests
+    tests("#bare_metal=").raises(NoMethodError) do
+      @vm.bare_metal = true
+    end
+    
+    # should not allow a set bare_metal flag manually on Bare Metal Servers
+    tests("#bare_metal=").raises(NoMethodError) do
+      @vm.bare_metal = false
+    end
+    
     # should not allow a second save
     tests("#save").raises(Fog::Errors::Error) do
       @vm.save

@@ -44,6 +44,8 @@ module Fog
         attribute :tags,                    :aliases => 'tagReferences'
 
         def initialize(attributes = {})
+          # Forces every request inject bare_metal parameter
+          raise Exception if attributes[:bare_metal].nil?
           super(attributes)
           set_defaults
         end
@@ -61,18 +63,9 @@ module Fog
         def bare_metal?
           bare_metal
         end
-
-        def bare_metal=(set)
-          attributes[:bare_metal] = case set
-            when false, 'false', 0, nil, ''
-              0
-            else
-              1
-          end
-        end
-
+        
         def bare_metal
-          attributes[:bare_metal] === 1 ? true : false
+          @bare_metal
         end
 
         def datacenter=(name)
@@ -291,6 +284,16 @@ module Fog
           common.merge(conditional)
         end
 
+        def bare_metal=(set)
+          raise Exception, "Bare metal flag has already been set" unless self.bare_metal.nil?
+          @bare_metal = case set
+            when false, 'false', 0, nil, ''
+              false
+            else
+              true
+          end
+        end
+        
         ##
         # Remove model attributes that aren't expected by the SoftLayer API
         def clean_attributes

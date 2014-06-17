@@ -9,7 +9,7 @@ Shindo.tests("Fog::Compute[:softlayer] | tag requests", ["softlayer"]) do
 
   @sl_connection = Fog::Compute[:softlayer]
 
-  opts = { :flavor_id => 'm1.small', :os_code => 'UBUNTU_LATEST',  :name => 'matt', :datacenter => 'dal05'}
+  opts = { :flavor_id => 'm1.small', :os_code => 'UBUNTU_LATEST',  :name => 'matt', :datacenter => 'dal05', :bare_metal => false}
   @vm = @sl_connection.servers.create(opts)
 
   opts[:bare_metal] = true

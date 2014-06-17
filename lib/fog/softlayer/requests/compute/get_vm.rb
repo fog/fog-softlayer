@@ -26,7 +26,9 @@ module Fog
 
       class Real
         def get_vm(identifier)
-          request(:virtual_guest, identifier, :expected => [200, 404], :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.passwords.password]')
+          response = request(:virtual_guest, identifier, :expected => [200, 404], :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.passwords.password]')
+          response.body['bare_metal'] = false
+          response
         end
       end
     end
