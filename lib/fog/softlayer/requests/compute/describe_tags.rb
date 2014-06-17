@@ -4,14 +4,16 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 module Fog
   module Compute
     class Softlayer
 
       class Mock
-        def get_bare_metal_servers
+
+        def describe_tags
           response = Excon::Response.new
-          response.body = @bare_metal_servers
+          response.body = @tags
           response.status = 200
           response
         end
@@ -19,8 +21,8 @@ module Fog
       end
 
       class Real
-        def get_bare_metal_servers
-          request(:account, :get_hardware, :query => 'objectMask=mask[datacenter,tagReferences,memory,processorCoreAmount,hardDrives,datacenter,hourlyBillingFlag,operatingSystem.passwords.password]')
+        def describe_tags
+          self.request(:account, :get_tags, :query => 'objectMask=mask[referenceCount]')
         end
       end
     end

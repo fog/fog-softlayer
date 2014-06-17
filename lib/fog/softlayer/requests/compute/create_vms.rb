@@ -44,32 +44,33 @@ module Fog
 
             ## stub some responses
             fields = {
-                :accountId =>  Fog::Softlayer.mock_account_id,
-                :createDate => Time.now.iso8601,
-                :dedicatedAccountHostOnlyFlag => false,
-                :domain => nil,
-                :fullyQualifiedDomainName => nil,
-                :hostname => nil,
-                :id => Fog::Softlayer.mock_vm_id,
-                :lastPowerStateId => nil,
-                :lastVerifiedDate => nil,
-                :maxCpu => nil,
-                :maxCpuUnits => "CORE",
-                :maxMemory => nil,
-                :metricPollDate => nil,
-                :modifyDate => nil,
-                :startCpus => nil,
-                :statusId => 1001,
-                :globalIdentifier => Fog::Softlayer.mock_global_identifier
+                'accountId' =>  Fog::Softlayer.mock_account_id,
+                'createDate' => Time.now.iso8601,
+                'datacenter' => nil,
+                'dedicatedAccountHostOnlyFlag' => false,
+                'domain' => nil,
+                'fullyQualifiedDomainName' => nil,
+                'hostname' => nil,
+                'id' => Fog::Softlayer.mock_vm_id,
+                'lastPowerStateId' => nil,
+                'lastVerifiedDate' => nil,
+                'maxCpu' => nil,
+                'maxCpuUnits' => "CORE",
+                'maxMemory' => nil,
+                'metricPollDate' => nil,
+                'modifyDate' => nil,
+                'startCpus' => nil,
+                'statusId' => 1001,
+                'globalIdentifier' => Fog::Softlayer.mock_global_identifier,
+                'operatingSystem' => {},
+                'tagReferences' => []
             }
 
             # clobber stubbed values where applicable
-            response.body = opts.each_with_index.map do |vm,i|
-              fields.reduce({}) do |result,(field,default)|
-                result[field] = vm[field] || default
-                result
-              end
+            response.body = opts.map do |vm|
+              fields.deep_merge(Fog::Softlayer.stringify_keys(opts.first)) # stringify in case :symbols were passed.
             end
+
           rescue MissingRequiredParameter
             response.status = 500
             response.body = {

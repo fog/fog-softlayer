@@ -22,7 +22,7 @@ module Fog
         attribute :private_ip,               :aliases => 'primaryBackendIpAddress'
         attribute :public_ip,                :aliases => 'primaryIpAddress'
         attribute :flavor_id
-        attribute :bare_metal,               :aliases => 'bareMetalInstanceFlag'
+        attribute :bare_metal,               :type => :boolean
         attribute :os_code,                  :aliases => 'operatingSystemReferenceCode'
         attribute :image_id,                 :type => :squash
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
@@ -40,11 +40,21 @@ module Fog
         attribute :single_tenant,           :aliases => 'dedicatedAccountHostOnlyFlag'
         attribute :global_identifier,       :aliases => 'globalIdentifier'
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
-
+        attribute :tags,                    :aliases => 'tagReferences'
 
         def initialize(attributes = {})
           super(attributes)
           set_defaults
+        end
+
+        def add_tags(tags)
+          requires :id
+          raise ArgumentError, "Tags argument for #{self.class.name}##{__method__} must be Array." unless tags.is_a?(Array)
+          tags.each do |tag|
+            service.tags.new(:resource_id => self.id, :name => tag).save
+          end
+          self.reload
+          true
         end
 
         def bare_metal?
@@ -53,12 +63,10 @@ module Fog
 
         def bare_metal=(set)
           attributes[:bare_metal] = case set
-            when true, 'true', 1
-              1
-            when false, 'false', 0, nil
+            when false, 'false', 0, nil, ''
               0
             else
-              raise ArgumentError, ":bare_metal cannot be #{set.class}"
+              1
           end
         end
 
@@ -75,23 +83,33 @@ module Fog
           attributes[:datacenter][:name] unless attributes[:datacenter].nil?
         end
 
+        def delete_tags(tags)
+          requires :id
+          raise ArgumentError, "Tags argument for #{self.class.name}##{__method__} must be Array." unless tags.is_a?(Array)
+          tags.each do |tag|
+            service.tags.new(:resource_id => self.id, :name => tag).destroy
+          end
+          self.reload
+          true
+        end
+
+        def destroy
+          requires :id
+          request = bare_metal? ? :delete_bare_metal_server : :delete_vm
+          response = service.send(request, self.id)
+          response.body
+        end
+
+        def dns_name
+          fqdn
+        end
+
         def image_id=(uuid)
           attributes[:image_id] = {:globalIdentifier => uuid}
         end
 
         def image_id
           attributes[:image_id][:globalIdentifier] unless attributes[:image_id].nil?
-        end
-
-        def ssh_password
-          self.os['passwords'][0]['password'] if self.id
-        end
-
-        def ram=(set)
-          if set.is_a?(Array) and set.first['hardwareComponentModel']
-            set = 1024 * set.first['hardwareComponentModel']['capacity'].to_i
-          end
-          attributes[:ram] = set
         end
 
         def name=(set)
@@ -102,15 +120,37 @@ module Fog
           attributes[:hostname]
         end
 
-        #def ram
-        #
-        #end
+        def pre_save
+          extract_flavor
+          validate_attributes
+          remap_attributes(attributes, attributes_mapping)
+          clean_attributes
+        end
 
-        def snapshot
-          # TODO: implement
+        def ram=(set)
+          if set.is_a?(Array) and set.first['hardwareComponentModel']
+            set = 1024 * set.first['hardwareComponentModel']['capacity'].to_i
+          end
+          attributes[:ram] = set
+        end
+
+        def ready?
+          if bare_metal?
+            state == "on"
+          else
+            state == "Running"
+          end
         end
 
         def reboot(use_hard_reboot = true)
+          # TODO: implement
+        end
+
+        def ssh_password
+          self.os['passwords'][0]['password'] if self.id
+        end
+
+        def snapshot
           # TODO: implement
         end
 
@@ -130,35 +170,11 @@ module Fog
           # TODO: implement
         end
 
-        def destroy
-          requires :id
-          request = bare_metal? ? :delete_bare_metal_server : :delete_vm
-          response = service.send(request, self.id)
-          response.body
-        end
-
-        # Returns the public DNS name of the server
-        #
-        # @return [String]
-        #
-        def dns_name
-          fqdn
-        end
-
         def state
           if bare_metal?
             service.request(:hardware_server, "#{id}/getServerPowerState").body
           else
             service.request(:virtual_guest, "#{id}/getPowerState").body['name']
-          end
-
-        end
-
-        def ready?
-          if bare_metal?
-            state == "on"
-          else
-            state == "Running"
           end
         end
 
@@ -186,11 +202,8 @@ module Fog
           true
         end
 
-        def pre_save
-          extract_flavor
-          validate_attributes
-          remap_attributes(attributes, attributes_mapping)
-          clean_attributes
+        def tags
+          attributes[:tags].map { |i| i['tag']['name'] } if attributes[:tags]
         end
 
         private

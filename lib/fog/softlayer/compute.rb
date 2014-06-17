@@ -28,15 +28,26 @@ module Fog
       model         :image
       collection    :servers
       model         :server
+      collection    :tags
+      model         :tag
 
       request_path 'fog/softlayer/requests/compute'
       request :create_bare_metal_server
+      request :create_bare_metal_tags
       request :create_vm
       request :create_vms
+      request :create_vm_tags
       request :delete_bare_metal_server
+      request :delete_bare_metal_tags
       request :delete_vm
+      request :delete_vm_tags
+      request :describe_tags
       request :get_bare_metal_server
       request :get_bare_metal_servers
+      request :get_bare_metal_tags
+      request :get_references_by_tag_name
+      request :get_tag
+      request :get_vm_tags
       request :get_vm
       request :get_vms
 
@@ -52,6 +63,7 @@ module Fog
         def initialize(args)
           @virtual_guests = []
           @bare_metal_servers = []
+          @tags = []
           super(args)
         end
 
@@ -130,7 +142,7 @@ module Fog
         end
 
         def list_servers
-          (self.get_vms.body << self.get_bare_metal_servers.body).flatten
+          (self.get_vms.body << self.get_bare_metal_servers.body.map {|s| s['bare_metal'] = true; s}).flatten
         end
 
         private
