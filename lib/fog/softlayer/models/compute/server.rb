@@ -22,7 +22,7 @@ module Fog
         attribute :private_ip,               :aliases => 'primaryBackendIpAddress'
         attribute :public_ip,                :aliases => 'primaryIpAddress'
         attribute :flavor_id
-        attribute :bare_metal,               :aliases => 'hardwareStatusId'
+        attribute :bare_metal,               :type => :boolean
         attribute :os_code,                  :aliases => 'operatingSystemReferenceCode'
         attribute :image_id,                 :type => :squash
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'

@@ -142,7 +142,7 @@ module Fog
         end
 
         def list_servers
-          (self.get_vms.body << self.get_bare_metal_servers.body).flatten
+          (self.get_vms.body << self.get_bare_metal_servers.body.map {|s| s['bare_metal'] = true; s}).flatten
         end
 
         private
