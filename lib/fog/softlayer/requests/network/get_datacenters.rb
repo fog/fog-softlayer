@@ -4,23 +4,25 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 module Fog
-  module Compute
+  module Network
     class Softlayer
 
       class Mock
-        def get_vms
+
+        def get_datacenters
           response = Excon::Response.new
-          response.body = @virtual_guests
           response.status = 200
+          response.body = @datacenters
           response
         end
 
       end
 
       class Real
-        def get_vms
-          request(:account, :get_virtual_guests, :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.passwords.password,primaryNetworkComponent.networkVlan]')
+        def get_datacenters
+          request(:location_datacenter, :get_datacenters)
         end
       end
     end
