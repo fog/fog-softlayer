@@ -57,6 +57,7 @@ module Fog
       #
       class Mock
         attr_accessor :default_domain
+        include Fog::Softlayer::Slapi
         include Fog::Softlayer::Compute::Shared
         attr_accessor :virtual_guests, :bare_metal_servers
 
@@ -67,7 +68,7 @@ module Fog
           super(args)
         end
 
-        def request(method, path, parameters = {})
+        def request(method, path, options = {})
           _request
         end
 
@@ -90,86 +91,24 @@ module Fog
       #
       class Real
         attr_accessor :default_domain
+        include Fog::Softlayer::Slapi
         include Fog::Softlayer::Compute::Shared
 
-        # Sends the real request to the real SoftLayer service.
-        #
-        # @param [String] service
-        #   ...ayer.com/rest/v3/Softlayer_Service_Name...
-        # @param path [String]
-        #   ...ayer.com/rest/v3/Softlayer_Service_Name/path.json
-        # @param [Hash] options
-        # @option options [Array<Hash>] :body
-        #   HTTP request body parameters
-        # @option options [String] :softlayer_api_url
-        #   Override the default (or configured) API endpoint
-        # @option options [String] :softlayer_username
-        #   Email or user identifier for user based authentication
-        # @option options [String] :softlayer_api_key
-        #   Password for user based authentication
-        # @return [Excon::Response]
-        def request(service, path, options={})
-
-          # default HTTP method to get if not passed
-          http_method = options[:http_method] || :get
-          # set the target base url
-          @request_url = options[:softlayer_api_url] || Fog::Softlayer::SL_API_URL
-          # tack on the username and password
-          credentialize_url(@credentials[:username], @credentials[:api_key])
-          # set the SoftLayer Service name
-          set_sl_service(service)
-          # set the request path (known as the "method" in SL docs)
-          set_sl_path(path)
-          # set the query params if any
-
-
-          # build request params
-          params = { :headers => user_agent_header }
-          params[:headers]['Content-Type'] = 'application/json'
-          params[:expects] = options[:expected] || [200,201]
-          params[:body] = Fog::JSON.encode({:parameters => [ options[:body] ]}) unless options[:body].nil?
-          params[:query] = options[:query] unless options[:query].nil?
-
-          # initialize connection object
-          @connection = Fog::Core::Connection.new(@request_url, false, params)
-
-          # send it
-          response = @connection.request(:method => http_method)
-
-          # decode it
-          response.body = Fog::JSON.decode(response.body)
-          response
+        def initialize(options={})
+          @softlayer_api_key = options[:softlayer_api_key]
+          @softlayer_username = options[:softlayer_username]
         end
+
+        def request(service, path, options = {})
+          options = {:username => @softlayer_username, :api_key => @softlayer_api_key}.merge(options)
+          Fog::Softlayer::Slapi.slapi_request(service, path, options)
+        end
+
 
         def list_servers
           (self.get_vms.body << self.get_bare_metal_servers.body.map {|s| s['bare_metal'] = true; s}).flatten
         end
 
-        private
-
-        def credentialize_url(username, apikey)
-          @request_url = "https://#{username}:#{apikey}@#{@request_url}"
-        end
-
-        ##
-        # Prepend "SoftLayer_" to the service name and Snake_Camel_Case the string before appending it to the @request_url.
-        #
-        def set_sl_service(service)
-          service = "SoftLayer_" << service.to_s.gsub(/^softlayer_/i, '').split('_').map{|i|i.capitalize}.join('_')
-          @request_url += "/#{service}"
-        end
-
-        ##
-        # Try to smallCamelCase the path before appending it to the @request_url
-        #
-        def set_sl_path(path)
-          path = path.to_s.underscore.camelize
-          @request_url += "/#{path}.json"
-        end
-
-        def user_agent_header
-          {"User-Agent" => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}"}
-        end
 
       end
 
