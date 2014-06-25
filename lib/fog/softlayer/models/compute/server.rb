@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 require 'fog/compute/models/server'
 
 module Fog

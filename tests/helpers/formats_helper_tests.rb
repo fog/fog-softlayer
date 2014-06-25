@@ -1,3 +1,10 @@
+#
+# Author:: Matt Eldridge (<matt.eldridge@us.ibm.com>)
+# © Copyright IBM Corporation 2014.
+#
+# LICENSE: MIT (http://opensource.org/licenses/MIT)
+#
+
 Shindo.tests('test_helper', 'meta') do
 
   tests('comparing welcome data against schema') do

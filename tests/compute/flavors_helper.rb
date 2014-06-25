@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 def flavors_tests(connection, params = {}, mocks_implemented = true)
 
   tests('success') do

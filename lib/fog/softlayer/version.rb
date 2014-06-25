@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 module Fog
   module Softlayer
     VERSION = "0.2.1"

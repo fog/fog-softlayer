@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 module Fog
   module Softlayer
     module Nullable

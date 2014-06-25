@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 require 'fog/core'
 require 'fog/json'
 require 'fog/softlayer/version'
@@ -12,7 +13,6 @@ require 'time'
 module Fog
   module Softlayer
 
-    ###############################################################################################
     module Slapi
 
       # Sends the real request to the real SoftLayer service.
@@ -31,36 +31,36 @@ module Fog
       # @option options [String] :softlayer_api_key
       #   Password for user based authentication
       # @return [Excon::Response]
-    def self.slapi_request(service, path, options)
-        # default HTTP method to get if not passed
-        http_method = options[:http_method] || :get
-        # set the target base url
-        @request_url = options[:softlayer_api_url] || Fog::Softlayer::SL_API_URL
-        # tack on the username and password
-        credentialize_url(options[:username], options[:api_key])
-        # set the SoftLayer Service name
-        set_sl_service(service)
-        # set the request path (known as the "method" in SL docs)
-        set_sl_path(path)
-        # set the query params if any
+      def self.slapi_request(service, path, options)
+          # default HTTP method to get if not passed
+          http_method = options[:http_method] || :get
+          # set the target base url
+          @request_url = options[:softlayer_api_url] || Fog::Softlayer::SL_API_URL
+          # tack on the username and password
+          credentialize_url(options[:username], options[:api_key])
+          # set the SoftLayer Service name
+          set_sl_service(service)
+          # set the request path (known as the "method" in SL docs)
+          set_sl_path(path)
+          # set the query params if any
 
 
-        # build request params
-        params = { :headers => user_agent_header }
-        params[:headers]['Content-Type'] = 'application/json'
-        params[:expects] = options[:expected] || [200,201]
-        params[:body] = Fog::JSON.encode({:parameters => [ options[:body] ]}) unless options[:body].nil?
-        params[:query] = options[:query] unless options[:query].nil?
+          # build request params
+          params = { :headers => user_agent_header }
+          params[:headers]['Content-Type'] = 'application/json'
+          params[:expects] = options[:expected] || [200,201]
+          params[:body] = Fog::JSON.encode({:parameters => [ options[:body] ]}) unless options[:body].nil?
+          params[:query] = options[:query] unless options[:query].nil?
 
-        # initialize connection object
-        @connection = Fog::Core::Connection.new(@request_url, false, params)
+          # initialize connection object
+          @connection = Fog::Core::Connection.new(@request_url, false, params)
 
-        # send it
-        response = @connection.request(:method => http_method)
+          # send it
+          response = @connection.request(:method => http_method)
 
-        # decode it
-        response.body = Fog::JSON.decode(response.body)
-        response
+          # decode it
+          response.body = Fog::JSON.decode(response.body)
+          response
       end
 
       private
@@ -92,12 +92,9 @@ module Fog
       end
 
     end
-    ###############################################################################################
-
 
 
     extend Fog::Provider
-
     SL_API_URL = 'api.softlayer.com/rest/v3' unless defined? SL_API_URL
     SL_STORAGE_AUTH_URL = 'objectstorage.softlayer.net/auth/v1.0' unless defined? SL_STORAGE_AUTH_URL
 
