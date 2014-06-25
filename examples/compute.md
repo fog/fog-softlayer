@@ -185,4 +185,27 @@ These examples all assume you have `~/.fog` which contains the following
    ```ruby
    	  @sl.servers.get(<server id>).destroy
    ```
+   
+1. Provision a Server (works the same for VM and Bare Metal) into a specific VLAN
+
+	```ruby
+	# I want to launch another server to hold docker containers into my existing staging VLANs
+	# I'll start by getting a staging server so I can use its vlans as a reference.
+	staging_server = @sl.servers.tagged_with(['staging', 'docker']).first # => <Fog::Compute::Softlayer::Server>
+	
+	opts = {
+	  :flavor_id => 'm1.large', 
+	  :image_id => '23f7f05f-3657-4330-8772-329ed2e816bc',  # Ubuntu Docker Image
+	  :domain => 'staging.example.com',
+	  :datacenter => 'ams01', # This needs to be the same datacenter as the target VLAN of course.
+	  :name => 'additional-docker-host',
+	  :vlan => staging.server.vlan, # Passing in a <Fog::Network::Softlayer::Network> object.
+	  :private_vlan => staging.server.private_vlan.id, # Passing in an Integer (the id of a network/vlan) works too. 
+	}
+
+	new_staging_server = @sl.servers.create(opts)
+	# => <Fog::Compute::Softlayer::Server>
+	
+	
+	```
 
