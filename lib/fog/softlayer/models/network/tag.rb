@@ -23,8 +23,9 @@ module Fog
 
         def destroy
           requires :name, :resource_id
-          load_network
-          @network.delete_tags([self.name])
+          service.delete_network_tags(self.resource_id, [self.name])
+          #load_network
+          #@network.delete_tags([self.name])
           true
         end
 
@@ -37,7 +38,7 @@ module Fog
         def save
           requires :name, :resource_id
           load_network
-          @network.add_tags([self.name])
+          service.create_network_tags(self.resource_id, @network.tags << self.name)
           true
         end
 

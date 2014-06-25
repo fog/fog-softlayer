@@ -49,6 +49,7 @@ module Fog
       request :get_subnet_price_code
       request :get_datacenters
       request :get_datacenter_routers
+      request :get_references_by_tag_name
 
 
       request :create_network_tags
