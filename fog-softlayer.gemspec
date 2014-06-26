@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'fog-json'
 
   spec.add_development_dependency('minitest')
-  spec.add_development_dependency('jekyll') unless RUBY_PLATFORM == 'java'
   spec.add_development_dependency('rake')
   spec.add_development_dependency('rbvmomi')
   spec.add_development_dependency('yard')
@@ -34,5 +33,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('shindo', '~> 0.3.4')
   spec.add_development_dependency('fission')
   spec.add_development_dependency('pry')
-  spec.add_development_dependency('google-api-client', '~> 0.6', '>= 0.6.2')
 end
