@@ -34,5 +34,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('fission')
   spec.add_development_dependency('pry')
   spec.add_development_dependency('osrcry')
-
 end
