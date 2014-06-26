@@ -12,18 +12,19 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     @bmc = {
         :operatingSystemReferenceCode      => 'UBUNTU_LATEST',
-        :processorCoreAmount               => 1,
-        :memoryCapacity                    => 1,
+        :processorCoreAmount               => 2,
+        :memoryCapacity                    => 2,
         :hourlyBillingFlag                 => true,
         :domain                            => 'example.com',
         :hostname                          => 'test',
+        :datacenter                        => { :name => 'wdc01' }
     }
 
     tests("#create_bare_metal_server('#{@bmc}')") do
       response = @sl_connection.create_bare_metal_server(@bmc)
       @server_id = response.body['id']
       data_matches_schema(Softlayer::Compute::Formats::BareMetal::SERVER, {:allow_extra_keys => true}) { response.body }
-      data_matches_schema(200) { response.status }
+      data_matches_schema(201) { response.status }
     end
 
     tests("#get_bare_metal_servers()") do
