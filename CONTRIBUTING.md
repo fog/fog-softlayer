@@ -1,30 +1,18 @@
-# Contributing to fog-softlayer
+## Getting Involved
 
-We are happy to accept contributions to fog-softlayer.  Please follow the guidelines below.  
+New contributors are always welcome, when it doubt please ask questions. We strive to be an open and welcoming community. Please be nice to one another.
 
-* Sign our contributor agreement (CLA) You can find the [CLA here](./docs/cla-individual.pdf).
+### Coding
 
-* If you're contributing on behalf of your employer we'll need a signed copy of our corporate contributor agreement (CCLA) as well.  You can find the [CCLA here](./docs/cla-corporate.pdf).
-    
-* Fork the repo, make your changes, and open a pull request.
+* Pick a task:
+  * Offer feedback on open [pull requests](https://github.com/softlayer/fog/pulls).
+  * Review open [issues](https://github.com/softlayer/fog/issues) for things to help on.
+  * [Create an issue](https://github.com/softlayer/fog/issues/new) to start a discussion on additions or features.
+* Fork the project, add your changes and tests to cover them in a topic branch.
+* Commit your changes and rebase against `softlayer/fog` to ensure everything is up to date.
+* [Submit a pull request](https://github.com/softlayer/fog/compare/).
 
-## Issue Tracking
+### Non-Coding
 
-You can file tickets to describe the bug you'd like to fix or feature you'd
-like to add on the [fog-softlayer project](https://github.com/softlayer/fog-softlayer/issues) on github.
-
-## Testing Instructions
-
-To run tests, run the following Ruby tool commands from the root of your local copy of
-fog-softlayer:
-
-    bundle install
-    bundle exec rake travis
-    
-**All tests must pass** before your contribution can be merged. Thus it's a good idea
-to execute the tests without your change to be sure you understand how to run
-them, as well as after to validate that you've avoided regressions.
-
-All but the most trivial changes should include **at least one unit test case** to exercise the
-new / changed code; please add tests to your pull request in this common case.
-
+* Offer feedback on open [issues](https://github.com/softlayer/fog/issues).
+* Organize or volunteer at events.

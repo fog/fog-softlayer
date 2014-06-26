@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Fog::Softlayer::VERSION
   spec.authors       = ["Matt Eldridge"]
   spec.email         = ["matt.eldridge@us.ibm.com"]
-  spec.date          = '2014-06-05'
+  spec.date          = '2014-06-26'
   spec.description   = %q{Module for the 'fog' gem to support SoftLayer Cloud}
   spec.summary       = %q{This library can be used as a module for `fog` or as standalone provider
                         to use the SoftLayer Cloud in applications}
@@ -33,4 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('shindo', '~> 0.3.4')
   spec.add_development_dependency('fission')
   spec.add_development_dependency('pry')
+  spec.add_development_dependency('osrcry')
+
 end
