@@ -83,8 +83,8 @@ module Fog
         def list_servers
           vms = self.get_vms.body
           bare_metals = self.get_bare_metal_servers.body
-          vms.map { |server| server['bare_metal'] = false } unless vms.empty?
-          bare_metals.map { |server| server['bare_metal'] = true } unless vms.empty?
+          vms.map! { |server| server['bare_metal'] = false }
+          bare_metals.map! { |server| server['bare_metal'] = true }
           (vms << bare_metals).flatten
         end
 
