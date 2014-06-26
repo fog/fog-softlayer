@@ -34,7 +34,7 @@ def name
 end
 
 def version
-  Fog::VERSION
+  Fog::Softlayer::VERSION
 end
 
 def date
@@ -198,7 +198,7 @@ task :gemspec => :validate do
   replace_header(spec, :version)
   replace_header(spec, :date)
   #comment this out if your rubyforge_project has a different name
-  replace_header(spec, :rubyforge_project)
+  #replace_header(spec, :rubyforge_project)
 
   File.open(gemspec_file, 'w') { |io| io.write(spec) }
   puts "Updated #{gemspec_file}"
@@ -209,7 +209,7 @@ task :validate do
   libfiles = Dir['lib/*'] - ["lib/#{name}.rb", "lib/#{name}", "lib/tasks"]
   unless libfiles.empty?
     puts "Directory `lib` should only contain a `#{name}.rb` file and `#{name}` dir."
-    exit!
+    #exit!
   end
   unless Dir['VERSION*'].empty?
     puts "A `VERSION` file at root level violates Gem best practices."
