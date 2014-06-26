@@ -32,6 +32,94 @@ These examples all assume you have `~/.fog` which contains the following
    server.state # => 'Running', 'Stopped', 'Terminated', etc.
    ```
 
+1. Get all servers tagged with certain tags.
+
+	```ruby
+	prod_fe_servers = @sl.servers.tagged_with(['production', 'frontend'])
+	# => [ <Fog::Compute::Softlayer::Server>,
+	#	<Fog::Compute::Softlayer::Server>,
+	#	<Fog::Compute::Softlayer::Server>,
+	#	<Fog::Compute::Softlayer::Server>,
+	#	<Fog::Compute::Softlayer::Server>,]		
+	```
+   
+1. Get a server's public/frontend VLAN
+
+	```ruby
+	server = @sl.servers.get(12345)
+	server.vlan
+	# => <Fog::Network::Softlayer::Network
+    #	id=123456,
+	#   name='frontend-staging-vlan',
+	#   modify_date="2014-02-22T12:42:31-06:00",
+	#   note=nil,
+	#   tags=['sparkle', 'motion'],
+	#   type="STANDARD",
+	#   datacenter=    <Fog::Network::Softlayer::Datacenter
+	#     id=168642,
+	#     long_name="San Jose 1",
+	#     name="sjc01"
+	#   >,
+	#   network_space="PUBLIC",
+	#   router={"hostname"=>"fcr01a.sjc01", "id"=>82412, "datacenter"=>{"id"=>168642, "longName"=>"San Jose 1", "name"=>"sjc01"}}
+  	# >
+	```
+	
+1. Get a server's private/backend VLAN
+
+	```ruby
+	server = @sl.servers.get(12345)
+	server.private_vlan
+	# =>  <Fog::Network::Softlayer::Network
+	#    id=123456,
+	#    name='backend-staging-vlan',
+	#    modify_date="2014-02-22T12:42:33-06:00",
+	#    note=nil,
+	#    tags=[],
+	#    type="STANDARD",
+	#    datacenter=    <Fog::Network::Softlayer::Datacenter
+	#	    id=168642,
+	#    	long_name="San Jose 1",
+	#    	name="sjc01"
+	#   >,
+	#   network_space="PRIVATE",
+    #	router={"hostname"=>"bcr01a.sjc01", "id"=>82461, "datacenter"=>{"id"=>168642, "longName"=>"San Jose 1", "name"=>"sjc01"}}
+  	# >
+	
+	```
+	
+1. Get a server's tags
+
+	```ruby
+		server = @sl.servers.get(12345)
+		server.tags
+		# => ['production', 'frontend']
+	```
+	
+1. Add tags to a server
+
+	```ruby
+		server = @sl.servers.get(12345)
+		server.tags
+		# => ['production', 'frontend']
+		server.add_tags(['sparkle', 'motion']
+		# => true
+		server.tags
+		# => ['production', 'frontend', 'sparkle', 'motion']
+	```
+
+1. Delete tags from a server
+
+	```ruby
+		server = @sl.servers.get(12345)
+		server.tags
+		# => ['production', 'frontend', 'sparkle', 'motion']
+		server.delete_tags(['sparkle', 'motion']
+		# => true
+		server.tags
+		# => ['production', 'frontend']
+	```
+
 1. Provision a new VM with flavor (simple).
 
    ```ruby
@@ -45,7 +133,7 @@ These examples all assume you have `~/.fog` which contains the following
      new_server.id # => 1337
    ```
 
-1. Provision a new BMC instance with flavor (simple).
+1. Provision a new Bare Metal instance with flavor (simple).
 
    ```ruby
      opts = {
@@ -75,7 +163,7 @@ These examples all assume you have `~/.fog` which contains the following
      }
    ```
 
-1. Provision a BMC Instance without a flavor
+1. Provision a Bare Metal Instance without a flavor
 
    ```ruby
    opts = {
@@ -92,9 +180,32 @@ These examples all assume you have `~/.fog` which contains the following
      }
    ```
 
-1. Delete a VM or BMC instance.
+1. Delete a VM or Bare Metal instance.
 
    ```ruby
    	  @sl.servers.get(<server id>).destroy
    ```
+   
+1. Provision a Server (works the same for VM and Bare Metal) into a specific VLAN
+
+	```ruby
+	# I want to launch another server to hold docker containers into my existing staging VLANs
+	# I'll start by getting a staging server so I can use its vlans as a reference.
+	staging_server = @sl.servers.tagged_with(['staging', 'docker']).first # => <Fog::Compute::Softlayer::Server>
+	
+	opts = {
+	  :flavor_id => 'm1.large', 
+	  :image_id => '23f7f05f-3657-4330-8772-329ed2e816bc',  # Ubuntu Docker Image
+	  :domain => 'staging.example.com',
+	  :datacenter => 'ams01', # This needs to be the same datacenter as the target VLAN of course.
+	  :name => 'additional-docker-host',
+	  :vlan => staging.server.vlan, # Passing in a <Fog::Network::Softlayer::Network> object.
+	  :private_vlan => staging.server.private_vlan.id, # Passing in an Integer (the id of a network/vlan) works too. 
+	}
+
+	new_staging_server = @sl.servers.create(opts)
+	# => <Fog::Compute::Softlayer::Server>
+	
+	
+	```
 

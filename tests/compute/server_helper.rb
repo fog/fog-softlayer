@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 def server_tests(connection, params = {}, mocks_implemented = true)
 
   model_tests(connection.servers, params, mocks_implemented) do

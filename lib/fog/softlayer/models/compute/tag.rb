@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 require 'fog/core/model'
 
 module Fog
@@ -29,12 +30,10 @@ module Fog
         end
 
         def references
-          service.get_tag(self.id).body['references'].map do |ref|
-            @refs ||= case ref['tagType']['keyName']
-              when 'GUEST', 'HARDWARE'
-                @servers ||= service.servers.get(ref['resourceTableId'])
-            end
-          end
+          @servers ||= service.request(:tag, "#{id}", :query => "objectMask=references;references.tagType").body['references'].map do |ref|
+            type = ref['tagType']['keyName']
+            service.servers.get(ref['resourceTableId']) if type == 'GUEST' || type == 'HARDWARE'
+          end.compact
         end
 
         def save

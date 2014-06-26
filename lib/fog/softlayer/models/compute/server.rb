@@ -4,6 +4,7 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 require 'fog/compute/models/server'
 
 module Fog
@@ -123,8 +124,38 @@ module Fog
         def pre_save
           extract_flavor
           validate_attributes
+          if self.vlan
+            attributes[:vlan] = { :networkVlan => { :id => self.vlan.id } }
+          end
+          if self.private_vlan
+            attributes[:private_vlan] = { :networkVlan => { :id => self.private_vlan.id } }
+          end
           remap_attributes(attributes, attributes_mapping)
           clean_attributes
+        end
+
+        def vlan
+          attributes[:vlan] ||= _get_vlan
+        end
+
+        def private_vlan
+          attributes[:private_vlan] ||= _get_private_vlan
+        end
+
+        def vlan=(value)
+          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
+            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
+          end
+          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
+          attributes[:vlan] = value
+        end
+
+        def private_vlan=(value)
+          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
+            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
+          end
+          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
+          attributes[:private_vlan] = value
         end
 
         def ram=(set)
@@ -208,12 +239,36 @@ module Fog
 
         private
 
+        def _get_private_vlan
+          if self.id
+            vlan_id = if bare_metal?
+              service.request(:hardware_server, "#{self.id}/get_private_vlan").body['id']
+            else
+              service.request(:virtual_guest, self.id, :query => 'objectMask=primaryBackendNetworkComponent.networkVlan').body['primaryBackendNetworkComponent']['networkVlan']['id']
+            end
+            Fog::Network[:softlayer].networks.get(vlan_id)
+          end
+        end
+
+        def _get_vlan
+          if self.id
+            vlan_id = if bare_metal?
+              service.request(:hardware_server, "#{self.id}/get_public_vlan").body['id']
+            else
+              service.request(:virtual_guest, self.id, :query => 'objectMask=primaryNetworkComponent.networkVlan').body['primaryNetworkComponent']['networkVlan']['id']
+            end
+            Fog::Network[:softlayer].networks.get(vlan_id)
+          end
+        end
+
         ##
         # Generate mapping for use with remap_attributes
         def attributes_mapping
           common = {
               :hourly_billing_flag => :hourlyBillingFlag,
               :os_code  =>  :operatingSystemReferenceCode,
+              :vlan => :primaryNetworkComponent,
+              :private_vlan => :primaryBackendNetworkComponent,
 
           }
 
