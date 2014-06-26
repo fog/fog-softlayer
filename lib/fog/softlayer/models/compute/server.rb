@@ -45,7 +45,7 @@ module Fog
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
-          raise Exception if attributes[:bare_metal].nil?
+          raise Exception if attributes[:collection].nil? and attributes['bare_metal'].nil?
           super(attributes)
           set_defaults
         end
