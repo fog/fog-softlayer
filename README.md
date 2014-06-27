@@ -9,15 +9,16 @@ the SoftLayer Cloud.
 It is included by the main `fog` metagem but can used as an independent library
 in other applications.
 
-This release includes support for the following services:
+Currently supported services:
 * Compute
 * Storage
 * DNS
+* Network
 
 Additional services coming soon:
-* Image
-* Network
-* Tags
+* CDN
+* Load Balancer
+* Message Queue
 
 #### Installation
 
@@ -35,19 +36,8 @@ Or install it yourself as:
 
 #### Usage
 
-Please see the following references for instructions using the main `fog` gem
-and its modules:
-
-* https://github.com/fog/fog
-* http://fog.io/
-* http://rubydoc.info/gems/fog/
+See `examples/`
 
 #### Contributing
 
-`fog` modules are kept within the main repo.
-
-1. Fork it ( http://github.com/softlayer/fog-softlayer/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+See `CONTRIBUTING.md`
