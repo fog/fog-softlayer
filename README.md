@@ -1,4 +1,4 @@
-### `fog-softlayer` - SoftLayer module for fog (The Ruby cloud services library).
+### `fog-softlayer` - SoftLayer module for fog.
 [![Gem Version](https://badge.fury.io/rb/fog-softlayer.png)](http://badge.fury.io/rb/fog-softlayer)
 [![Build Status](https://api.travis-ci.org/softlayer/fog-softlayer.svg)](https://travis-ci.org/softlayer/fog-softlayer)
 [![Dependency Status](https://gemnasium.com/softlayer/fog-softlayer.svg)](https://gemnasium.com/softlayer/fog-softlayer)
