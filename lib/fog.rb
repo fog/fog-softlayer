@@ -18,12 +18,5 @@ require 'fog'
 # data exchange specific (to be extracted and used on a per provider basis)
 require 'fog/xml'
 require 'fog/json'
-require 'fog/core/parser'
 
-# deprecation wrappers (XML wrapped version)
-require 'fog/core/deprecated/connection'
-require 'fog/core/deprecated_connection_accessors'
-
-# any one of these can be required separately.
-# they all depend on fog/core for shared functionality.
 require 'fog/softlayer'

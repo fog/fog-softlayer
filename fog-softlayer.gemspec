@@ -20,9 +20,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'fog'
   spec.add_dependency 'fog-core'
   spec.add_dependency 'fog-json'
+  spec.add_dependency 'fog-xml'
 
   spec.add_development_dependency('minitest')
   spec.add_development_dependency('rake')
