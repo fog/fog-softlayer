@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'fog-core'
   spec.add_dependency 'fog-json'
-  spec.add_dependency 'fog-xml'
+  spec.add_dependency 'fog-xml', '0.0.1.alpha'
 
   spec.add_development_dependency('minitest')
   spec.add_development_dependency('rake')
