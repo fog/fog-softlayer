@@ -1,7 +1,7 @@
 ### `fog-softlayer` - SoftLayer module for fog.
 [![Gem Version](https://badge.fury.io/rb/fog-softlayer.png)](http://badge.fury.io/rb/fog-softlayer)
-[![Build Status](https://api.travis-ci.org/softlayer/fog-softlayer.svg)](https://travis-ci.org/softlayer/fog-softlayer)
-[![Dependency Status](https://gemnasium.com/softlayer/fog-softlayer.svg)](https://gemnasium.com/softlayer/fog-softlayer)
+[![Build Status](https://api.travis-ci.org/fog/fog-softlayer.svg)](https://travis-ci.org/fog/fog-softlayer)
+[![Dependency Status](https://gemnasium.com/fog/fog-softlayer.svg)](https://gemnasium.com/fog/fog-softlayer)
 
 This gem is a module for the `fog` gem that allows you to manage resources in
 the SoftLayer Cloud.
