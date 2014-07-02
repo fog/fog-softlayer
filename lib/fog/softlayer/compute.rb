@@ -17,8 +17,7 @@ module Fog
       requires :softlayer_username, :softlayer_api_key
 
       # Excon connection settings
-      recognizes :softlayer_api_url
-      recognizes :softlayer_default_domain
+      recognizes :softlayer_api_url, :softlayer_default_domain, :softlayer_default_datacenter
 
 
       model_path 'fog/softlayer/models/compute'
@@ -26,6 +25,8 @@ module Fog
       model         :flavor
       collection    :images
       model         :image
+      collection    :key_pairs
+      model         :key_pair
       collection    :servers
       model         :server
       collection    :tags
@@ -34,17 +35,21 @@ module Fog
       request_path 'fog/softlayer/requests/compute'
       request :create_bare_metal_server
       request :create_bare_metal_tags
+      request :create_key_pair
       request :create_vm
       request :create_vms
       request :create_vm_tags
       request :delete_bare_metal_server
       request :delete_bare_metal_tags
+      request :delete_key_pair
       request :delete_vm
       request :delete_vm_tags
       request :describe_tags
       request :get_bare_metal_server
       request :get_bare_metal_servers
       request :get_bare_metal_tags
+      request :get_key_pair
+      request :get_key_pairs
       request :get_references_by_tag_name
       request :get_tag
       request :get_vm_tags
@@ -65,6 +70,7 @@ module Fog
           @virtual_guests = []
           @bare_metal_servers = []
           @tags = []
+          @key_pairs = []
           super(args)
         end
 
@@ -94,20 +100,22 @@ module Fog
       # Makes real connections to Softlayer.
       #
       class Real
-        attr_accessor :default_domain
+        attr_accessor :softlayer_default_domain
+        attr_accessor :softlayer_default_datacenter
         include Fog::Softlayer::Slapi
         include Fog::Softlayer::Compute::Shared
 
         def initialize(options={})
           @softlayer_api_key = options[:softlayer_api_key]
           @softlayer_username = options[:softlayer_username]
+          @softlayer_default_domain = options[:softlayer_default_domain]
+          @softlayer_default_datacenter = options[:softlayer_default_datacenter]
         end
 
         def request(service, path, options = {})
           options = {:username => @softlayer_username, :api_key => @softlayer_api_key}.merge(options)
           Fog::Softlayer::Slapi.slapi_request(service, path, options)
         end
-
 
         def list_servers
           (self.get_vms.body.map {|s| s['bare_metal'] = false; s } << self.get_bare_metal_servers.body.map {|s| s['bare_metal'] = true; s}).flatten

@@ -20,7 +20,7 @@ module Fog
 
       class Real
         def get_vms
-          request(:account, :get_virtual_guests, :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.passwords.password,primaryNetworkComponent.networkVlan]')
+          request(:account, :get_virtual_guests, :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.softwareLicense.softwareDescription.referenceCode,primaryNetworkComponent.networkVlan,sshKeys.id]')
         end
       end
     end
