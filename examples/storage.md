@@ -4,9 +4,10 @@ These examples all assume you have `~/.fog` which contains the following
 
 
    ```yaml  
-   :softlayer_username: example-username
-   :softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
-   :softlayer_cluster: cluster # currently supported clusters are dal05, sng01, ams01
+default:
+  softlayer_username: example-username
+  softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
+  softlayer_cluster: cluster # currently supported clusters are dal05, sng01, ams01
   ```
 
 #### Create a connection to SoftLayer Object Storage

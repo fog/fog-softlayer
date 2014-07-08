@@ -3,9 +3,10 @@
 These examples all assume you have `~/.fog` which contains the following
 
    ```yaml  
-   :softlayer_username: example-username
-   :softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
-   :softlayer_default_domain: example.com
+default:
+  softlayer_username: example-username
+  softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
+  softlayer_default_domain: example.com
   ```
   
 #### Create a connection to SoftLayer Compute Service
@@ -127,7 +128,7 @@ These examples all assume you have `~/.fog` which contains the following
      	:flavor_id => "m1.small",
      	:image_id => "23f7f05f-3657-4330-8772-329ed2e816bc",
      	:name => "test",
-     	:datacenter => {:name=>"ams01"}
+     	:datacenter => "ams01"
      }
      new_server = @sl.servers.create(opts)
      new_server.id # => 1337
@@ -140,7 +141,7 @@ These examples all assume you have `~/.fog` which contains the following
      	:flavor_id => "m1.small",
      	:os_code => "UBUNTU_LATEST",
      	:name => "test1",
-     	:datacenter => {:name=>"ams01"},
+     	:datacenter => "ams01",
      	:bare_metal => true
      }
      @sl.servers.create(opts)
@@ -159,7 +160,7 @@ These examples all assume you have `~/.fog` which contains the following
      	:name => "hostname",
      	:os_code => "UBUNTU_LATEST",
      	:name => "test2",
-     	:datacenter => {:name=>"ams01"},     
+     	:datacenter => "ams01"     
      }
    ```
 
@@ -175,7 +176,7 @@ These examples all assume you have `~/.fog` which contains the following
      	:name => "hostname",
      	:os_code => "UBUNTU_LATEST",
      	:name => "test2",
-     	:datacenter => {:name=>"ams01"},
+     	:datacenter => "ams01",
      	:bare_metal => true
      }
    ```
