@@ -55,6 +55,7 @@ module Fog
       request :get_vm_tags
       request :get_vm
       request :get_vms
+      request :update_key_pair
 
       # The Mock Service allows you to run a fake instance of the Service
       # which makes no real connections.

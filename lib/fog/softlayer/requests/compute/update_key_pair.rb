@@ -14,7 +14,7 @@ module Fog
           response = Excon::Response.new
           response.status = 200
 
-          key_pair, index = @key_pairs.each_with_index.select { |kp, i| kp['id'] == id }
+          key_pair, index = @key_pairs.each_with_index.map { |kp, i| [kp, i] if kp['id'] == id }.compact.flatten
 
           if key_pair.nil?
             response.status = 404
@@ -23,6 +23,7 @@ module Fog
                 "code" => "SoftLayer_Exception_ObjectNotFound"
             }
           else
+
             @key_pairs[index] = key_pair.merge(opts)
             response.body = true
           end
