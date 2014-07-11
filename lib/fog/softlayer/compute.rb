@@ -61,10 +61,9 @@ module Fog
       #
       #
       class Mock
-        attr_accessor :default_domain
         include Fog::Softlayer::Slapi
         include Fog::Softlayer::Compute::Shared
-        attr_accessor :virtual_guests, :bare_metal_servers
+        attr_accessor :default_domain, :virtual_guests, :bare_metal_servers, :softlayer_default_domain, :softlayer_default_datacenter
 
         def initialize(args)
           @virtual_guests = []
