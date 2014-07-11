@@ -10,12 +10,6 @@
 __LIB_DIR__ = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift __LIB_DIR__ unless $LOAD_PATH.include?(__LIB_DIR__)
 
-# Use fog and core
 require 'fog/core'
-require 'fog'
-
-# Previously treated as "core"
-# data exchange specific (to be extracted and used on a per provider basis)
 require 'fog/json'
-
 require 'fog/softlayer'

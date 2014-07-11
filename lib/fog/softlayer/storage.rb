@@ -86,7 +86,7 @@ module Fog
           @api_key = options[:softlayer_api_key]
           @username = options[:softlayer_username]
           @cluster = options[:softlayer_cluster]
-          @storage_account = options[:softlayer_storage_account] || default_storage_account
+          @storage_account = options[:softlayer_storage_account] || default_storage_account(options[:softlayer_username], options[:softlayer_api_key])
           @connection_options     = options[:connection_options] || {}
           authenticate
           @persistent = options[:persistent] || false
@@ -183,8 +183,8 @@ module Fog
           true
         end
 
-        def default_storage_account
-          slapi = Fog::Compute[:softlayer].request(:account, :get_hub_network_storage)
+        def default_storage_account(username, api_key)
+          slapi = Fog::Compute.new(:provider => :softlayer, :softlayer_username => username, :softlayer_api_key => api_key).request(:account, :get_hub_network_storage)
           slapi.body.map { |store| store['username'] }.first if slapi.body and slapi.body.instance_of? Array
         end
 

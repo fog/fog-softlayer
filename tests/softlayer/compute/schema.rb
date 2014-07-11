@@ -120,6 +120,17 @@ class Softlayer
 
       end
 
+      module KeyPair
+        KP = {
+          "createDate"   => String,
+          "fingerprint"  => String,
+          "id"           => Integer,
+          "key"          => String,
+          "label"        => String,
+          "modifyDate"   => Fog::Nullable::String,
+        }
+      end
+
       module Collected
         SERVER = {
             :id => Fog::Nullable::Integer,

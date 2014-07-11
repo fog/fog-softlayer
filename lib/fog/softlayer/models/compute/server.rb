@@ -24,10 +24,10 @@ module Fog
         attribute :public_ip,                :aliases => 'primaryIpAddress'
         attribute :flavor_id
         attribute :bare_metal,               :type => :boolean
-        attribute :os_code,                  :aliases => 'operatingSystemReferenceCode'
+        attribute :os_code
         attribute :image_id,                 :type => :squash
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
-        attribute :os,                       :aliases => 'operatingSystem'
+        attribute :key_pairs,                :aliases => 'sshKeys'
 
         # Times
         attribute :created_at,              :aliases => ['createDate', 'provisionDate'], :type => :time
@@ -42,6 +42,7 @@ module Fog
         attribute :global_identifier,       :aliases => 'globalIdentifier'
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
         attribute :tags,                    :aliases => 'tagReferences'
+        attribute :private_network_only,    :aliases => 'privateNetworkOnlyFlag'
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
@@ -123,24 +124,19 @@ module Fog
           if self.private_vlan
             attributes[:private_vlan] = { :networkVlan => { :id => self.private_vlan.id } }
           end
+          if self.key_pairs
+            attributes[:key_pairs].map! { |key| { :id => key.id } }
+          end
           remap_attributes(attributes, attributes_mapping)
           clean_attributes
         end
 
-        def vlan
-          attributes[:vlan] ||= _get_vlan
+        def os_code
+          attributes['operatingSystem']['softwareLicense']['softwareDescription']['referenceCode'] if attributes['operatingSystem']
         end
 
         def private_vlan
           attributes[:private_vlan] ||= _get_private_vlan
-        end
-
-        def vlan=(value)
-          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
-            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
-          end
-          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
-          attributes[:vlan] = value
         end
 
         def private_vlan=(value)
@@ -149,6 +145,35 @@ module Fog
           end
           value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
           attributes[:private_vlan] = value
+        end
+
+        def key_pairs
+          attributes[:key_pairs]
+        end
+
+        def key_pairs=(keys)
+          raise ArgumentError, "Argument #{local_variables.first.to_s} for #{self.class.name}##{__method__} must be Array." unless keys.is_a?(Array)
+          attributes[:key_pairs] = []
+          keys.map do |key|
+            key = self.symbolize_keys(key) if key.is_a?(Hash)
+            unless key.is_a?(Fog::Compute::Softlayer::KeyPair) or (key.is_a?(Hash) and key[:id])
+              raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Compute::Softlayer::KeyPair"
+            end
+            key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Compute::Softlayer::KeyPair)
+            attributes[:key_pairs] << key
+          end
+        end
+
+        def vlan
+          attributes[:vlan] ||= _get_vlan
+        end
+
+        def vlan=(value)
+          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
+            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
+          end
+          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
+          attributes[:vlan] = value
         end
 
         def ram=(set)
@@ -212,7 +237,6 @@ module Fog
         #   * BUILD -> ERROR (on error)
         def save
           raise Fog::Errors::Error.new('Resaving an existing object may create a duplicate') if persisted?
-
           copy = self.dup
           copy.pre_save
 
@@ -263,6 +287,8 @@ module Fog
               :os_code  =>  :operatingSystemReferenceCode,
               :vlan => :primaryNetworkComponent,
               :private_vlan => :primaryBackendNetworkComponent,
+              :key_pairs => :sshKeys,
+              :private_network_only => :privateNetworkOnlyFlag,
 
           }
 
@@ -331,7 +357,8 @@ module Fog
         def set_defaults
           attributes[:hourly_billing_flag] = true if attributes[:hourly_billing_flag].nil?
           attributes[:ephemeral_storage] = false if attributes[:ephemeral_storage].nil?
-          attributes[:domain] = service.default_domain if service.default_domain and attributes[:domain].nil?
+          attributes[:domain] = service.softlayer_default_domain if service.softlayer_default_domain and attributes[:domain].nil?
+          self.datacenter = service.softlayer_default_datacenter if service.softlayer_default_datacenter and attributes[:datacenter].nil?
         end
 
       end

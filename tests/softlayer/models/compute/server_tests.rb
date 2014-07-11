@@ -23,7 +23,7 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :os_code => 'UBUNTU_LATEST',
         :name => 'test-bmc',
         :domain => 'bare-metal-server.com',
-        :datecenter => 'dal05',
+        :datacenter => 'dal05',
         :bare_metal => true
     }
 

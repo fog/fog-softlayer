@@ -4,14 +4,15 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
+
 module Fog
   module Compute
     class Softlayer
 
       class Mock
-        def get_vms
+        def get_key_pairs
           response = Excon::Response.new
-          response.body = @virtual_guests
+          response.body = @key_pairs
           response.status = 200
           response
         end
@@ -19,8 +20,8 @@ module Fog
       end
 
       class Real
-        def get_vms
-          request(:account, :get_virtual_guests, :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.softwareLicense.softwareDescription.referenceCode,primaryNetworkComponent.networkVlan,sshKeys.id,privateNetworkOnlyFlag]')
+        def get_key_pairs
+          request(:account, :get_ssh_keys)
         end
       end
     end
