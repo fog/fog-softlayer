@@ -149,7 +149,9 @@ class String
   end
 
   def fix_convention_exceptions
-    self.gsub!(/ipaddress/i, 'IpAddress') # SLAPI WHY U No Follow Own Convention!?
+    # SLAPI WHY U No Follow Own Convention!?
+    self.gsub!(/ipaddress/i, 'IpAddress')
+    self.gsub!(/loadbalancer/i, 'LoadBalancer')
   end
 
   def softlayer_underscore
