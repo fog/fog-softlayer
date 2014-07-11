@@ -181,6 +181,26 @@ default:
      }
    ```
 
+1. Create a server with one or more key pairs (also see [key_pairs.md](./key_pairs.md) )
+
+	```ruby
+	the_first_key = @sl.key_pairs.by_label('my-new-key')
+	# => <Fog::Compute::Softlayer::KeyPair>
+	the_second_key = @sl.key_pairs.by_label('my-other-new-key')
+	# => <Fog::Compute::Softlayer::KeyPair>
+	
+	opts = { 
+		:flavor_id => 'm1.small', 
+		:os_code => 'UBUNTU_LATEST', 
+		:datacenter => 'hkg02', 
+		:name => 'cphrmky', 
+		:key_pairs => [ the_first_key, the_second_key ]
+	}
+	@sl.servers.create(opts)
+	# => <Fog::Compute::Softlayer::Server>
+```
+
+
 1. Delete a VM or Bare Metal instance.
 
    ```ruby
