@@ -123,11 +123,11 @@ end
 
 ## some helpers for some dirty work
 class String
-  def camelize
+  def softlayer_camelize
     self.split('_').inject([]){ |buffer,e| buffer.push(buffer.empty? ? e : e.capitalize) }.join
   end
 
-  def underscore
+  def softlayer_underscore
     self.gsub(/::/, '/').
         gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
         gsub(/([a-z\d])([A-Z])/,'\1_\2').
