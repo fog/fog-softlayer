@@ -1,3 +1,10 @@
+## 0.3.7 2014-07-11
+* Added support for ssh key pairs.
+  * See [key_pairs.md](https://github.com/fog/fog-softlayer/blob/master/examples/key_pairs.md) for details.
+* Fix [issue 19](https://github.com/fog/fog-softlayer/issues/19) Storage initialization bug.
+* Fix [issue 17], incompatibility with Rails 4.1.4. *thanks konsti*
+* Updated .fog file example and datacenter option. *thanks 
+
 ## 0.3.2 2014-06-30
 * No longer requires `fog` gem.
 
@@ -10,7 +17,7 @@
   * Tag model.
 * Added vlan and private_vlan properties to Server model.
 * Fixed up bare_metal? on Server so it's not a hack. *thanks fernandes*
-* Fixed Bundler/dep issues with Ruby 1.8.7. (Thx @fernandes!)
+* Fixed Bundler/dep issues with Ruby 1.8.7. *thanks fernandes*
 * Added some missing license headers.
 * Updated Compute examples and Tag examples to reflect new Network service.
 * Moved shared logic from `lib/fog/softlayer/compute.rb` to `lib/fog/softlayer/core.rb`
