@@ -24,10 +24,10 @@ module Fog
         attribute :public_ip,                :aliases => 'primaryIpAddress'
         attribute :flavor_id
         attribute :bare_metal,               :type => :boolean
-        attribute :os_code,                  :aliases => 'operatingSystemReferenceCode'
+        attribute :os_code
         attribute :image_id,                 :type => :squash
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
-        attribute :os,                       :aliases => 'operatingSystem'
+        attribute :key_pairs,                :aliases => 'sshKeys'
 
         # Times
         attribute :created_at,              :aliases => ['createDate', 'provisionDate'], :type => :time
@@ -42,6 +42,7 @@ module Fog
         attribute :global_identifier,       :aliases => 'globalIdentifier'
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
         attribute :tags,                    :aliases => 'tagReferences'
+        attribute :private_network_only,    :aliases => 'privateNetworkOnlyFlag'
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
@@ -130,12 +131,8 @@ module Fog
           clean_attributes
         end
 
-        def os
-          attributes[:os]['softwareLicense']['softwareDescription']['referenceCode']
-        end
-
         def os_code
-          self.os if attributes[:os]
+          attributes['operatingSystem']['softwareLicense']['softwareDescription']['referenceCode'] if attributes['operatingSystem']
         end
 
         def private_vlan
@@ -159,10 +156,10 @@ module Fog
           attributes[:key_pairs] = []
           keys.map do |key|
             key = self.symbolize_keys(key) if key.is_a?(Hash)
-            unless key[:id] or key.is_a?(Fog::Compute::Softlayer::KeyPair)
+            unless key.is_a?(Fog::Compute::Softlayer::KeyPair) or (key.is_a?(Hash) and key[:id])
               raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Compute::Softlayer::KeyPair"
             end
-            key = service.key_pairs.get(key[:id]) unless key[:id].is_a?(Fog::Compute::Softlayer::KeyPair)
+            key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Compute::Softlayer::KeyPair)
             attributes[:key_pairs] << key
           end
         end
@@ -291,6 +288,7 @@ module Fog
               :vlan => :primaryNetworkComponent,
               :private_vlan => :primaryBackendNetworkComponent,
               :key_pairs => :sshKeys,
+              :private_network_only => :privateNetworkOnlyFlag,
 
           }
 
