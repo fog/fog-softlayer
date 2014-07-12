@@ -229,4 +229,20 @@ default:
 	
 	
 	```
+	
+1. Provision a Server with only a private network.
+
+	```ruby
+	opts = {
+	  :flavor_id => 'm1.large', 
+	  :os_code => 'UBUNTU_LATEST',
+	  :domain => 'example.com',
+	  :datacenter => 'ams01',
+	  :name => 'private-eye',
+	  :private_network_only => true
+	}
+	
+	private_vm = @sl.servers.create(opts)
+	# => <Fog::Compute::Softlayer::Server>
+	```
 
