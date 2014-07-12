@@ -2,8 +2,9 @@
 * Added support for ssh key pairs.
   * See [key_pairs.md](https://github.com/fog/fog-softlayer/blob/master/examples/key_pairs.md) for details.
 * Fix [issue 19](https://github.com/fog/fog-softlayer/issues/19) Storage initialization bug.
-* Fix [issue 17], incompatibility with Rails 4.1.4. *thanks konsti*
-* Updated .fog file example and datacenter option. *thanks 
+* Fix [issue 17](https://github.com/fog/fog-softlayer/issues/17), incompatibility with Rails 4.1.4. *thanks konsti*
+* Updated .fog file example and datacenter option. *thanks urasoko*
+* Fix [issue 14](https://github.com/fog/fog-softlayer/issues/14), added `:private_network_only` flag to Server model. 
 
 ## 0.3.2 2014-06-30
 * No longer requires `fog` gem.
