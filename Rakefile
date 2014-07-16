@@ -21,7 +21,7 @@ require 'date'
 require 'rubygems'
 require 'rubygems/package_task'
 require 'yard'
-require File.dirname(__FILE__) + '/lib/fog'
+require File.dirname(__FILE__) + '/lib/fog/softlayer'
 
 #############################################################################
 #

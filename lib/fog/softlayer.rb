@@ -5,7 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog'
 require 'fog/softlayer'
 require 'fog/softlayer/compute'
 require 'fog/softlayer/dns'
