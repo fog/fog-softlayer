@@ -19,13 +19,13 @@ module Fog
         attribute :fqdn,                     :aliases => 'fullyQualifiedDomainName'
         attribute :cpu,                      :aliases => ['startCpus', 'processorCoreAmount']
         attribute :ram,                      :aliases => ['maxMemory', 'memory']
-        attribute :disk,                     :aliases => ['blockDevices','hardDrives'], :type => :squash
+        attribute :disk,                     :aliases => ['blockDevices','hardDrives']
         attribute :private_ip,               :aliases => 'primaryBackendIpAddress'
         attribute :public_ip,                :aliases => 'primaryIpAddress'
         attribute :flavor_id
         attribute :bare_metal,               :type => :boolean
         attribute :os_code
-        attribute :image_id,                 :type => :squash
+        attribute :image_id
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
         attribute :key_pairs,                :aliases => 'sshKeys'
 
@@ -37,7 +37,7 @@ module Fog
 
         # Metadata
         attribute :account_id,              :aliases => 'accountId', :type => :integer
-        attribute :datacenter,              :aliases => 'datacenter', :type => :squash
+        attribute :datacenter,              :aliases => 'datacenter'
         attribute :single_tenant,           :aliases => 'dedicatedAccountHostOnlyFlag'
         attribute :global_identifier,       :aliases => 'globalIdentifier'
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
