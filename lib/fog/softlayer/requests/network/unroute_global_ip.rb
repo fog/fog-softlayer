@@ -11,7 +11,7 @@ module Fog
 
       class Mock
 
-        def get_ip_address(id)
+        def unroute_global_ip(global_ip_id)
           # TODO: Implement.
           raise Fog::Errors::MockNotImplemented
         end
@@ -19,8 +19,8 @@ module Fog
       end
 
       class Real
-        def get_ip_address(id)
-          self.request(:network_subnet_IpAddress, id, :query => 'objectMask=mask[hardware.fullyQualifiedDomainName,hardware.id,virtualGuest.id,virtualGuest.fullyQualifiedDomainName,subnet.id]')
+        def unroute_global_ip(global_ip_id)
+          self.request(:network_subnet_ipaddress_global, "#{global_ip_id}/unroute")
         end
       end
     end

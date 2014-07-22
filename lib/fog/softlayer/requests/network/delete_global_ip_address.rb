@@ -11,7 +11,7 @@ module Fog
 
       class Mock
 
-        def get_ip_address(id)
+        def delete_global_ip_address(id)
           # TODO: Implement.
           raise Fog::Errors::MockNotImplemented
         end
@@ -19,8 +19,10 @@ module Fog
       end
 
       class Real
-        def get_ip_address(id)
-          self.request(:network_subnet_IpAddress, id, :query => 'objectMask=mask[hardware.fullyQualifiedDomainName,hardware.id,virtualGuest.id,virtualGuest.fullyQualifiedDomainName,subnet.id]')
+        def delete_global_ip_address(id)
+          billing = self.request(:network_subnet_ipaddress_global, "#{id}/get_billing_item").body
+          billing.nil? and raise "Global IP Address with ID #{id} not found."
+          request(:billing_item, "#{billing['id']}/cancel_service")
         end
       end
     end

@@ -1,3 +1,10 @@
+## 0.3.10 2014-07-22
+* Added support for Global IP addresses
+  * Create.
+  * Destroy.
+  * Route.
+  * Unroute.
+
 ## 0.3.7 2014-07-11
 * Added support for ssh key pairs.
   * See [key_pairs.md](https://github.com/fog/fog-softlayer/blob/master/examples/key_pairs.md) for details.

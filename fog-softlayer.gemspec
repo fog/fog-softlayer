@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Module for the 'fog' gem to support SoftLayer Cloud}
   spec.summary       = %q{This library can be used as a module for `fog` or as standalone provider
                         to use the SoftLayer Cloud in applications}
-  spec.homepage      = "https://github.com/softlayer/fog-softlayer"
+  spec.homepage      = "https://github.com/fog/fog-softlayer"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

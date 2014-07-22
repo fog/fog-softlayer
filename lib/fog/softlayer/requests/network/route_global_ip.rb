@@ -11,7 +11,7 @@ module Fog
 
       class Mock
 
-        def get_ip_address(id)
+        def route_global_ip(global_ip, destination_ip)
           # TODO: Implement.
           raise Fog::Errors::MockNotImplemented
         end
@@ -19,8 +19,8 @@ module Fog
       end
 
       class Real
-        def get_ip_address(id)
-          self.request(:network_subnet_IpAddress, id, :query => 'objectMask=mask[hardware.fullyQualifiedDomainName,hardware.id,virtualGuest.id,virtualGuest.fullyQualifiedDomainName,subnet.id]')
+        def route_global_ip(global_ip_id, destination_ip_address)
+          self.request(:network_subnet_ipaddress_global, "#{global_ip_id}/route", :body => destination_ip_address, :http_method => :post)
         end
       end
     end

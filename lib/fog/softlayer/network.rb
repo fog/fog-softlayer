@@ -41,7 +41,6 @@ module Fog
       request :create_network
       request :delete_network
       request :get_network
-      #request :update_network
 
       request :get_private_vlan_price_code
       request :get_public_vlan_price_code
@@ -56,24 +55,16 @@ module Fog
       request :delete_network_tags
       request :get_network_tags
 
-      #request :list_ports
-      #request :create_port
-      #request :delete_port
-      #request :get_port
-      #request :update_port
-
       request :list_subnets
-      #request :create_subnet
-      #request :delete_subnet
       request :get_subnet
-      #request :update_subnet
 
-      #request :list_ip_addresses
-      #request :create_ip_addresse
-      #request :delete_ip_addresse
       request :get_ip_address
-      #request :associate_ip_address
-      #request :disassociate_ip_address
+      request :get_global_ip_address
+      request :get_ip_addresses
+      request :get_global_ip_records
+      request :route_global_ip
+      request :unroute_global_ip
+      request :delete_global_ip_address
 
       class Mock
         #Fog::Mock.random_ip,
@@ -129,8 +120,66 @@ module Fog
           Fog::Softlayer::Slapi.slapi_request(service, path, options)
         end
 
+        def create_new_global_ipv4
+          order = {
+              "complexType" => 'SoftLayer_Container_Product_Order_Network_Subnet',
+              "packageId" => 0, # everything that's not a Server is package 0 when using placeOrder
+              "prices" => [{"id"=>global_ipv4_price_code}],
+              "quantity" => 1
+          }
+          request(:product_order, :place_order, :body => order, :http_method => :POST).status == 200
+        end
+
+        def create_new_global_ipv6
+          order = {
+              "complexType" => 'SoftLayer_Container_Product_Order_Network_Subnet',
+              "packageId" => 0, # everything that's not a Server is package 0 when using placeOrder
+              "prices" => [{"id"=>global_ipv6_price_code}],
+              "quantity" => 1
+          }
+          request(:product_order, :place_order, :body => order, :http_method => :POST).status == 200
+        end
+
         def list_networks
           self.list_networks
+        end
+
+        private
+
+        ##
+        # Queries the SoftLayer API and returns the "category code" required for ordering a Global IPv4 address.
+        # @return [Integer]
+        def global_ipv4_cat_code
+          request(:product_package, '0/get_configuration', :query => 'objectMask=mask[isRequired,itemCategory]').body.map do |item|
+            item['itemCategory']['id'] if item['itemCategory']['categoryCode'] == 'global_ipv4'
+          end.compact.first
+        end
+
+        ##
+        # Queries the SoftLayer API and returns the "category code" required for ordering a Global IPv4 address.
+        # @return [Integer]
+        def global_ipv6_cat_code
+          request(:product_package, '0/get_configuration', :query => 'objectMask=mask[isRequired,itemCategory]').body.map do |item|
+            item['itemCategory']['id'] if item['itemCategory']['categoryCode'] == 'global_ipv6'
+          end.compact.first
+        end
+
+        ##
+        # Queries the SoftLayer API and returns the "price code" required for ordering a Global IPv4 address.
+        # @return [Integer]
+        def global_ipv4_price_code
+          request(:product_package, '0/get_item_prices', :query => 'objectMask=mask[id,item.description,categories.id]').body.map do |item|
+            item['id'] if item['categories'][0]['id'] == global_ipv4_cat_code
+          end.compact.first
+        end
+
+        ##
+        # Queries the SoftLayer API and returns the "price code" required for ordering a Global IPv4 address.
+        # @return [Integer]
+        def global_ipv6_price_code
+          request(:product_package, '0/get_item_prices', :query => 'objectMask=mask[id,item.description,categories.id]').body.map do |item|
+            item['id'] if item['categories'][0]['id'] == global_ipv6_cat_code
+          end.compact.first
         end
 
       end

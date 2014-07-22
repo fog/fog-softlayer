@@ -11,7 +11,7 @@ module Fog
 
       class Mock
 
-        def get_ip_address(id)
+        def get_ip_addresses
           # TODO: Implement.
           raise Fog::Errors::MockNotImplemented
         end
@@ -19,8 +19,8 @@ module Fog
       end
 
       class Real
-        def get_ip_address(id)
-          self.request(:network_subnet_IpAddress, id, :query => 'objectMask=mask[hardware.fullyQualifiedDomainName,hardware.id,virtualGuest.id,virtualGuest.fullyQualifiedDomainName,subnet.id]')
+        def get_ip_addresses
+          self.request(:account, :get_ip_addresses, :query => 'objectMask=mask[hardware.fullyQualifiedDomainName,hardware.id,virtualGuest.id,virtualGuest.fullyQualifiedDomainName,subnet.id]')
         end
       end
     end
