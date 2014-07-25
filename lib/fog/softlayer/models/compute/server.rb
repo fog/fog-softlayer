@@ -196,7 +196,10 @@ module Fog
         end
 
         def ssh_password
-          self.os['passwords'][0]['password'] if self.id
+          requires :id
+          service_path = bare_metal? ? :hardware_server : :virtual_guest
+          @sshpass ||= service.request(service_path, id, :query => 'objectMask=mask[id,operatingSystem.passwords[password]]').body
+          @sshpass['operatingSystem']['passwords'][0]['password'] unless @sshpass['operatingSystem'].nil? or @sshpass['operatingSystem']['passwords'].empty?
         end
 
         def snapshot
