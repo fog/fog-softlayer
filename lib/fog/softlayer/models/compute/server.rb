@@ -43,6 +43,7 @@ module Fog
         attribute :hourly_billing_flag,     :aliases => 'hourlyBillingFlag'
         attribute :tags,                    :aliases => 'tagReferences'
         attribute :private_network_only,    :aliases => 'privateNetworkOnlyFlag'
+        attribute :user_data,               :aliases => 'userData'
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
@@ -183,6 +184,15 @@ module Fog
           attributes[:ram] = set
         end
 
+        # @params value [String]
+        def user_data=(value)
+          attributes[:user_data] = [{'value' => value}]
+        end
+
+        def user_data
+          attributes[:user_data]
+        end
+
         def ready?
           if bare_metal?
             state == "on"
@@ -292,7 +302,7 @@ module Fog
               :private_vlan => :primaryBackendNetworkComponent,
               :key_pairs => :sshKeys,
               :private_network_only => :privateNetworkOnlyFlag,
-
+              :user_data => :userData
           }
 
           conditional = if bare_metal?

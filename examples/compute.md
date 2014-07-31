@@ -246,3 +246,19 @@ default:
 	# => <Fog::Compute::Softlayer::Server>
 	```
 
+1. Provision a Server with user metadata.
+
+   ```ruby
+     opts = {
+      :flavor_id => "m1.small",
+      :image_id => "23f7f05f-3657-4330-8772-329ed2e816bc",
+      :name => "test",
+      :datacenter => "ams01",
+      :user_data => "my-custom-user-metadata"
+     }
+
+     new_server = @sl.servers.create(opts)
+     new_server.user_data # => "my-custom-user-metadata"
+     new_server.user_data = "new-user-metadata"
+     new_server.user_data # => "new-user-metadata"
+   ```

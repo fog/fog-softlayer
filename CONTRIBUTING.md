@@ -5,14 +5,14 @@ New contributors are always welcome, when it doubt please ask questions. We stri
 ### Coding
 
 * Pick a task:
-  * Offer feedback on open [pull requests](https://github.com/softlayer/fog/pulls).
-  * Review open [issues](https://github.com/softlayer/fog/issues) for things to help on.
-  * [Create an issue](https://github.com/softlayer/fog/issues/new) to start a discussion on additions or features.
+  * Offer feedback on open [pull requests](https://github.com/fog/fog-softlayer/pulls).
+  * Review open [issues](https://github.com/fog/fog-softlayer/issues) for things to help on.
+  * [Create an issue](https://github.com/fog/fog-softlayer/issues/new) to start a discussion on additions or features.
 * Fork the project, add your changes and tests to cover them in a topic branch.
 * Commit your changes and rebase against `softlayer/fog` to ensure everything is up to date.
-* [Submit a pull request](https://github.com/softlayer/fog/compare/).
+* [Submit a pull request](https://github.com/fog/fog-softlayer/compare/).
 
 ### Non-Coding
 
-* Offer feedback on open [issues](https://github.com/softlayer/fog/issues).
+* Offer feedback on open [issues](https://github.com/fog/fog-softlayer/issues).
 * Organize or volunteer at events.
