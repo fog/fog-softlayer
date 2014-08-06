@@ -86,7 +86,7 @@ global_ip.routed? # => false
 
 @compute = Fog::Compute[:softlayer]
 dest_server = @compute.servers.tagged_with(['production', 'frontend', 'hkg']).first # => <Fog::Compute::Softlayer::Server>
-dest_ip = @network.ips.by_address(dest_server.public_ip) # => <Fog::Network::Softlayer::Ip>
+dest_ip = @network.ips.by_address(dest_server.public_ip_address) # => <Fog::Network::Softlayer::Ip>
 
 
 global_ip.route(dest_ip) # => true
@@ -129,7 +129,7 @@ global_ip = @network.ips.by_address('203.0.113.5')
 global_ip.destination.address # => 203.0.113.8
 
 london_server = @compute.servers.tagged_with(['production', 'frontend', 'lon']).first # => <Fog::Compute::Softlayer::Server>
-dest_ip = @network.ips.by_address(london_server.public_ip) # => <Fog::Network::Softlayer::Ip>
+dest_ip = @network.ips.by_address(london_server.public_ip_address) # => <Fog::Network::Softlayer::Ip>
 
 global_ip.route(dest_ip) # => true
 global_ip.reload # => <Fog::Network::Softlayer::Ip>

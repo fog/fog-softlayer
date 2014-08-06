@@ -20,8 +20,8 @@ module Fog
         attribute :cpu,                      :aliases => ['startCpus', 'processorCoreAmount']
         attribute :ram,                      :aliases => ['maxMemory', 'memory']
         attribute :disk,                     :aliases => ['blockDevices','hardDrives']
-        attribute :private_ip,               :aliases => 'primaryBackendIpAddress'
-        attribute :public_ip,                :aliases => 'primaryIpAddress'
+        attribute :private_ip_address,       :aliases => 'primaryBackendIpAddress'
+        attribute :public_ip_address,        :aliases => 'primaryIpAddress'
         attribute :flavor_id
         attribute :bare_metal,               :type => :boolean
         attribute :os_code
@@ -130,6 +130,14 @@ module Fog
           end
           remap_attributes(attributes, attributes_mapping)
           clean_attributes
+        end
+
+        def private_ip # maintain backward compatibility with <0.3.13
+          private_ip_address
+        end
+
+        def public_ip # maintain backward compatibility with <0.3.13
+          public_ip_address
         end
 
         def os_code
