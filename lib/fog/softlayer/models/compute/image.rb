@@ -17,11 +17,15 @@ module Fog
         attribute :name
         attribute :note
         attribute :parent_id,       :aliases => 'parentId'
-        attribute :pulic_flag,      :aliases => 'publicFlag'
+        attribute :public_flag,      :aliases => 'publicFlag'
         attribute :status_id,       :aliases => 'statusId'
         attribute :summary
         attribute :transaction_id,  :aliases => 'transactionId'
         attribute :user_record_id,  :aliases => 'userRecordId'
+
+        def public?
+          public_flag == 1
+        end
 
       end
 
