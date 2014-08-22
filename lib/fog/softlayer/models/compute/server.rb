@@ -44,6 +44,7 @@ module Fog
         attribute :tags,                    :aliases => 'tagReferences'
         attribute :private_network_only,    :aliases => 'privateNetworkOnlyFlag'
         attribute :user_data,               :aliases => 'userData'
+        attribute :uid,                     :aliases => 'globalIdentifier'
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
