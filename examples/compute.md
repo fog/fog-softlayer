@@ -245,6 +245,21 @@ default:
 	private_vm = @sl.servers.create(opts)
 	# => <Fog::Compute::Softlayer::Server>
 	```
+1. Provision a Server with 1Gbps network components.
+
+	```ruby
+	opts = {
+	  :flavor_id => 'm1.large', 
+	  :os_code => 'UBUNTU_LATEST',
+	  :domain => 'example.com',
+	  :datacenter => 'wdc01',
+	  :name => 'speedy-tubes',
+	  :network_components => [ {:speed => 1000 } ],
+	}
+	
+	private_vm = @sl.servers.create(opts)
+	# => <Fog::Compute::Softlayer::Server>
+	```
 
 1. Provision a Server with user metadata.
 
