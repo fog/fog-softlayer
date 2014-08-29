@@ -27,6 +27,8 @@ module Fog
       model         :image
       collection    :key_pairs
       model         :key_pair
+      collection    :network_components
+      model         :network_component
       collection    :servers
       model         :server
       collection    :tags

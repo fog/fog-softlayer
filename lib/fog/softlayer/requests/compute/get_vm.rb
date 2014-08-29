@@ -26,7 +26,7 @@ module Fog
 
       class Real
         def get_vm(identifier)
-          request(:virtual_guest, identifier, :expected => [200, 404], :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.softwareLicense.softwareDescription.referenceCode,sshKeys.id,privateNetworkOnlyFlag,userData]')
+          request(:virtual_guest, identifier, :expected => [200, 404], :query => 'objectMask=mask[datacenter,tagReferences,blockDevices,blockDeviceTemplateGroup.globalIdentifier,operatingSystem.softwareLicense.softwareDescription.referenceCode,sshKeys.id,privateNetworkOnlyFlag,userData,frontendNetworkComponents,backendNetworkComponents]')
         end
       end
     end

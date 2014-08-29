@@ -28,6 +28,7 @@ module Fog
         attribute :image_id
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
         attribute :key_pairs,                :aliases => 'sshKeys'
+        attribute :network_components
 
         # Times
         attribute :created_at,              :aliases => ['createDate', 'provisionDate'], :type => :time
@@ -129,6 +130,14 @@ module Fog
           if self.key_pairs
             attributes[:key_pairs].map! { |key| { :id => key.id } }
           end
+          if self.network_components
+            self.network_components = self.network_components.map do |component|
+              component[:maxSpeed] = component.delete(:speed) if component[:speed]
+              component[:maxSpeed] = component.delete(:max_speed) if component[:max_speed]
+              component
+            end
+          end
+
           remap_attributes(attributes, attributes_mapping)
           clean_attributes
         end
@@ -200,6 +209,30 @@ module Fog
 
         def user_data
           attributes[:user_data]
+        end
+
+        def network_components
+          if id
+            (public_network_components << private_network_components).flatten
+          else
+            attributes[:network_components]
+          end
+        end
+
+        def public_network_components
+          if attributes['frontendNetworkComponents']
+            attributes['frontendNetworkComponents'].map { |n| Fog::Compute::Softlayer::NetworkComponent.new(n) }
+          else
+            []
+          end
+        end
+
+        def private_network_components
+          if attributes['backendNetworkComponents']
+            attributes['backendNetworkComponents'].map { |n| Fog::Compute::Softlayer::NetworkComponent.new(n) }
+          else
+            []
+          end
         end
 
         def ready?
@@ -311,7 +344,8 @@ module Fog
               :private_vlan => :primaryBackendNetworkComponent,
               :key_pairs => :sshKeys,
               :private_network_only => :privateNetworkOnlyFlag,
-              :user_data => :userData
+              :user_data => :userData,
+              :network_components => :networkComponents,
           }
 
           conditional = if bare_metal?
