@@ -49,7 +49,17 @@ module Fog
           params = { :headers => user_agent_header }
           params[:headers]['Content-Type'] = 'application/json'
           params[:expects] = options[:expected] || [200,201]
-          params[:body] = Fog::JSON.encode({:parameters => [ options[:body] ]}) unless options[:body].nil?
+
+          if options[:body].respond_to?(:each)
+            body = []
+            options[:body].each do |item|
+              body.push(item)
+            end
+          else
+            body = options[:body]
+          end
+
+          params[:body] = Fog::JSON.encode({:parameters => body}) unless options[:body].nil?
           params[:query] = options[:query] unless options[:query].nil?
 
           # initialize connection object
