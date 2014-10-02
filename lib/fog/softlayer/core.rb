@@ -59,7 +59,7 @@ module Fog
             body = options[:body]
           end
 
-          params[:body] = Fog::JSON.encode({:parameters => body}) unless options[:body].nil?
+          params[:body] = Fog::JSON.encode({:parameters => [body]}) unless options[:body].nil?
           params[:query] = options[:query] unless options[:query].nil?
 
           # initialize connection object
