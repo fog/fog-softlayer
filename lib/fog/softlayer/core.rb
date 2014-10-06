@@ -59,7 +59,14 @@ module Fog
             body = options[:body]
           end
 
-          params[:body] = Fog::JSON.encode({:parameters => [body]}) unless options[:body].nil?
+          unless options[:body].nil?
+            # SLAPI reloadOperatingSystem appears to want a different format for the body than any other method...
+            if path =~ /reload/i and path =~ /operating/i and path =~ /system/i
+              params[:body] = Fog::JSON.encode({:parameters => body})
+            else
+              params[:body] = Fog::JSON.encode({:parameters => [body]})
+            end
+          end
           params[:query] = options[:query] unless options[:query].nil?
 
           # initialize connection object
