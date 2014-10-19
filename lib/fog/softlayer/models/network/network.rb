@@ -21,6 +21,7 @@ module Fog
         attribute :datacenter
         attribute :network_space,             :aliases => 'networkSpace'
         attribute :router,                    :aliases => 'primaryRouter'
+	      attribute :vlan_id,		                :aliases => 'networkVlanId'
         #attribute :subnets
 
         def add_tags(tags)
