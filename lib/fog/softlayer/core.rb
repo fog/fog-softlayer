@@ -49,25 +49,11 @@ module Fog
           params = { :headers => user_agent_header }
           params[:headers]['Content-Type'] = 'application/json'
           params[:expects] = options[:expected] || [200,201]
-
-          if options[:body].respond_to?(:each)
-            body = []
-            options[:body].each do |item|
-              body.push(item)
-            end
-          else
-            body = options[:body]
-          end
-
-          unless options[:body].nil?
-            # SLAPI reloadOperatingSystem appears to want a different format for the body than any other method...
-            if path =~ /reload/i and path =~ /operating/i and path =~ /system/i
-              params[:body] = Fog::JSON.encode({:parameters => body})
-            else
-              params[:body] = Fog::JSON.encode({:parameters => [body]})
-            end
-          end
           params[:query] = options[:query] unless options[:query].nil?
+          unless options[:body].nil?
+            options[:body] = [options[:body]] unless options[:body].kind_of?(Array)
+            params[:body] = Fog::JSON.encode({:parameters => options[:body]})
+          end
 
           # initialize connection object
           @connection = Fog::Core::Connection.new(@request_url, false, params)

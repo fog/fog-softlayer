@@ -43,7 +43,7 @@ module Fog
       class Real
         def create_vm(opts)
           raise ArgumentError, "Fog::Compute::Softlayer#create_vm expects argument of type Hash" unless opts.kind_of?(Hash)
-          opts = [opts]
+          opts = [[opts]] # don't ask...
           self.create_vms(opts)
         end
       end
