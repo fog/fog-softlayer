@@ -8,6 +8,8 @@
 Shindo.tests('Fog::Storage[:softlayer]', ['softlayer']) do
   tests('#_build_params') do
     tests('sending image/png files') do
+      mocking = Fog.mocking?
+      Fog.unmock!
       # Stubs Real Connection
       class Fog::Storage::Softlayer::Real
         def initialize(_options = {});end
@@ -19,6 +21,7 @@ Shindo.tests('Fog::Storage[:softlayer]', ['softlayer']) do
       # Testing header setup
       header = @service.send(:_build_params, { :headers => { 'Content-Type' => 'image/png' }})
       returns('image/png', 'properly sets the header') { header[:headers]['Content-Type'] }
+      Fog.mock! if mocking
     end
   end
 end
