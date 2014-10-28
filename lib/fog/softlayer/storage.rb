@@ -148,8 +148,8 @@ module Fog
 
           output[:path] = params[:path] ? "#{@path}/#{params.delete(:path)}".sub(/\/$/, '') : @path
 
-          output = output.deep_merge(params)
-          output.deep_merge(_headers)
+          output = output.deep_merge(_headers)
+          output.deep_merge(params)
         end
 
         def _headers
