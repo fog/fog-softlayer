@@ -33,7 +33,10 @@ module Fog
 
       class Real
         def get_datacenter_routers(id)
-          request(:location_datacenter, "#{id}/get_hardware_routers", :query => 'objectMask=id;hostname')
+          Excon.defaults[:read_timeout] *= 2 # this SLAPI method is incredibly slow to respond
+          result = request(:location_datacenter, "#{id}/get_hardware_routers", :query => 'objectMask=id;hostname')
+          Excon.defaults[:read_timeout] /= 2
+          result
         end
       end
     end

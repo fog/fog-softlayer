@@ -39,6 +39,7 @@ module Fog
 
       request :list_networks
       request :create_network
+      request :create_subnet
       request :delete_network
       request :get_network
 
@@ -46,6 +47,8 @@ module Fog
       request :get_public_vlan_price_code
       request :get_subnet_package_id
       request :get_subnet_price_code
+      request :get_portable_subnet_package_id
+      request :get_portable_subnet_price_code
       request :get_datacenters
       request :get_datacenter_routers
       request :get_references_by_tag_name

@@ -35,11 +35,11 @@ Shindo.tests("Fog::Network[:softlayer] | network requests", ["softlayer"]) do
     end
 
     tests("#get_subnet_package_id") do
-      data_matches_schema(Integer) { @sl.get_subnet_package_id }
+      data_matches_schema(Integer) { @sl.get_subnet_package_id('PUBLIC') }
     end
 
     tests("#get_subnet_price_code") do
-      data_matches_schema(Integer) { @sl.get_subnet_price_code }
+      data_matches_schema(Integer) { @sl.get_subnet_price_code(4) }
     end
 
     tests("#create_network(#{@order})") do

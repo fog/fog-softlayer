@@ -20,7 +20,7 @@ module Fog
 
       class Real
         def get_subnet(id)
-          self.request(:network_subnet, "#{id}/get_object", :query => 'objectMask=mask[datacenter,ipAddresses.id,virtualGuests.fullyQualifiedDomainName,virtualGuests.id,hardware.fullyQualifiedDomainName,hardware.id]')
+          self.request(:network_subnet, "#{id}/get_object", :query => 'objectMask=mask[datacenter,ipAddresses.id,virtualGuests.fullyQualifiedDomainName,virtualGuests.id,hardware.fullyQualifiedDomainName,hardware.id,addressSpace]')
         end
       end
     end
