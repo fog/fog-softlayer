@@ -23,7 +23,7 @@ module Fog
           {
               :id                      => 'm1.tiny',
               :name                    => 'Tiny Instance',
-              :cpu                     => 2,
+              :cpu                     => 1,
               :disk                    => [{'device' => 0, 'diskImage' => {'capacity' => 25 } }],
               :ram                     => 1024
           },
