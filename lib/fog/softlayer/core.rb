@@ -69,7 +69,12 @@ module Fog
       private
 
       def self.credentialize_url(username, apikey)
-        @request_url = "https://#{username}:#{apikey}@#{@request_url}"
+        @request_url = "https://#{sanitize_username(username)}:#{apikey}@#{@request_url}"
+      end
+      
+      def self.sanitize_username(username)
+        username.gsub!(/@/, '%40')
+        username
       end
 
       ##
