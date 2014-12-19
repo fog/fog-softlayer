@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Fog::Softlayer::VERSION
   spec.authors       = ["Matt Eldridge"]
   spec.email         = ["matt.eldridge@us.ibm.com"]
-  spec.date          = '2014-07-16'
+  spec.date          = Date.today.to_s
   spec.description   = %q{Module for the 'fog' gem to support SoftLayer Cloud}
   spec.summary       = %q{This library can be used as a module for `fog` or as standalone provider
                         to use the SoftLayer Cloud in applications}

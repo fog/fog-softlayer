@@ -166,6 +166,17 @@ module Fog
           attributes[:private_vlan] = value
         end
 
+        # reload the OS on a server (method name reload was already taken)
+        def relaunch!
+          requires :id
+          body = [ "FORCE", {}]
+          body[1][:sshKeyIds] = key_pairs.map {|kp| kp.id} unless key_pairs.empty?
+          type = bare_metal? ? :hardware_server : :virtual_guest
+          status = service.request(type, "#{id}/reloadOperatingSystem", :body => body, :http_method => :post).status
+          wait_for { not ready? } # block until the relaunch has begun
+          [200, 201].include?(status)
+        end
+
         def key_pairs
           attributes[:key_pairs]
         end
@@ -236,10 +247,14 @@ module Fog
         end
 
         def ready?
-          if bare_metal?
-            state == "on"
-          else
-            state == "Running"
+          begin
+            if bare_metal?
+              state == "on"
+            else
+              state == "Running"
+            end
+          rescue Excon::Errors::InternalServerError => e
+            false
           end
         end
 
