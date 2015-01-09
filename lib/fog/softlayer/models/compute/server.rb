@@ -162,7 +162,7 @@ module Fog
           unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
             raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
           end
-          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
+          value = network_connection.networks.get(value) if value.is_a?(Integer)
           attributes[:private_vlan] = value
         end
 
@@ -202,7 +202,7 @@ module Fog
           unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
             raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
           end
-          value = Fog::Network[:softlayer].networks.get(value) if value.is_a?(Integer)
+          value = network_connection.networks.get(value) if value.is_a?(Integer)
           attributes[:vlan] = value
         end
 
@@ -327,6 +327,14 @@ module Fog
 
         private
 
+        def network_connection
+          @network_conn ||= Fog::Network.new(
+              :provider => :softlayer,
+              :softlayer_username => service.instance_variable_get(:@softlayer_username),
+              :softlayer_api_key =>  service.instance_variable_get(:@softlayer_api_key)
+          )
+        end
+
         def _get_private_vlan
           if self.id
             vlan_id = if bare_metal?
@@ -334,7 +342,7 @@ module Fog
             else
               service.request(:virtual_guest, self.id, :query => 'objectMask=primaryBackendNetworkComponent.networkVlan').body['primaryBackendNetworkComponent']['networkVlan']['id']
             end
-            Fog::Network[:softlayer].networks.get(vlan_id)
+            network_connection.networks.get(vlan_id)
           end
         end
 
@@ -345,7 +353,7 @@ module Fog
             else
               service.request(:virtual_guest, self.id, :query => 'objectMask=primaryNetworkComponent.networkVlan').body['primaryNetworkComponent']['networkVlan']['id']
             end
-            Fog::Network[:softlayer].networks.get(vlan_id)
+            network_connection.networks.get(vlan_id)
           end
         end
 
