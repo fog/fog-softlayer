@@ -109,6 +109,7 @@ module Fog
     service(:compute, 'Compute')
     service(:dns, 'DNS')
     service(:network, 'Network')
+    service(:product, 'Product')
     service(:storage, 'Storage')
 
     def self.mock_account_id
