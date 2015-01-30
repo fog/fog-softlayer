@@ -1,13 +1,6 @@
 #### Global IP Address examples
 
-These examples all assume you have `~/.fog` which contains the following:
-
-
-   ```yaml  
-default:
-  softlayer_username: example-username
-  softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
-  ```
+If you are unfamiliar with fog, we recommend reading our [getting started](getting_started.md) guide.
 
 ##### Create a connection to SoftLayer network
 

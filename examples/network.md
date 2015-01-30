@@ -1,16 +1,7 @@
 ### Network Examples
 
-Note that SoftLayer uses the term `VLAN`.  The Fog project tries to keep things provider independent, and we'll be referring to them as `networks`.
+If you are unfamiliar with fog, we recommend reading our [getting started](getting_started.md) guide.
 
-
-These examples all assume you have `~/.fog` which contains the following
-
-
-   ```yaml  
-default:
-  softlayer_username: example-username
-  softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1 
-  ```
 
 #### Create a connection to SoftLayer Network
 

@@ -1,13 +1,7 @@
 ### DNS Examples
 
-These examples all assume you have `~/.fog` which contains the following
+If you are unfamiliar with fog, we recommend reading our [getting started](getting_started.md) guide.
 
-
-   ```yaml  
-default:
-  softlayer_username: example-username
-  softlayer_api_key: 1a1a1a1a1a1a1a1a1a11a1a1a1a1a1a1a1a1a1
-  ```
 
 #### Create a connection to SoftLayer DNS Service
 
