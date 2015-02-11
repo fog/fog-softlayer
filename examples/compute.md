@@ -271,3 +271,21 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
      new_server.user_data = "new-user-metadata"
      new_server.user_data # => "new-user-metadata"
    ```
+
+1. Start, Stop, and Reboot a existing server (works the same for VMs and Bare Metal).
+
+	```ruby
+		srvr = @sl.servers.get(123456)
+		srvr.ready? # true
+		
+		srvr.reboot # true
+		
+		srvr.stop # true
+		srvr.ready? # false
+		srvr.state # "Halted"
+		
+		srvr.start # true
+		srvr.ready # true
+		srvr.state # "Running"
+		
+	```

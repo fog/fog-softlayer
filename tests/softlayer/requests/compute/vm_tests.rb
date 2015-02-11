@@ -50,6 +50,36 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       #data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { vm }
     end
 
+    tests("#power_on_vm(#{@vm_id})") do
+      response = @sl_connection.power_on_vm(@vm_id)
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
+    tests("#power_off_vm(#{@vm_id}, false)") do
+      response = @sl_connection.power_off_vm(@vm_id, false)
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
+    tests("#power_off_vm(#{@vm_id}, true)") do
+      response = @sl_connection.power_off_vm(@vm_id, true)
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
+    tests("#reboot_vm(#{@vm_id}, false)") do
+      response = @sl_connection.reboot_vm(@vm_id, false)
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
+    tests("#reboot_vm(#{@vm_id}, true)") do
+      response = @sl_connection.reboot_vm(@vm_id, true)
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#delete_vm('#{@vm_id})'") do
       response = @sl_connection.delete_vm(@vm_id)
       data_matches_schema(true) {response.body}
@@ -78,6 +108,36 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     tests("#create_vm(#{@vms}").raises(ArgumentError) do
       @sl_connection.create_vm(@vms)
+    end
+
+    tests("#power_on_vm('99999999999999')") do
+      response = @sl_connection.power_on_vm(99999999999999)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#power_off_vm('99999999999999', true)") do
+      response = @sl_connection.power_off_vm(99999999999999, true)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#power_off_vm('99999999999999', false)") do
+      response = @sl_connection.power_off_vm(99999999999999, false)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#reboot_vm('99999999999999', true)") do
+      response = @sl_connection.reboot_vm(99999999999999, true)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#reboot_vm('99999999999999', false)") do
+      response = @sl_connection.reboot_vm(99999999999999, false)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
     end
 
     tests("#delete_vm('99999999999999')'") do

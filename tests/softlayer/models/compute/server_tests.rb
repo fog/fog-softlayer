@@ -64,6 +64,29 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
       returns(true) { @vm.save }
     end
 
+    tests("#start") do
+      returns(true) { @vm.start }
+      returns(true) { @bmc.start }
+    end
+
+    tests("#stop") do
+      returns(true) { @vm.stop }
+      returns(true) { @bmc.stop }
+    end
+
+    tests("#shutdown") do
+      returns(true) { @vm.shutdown }
+    end
+
+    tests("#reboot") do
+      returns(true) { @vm.reboot }
+      returns(true) { @bmc.reboot }
+      returns(true) { @vm.reboot(true) }
+      returns(true) { @bmc.reboot(true) }
+      returns(true) { @vm.reboot(false) }
+      returns(true) { @bmc.reboot(false) }
+    end
+
   end
 
   tests ("failure") do
@@ -97,6 +120,11 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
     # should not allow a second save
     tests("#save").raises(Fog::Errors::Error) do
       @vm.save
+    end
+
+    # bare metal servers dont allow shutdown
+    tests("#shutdown").raises(Fog::Errors::Error) do
+      @bmc.shutdown
     end
 
     tests("#destroy").raises(ArgumentError) do

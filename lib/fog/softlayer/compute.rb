@@ -57,6 +57,12 @@ module Fog
       request :get_vm_tags
       request :get_vm
       request :get_vms
+      request :power_off_bare_metal_server
+      request :power_off_vm
+      request :power_on_bare_metal_server
+      request :power_on_vm
+      request :reboot_bare_metal_server
+      request :reboot_vm
       request :update_key_pair
 
       # The Mock Service allows you to run a fake instance of the Service
