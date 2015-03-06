@@ -54,6 +54,7 @@ module Fog
       request :get_key_pairs
       request :get_references_by_tag_name
       request :get_tag
+      request :get_virtual_guest_create_options
       request :get_vm_tags
       request :get_vm
       request :get_vms
