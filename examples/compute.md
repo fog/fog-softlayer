@@ -289,3 +289,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		srvr.state # "Running"
 		
 	```
+
+1. Get a server's details
+
+   ```ruby
+   @sl.servers.get_create_options
+   ```

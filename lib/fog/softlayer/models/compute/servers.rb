@@ -55,8 +55,8 @@ module Fog
           ids.map { |id| get(id) }
         end
         
-        def get_virtual_guest_create_options
-          service.get_virtual_guest_create_options
+        def get_create_options(for_virtual_guest = true)
+          return service.get_virtual_guest_create_options if for_virtual_guest
         end
       end
     end

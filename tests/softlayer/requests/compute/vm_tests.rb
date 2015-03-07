@@ -85,6 +85,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(true) {response.body}
       data_matches_schema(200) {response.status}
     end
+
+    tests("#get_virtual_guest_create_options()") do
+      response = @sl_connection.get_virtual_guest_create_options
+      data_matches_schema(Hash) {response.body}
+      data_matches_schema(200) {response.status}
+    end
   end
 
   tests('failure') do
