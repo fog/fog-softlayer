@@ -290,8 +290,8 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		
 	```
 
-1. Get a server's details
+1. Get all options to create a VM.
 
    ```ruby
-   @sl.servers.get_create_options
+   @sl.servers.get_vm_create_options
    ```
