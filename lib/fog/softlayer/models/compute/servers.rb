@@ -54,6 +54,10 @@ module Fog
           end.flatten.uniq
           ids.map { |id| get(id) }
         end
+        
+        def get_vm_create_options
+          service.get_virtual_guest_create_options
+        end
       end
     end
   end

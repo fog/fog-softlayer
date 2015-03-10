@@ -289,3 +289,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		srvr.state # "Running"
 		
 	```
+
+1. Get all options to create a VM.
+
+   ```ruby
+   @sl.servers.get_vm_create_options
+   ```
