@@ -47,6 +47,7 @@ module Fog
       request :delete_vm
       request :delete_vm_tags
       request :describe_tags
+      request :get_bare_metal_create_options
       request :get_bare_metal_server
       request :get_bare_metal_servers
       request :get_bare_metal_tags
