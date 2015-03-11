@@ -55,6 +55,10 @@ module Fog
           ids.map { |id| get(id) }
         end
         
+        def get_bm_create_options
+          service.get_bare_metal_create_options
+        end
+
         def get_vm_create_options
           service.get_virtual_guest_create_options
         end
