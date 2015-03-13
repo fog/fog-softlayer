@@ -49,12 +49,14 @@ module Fog
       request :describe_tags
       request :get_bare_metal_create_options
       request :get_bare_metal_server
+      request :get_bare_metal_server_by_ip
       request :get_bare_metal_servers
       request :get_bare_metal_tags
       request :get_key_pair
       request :get_key_pairs
       request :get_references_by_tag_name
       request :get_tag
+      request :get_virtual_guest_by_ip
       request :get_virtual_guest_create_options
       request :get_vm_tags
       request :get_vm

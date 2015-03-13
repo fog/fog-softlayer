@@ -27,6 +27,15 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
    server.state # => 'Running', 'Stopped', 'Terminated', etc.
    ```
 
+1. Get a server's details using ip address
+
+   ```ruby
+   server = @sl.servers.get_by_ip(<server ip>)
+   server.name # => 'hostname.example.com'
+   server.created_at # => DateTime the server was created
+   server.state # => 'Running', 'Stopped', 'Terminated', etc.
+   ```
+
 1. Get all servers tagged with certain tags.
 
 	```ruby
