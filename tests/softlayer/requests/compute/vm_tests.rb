@@ -40,7 +40,7 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
     tests("#create_vm('#{@vm}')") do
       response = @sl_connection.create_vm(@vm)
       @vm_id = response.body.first['id']
-      @vm_ip = response.body.first['public_ip_address']
+      @vm_ip = response.body.first['primaryIpAddress']
       #data_matches_schema([Softlayer::Compute::Formats::VirtualGuest::SERVER], {:allow_extra_keys => true}) { response.body }
       data_matches_schema(200) { response.status }
     end

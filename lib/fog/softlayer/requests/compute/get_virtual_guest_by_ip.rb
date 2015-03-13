@@ -10,7 +10,7 @@ module Fog
       class Mock
         def get_virtual_guest_by_ip(ip_address)
           response = Excon::Response.new
-          response.body = @virtual_guests.map {|vm| vm if vm['public_ip_address'] == ip_address }.compact.first || {}
+          response.body = @virtual_guests.map {|vm| vm if vm['primaryIpAddress'] == ip_address }.compact.first || {}
           response.status = response.body.empty? ? 404 : 200
           if response.status == 404
             response.body = {

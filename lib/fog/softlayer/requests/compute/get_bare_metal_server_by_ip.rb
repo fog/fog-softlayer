@@ -10,7 +10,7 @@ module Fog
       class Mock
         def get_bare_metal_server_by_ip(ip_address)
           response = Excon::Response.new
-          response.body = @bare_metal_servers.map {|vm| vm if vm['public_ip_address'] == ip_address.to_s }.compact.first || {}
+          response.body = @bare_metal_servers.map {|vm| vm if vm['primaryIpAddress'] == ip_address.to_s }.compact.first || {}
           response.status = response.body.empty? ? 404 : 200
           if response.status == 404
             response.body = {
