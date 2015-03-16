@@ -63,6 +63,7 @@ module Fog
                 'statusId' => 1001,
                 'globalIdentifier' => Fog::Softlayer.mock_global_identifier,
                 'operatingSystem' => {},
+                'primaryIpAddress' => Fog::Mock.random_ip,
                 'tagReferences' => []
             }
 

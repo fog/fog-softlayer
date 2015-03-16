@@ -23,9 +23,17 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
     tests("#create_bare_metal_server('#{@bmc}')") do
       response = @sl_connection.create_bare_metal_server(@bmc)
       @server_id = response.body['id']
+      @server_ip = response.body['primaryIpAddress']
       data_matches_schema(Softlayer::Compute::Formats::BareMetal::SERVER, {:allow_extra_keys => true}) { response.body }
       data_matches_schema(201) { response.status }
     end
+
+    tests"#get_bare_metal_server_by_ip('#{@server_ip}'))" do
+      response = @sl_connection.get_bare_metal_server_by_ip(@server_ip)
+      data_matches_schema(200) { response.status }
+      data_matches_schema(Softlayer::Compute::Formats::BareMetal::SERVER) { response.body }
+    end
+
 
     tests("#get_bare_metal_servers()") do
       @sl_connection.get_bare_metal_servers.body.each do |bms|
@@ -87,6 +95,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     tests("#create_bare_metal_server(#{[@bmc]}").raises(ArgumentError) do
       @sl_connection.create_bare_metal_server([@bmc])
+    end
+
+    tests("#get_bare_metal_server_by_ip('1.1.1.1')") do
+      response = @sl_connection.get_bare_metal_server_by_ip('1.1.1.1')
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404){ response.status }
     end
 
     tests("#power_on_bare_metal_server('#{bmc}')") do

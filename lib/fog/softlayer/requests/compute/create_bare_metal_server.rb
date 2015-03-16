@@ -58,6 +58,7 @@ module Fog
                 'modifyDate' => nil,
                 'startCpus' => nil,
                 'statusId' => 1001,
+                'primaryIpAddress' => Fog::Mock.random_ip,
                 'globalIdentifier' => Fog::Softlayer.mock_global_identifier
             }
           rescue MissingRequiredParameter
