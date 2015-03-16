@@ -20,7 +20,7 @@ module Fog
 
       class Real
         def get_bare_metal_create_options
-          request(:virtual_guest, "getCreateObjectOptions", :http_method => :GET)
+          request(:hardware_server, "getCreateObjectOptions", :http_method => :GET)
         end
       end
     end
