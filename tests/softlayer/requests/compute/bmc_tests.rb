@@ -33,6 +33,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       end
     end
 
+    tests("#get_bare_metal_active_tickets('#{@server_id})'") do
+      response = @sl_connection.get_bare_metal_active_tickets(@server_id)
+      data_matches_schema(Array) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#power_on_bare_metal_server('#{@server_id})'") do
       response = @sl_connection.power_on_bare_metal_server(@server_id)
       data_matches_schema(true) {response.body}
