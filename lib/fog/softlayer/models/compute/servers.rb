@@ -39,6 +39,23 @@ module Fog
           nil
         end
 
+        ## Get a SoftLayer server by ip.
+        #
+        def get_by_ip(ip)
+          return nil if ip.blank?
+          response = service.get_virtual_guest_by_ip(ip)
+          bare_metal = false
+          if response.status == 404 # we didn't find it as a VM, look for a BMC server
+            response = service.get_bare_metal_server_by_ip(ip)
+            bare_metal = true
+          end
+          data = response.body
+          data['bare_metal'] = bare_metal
+          new.merge_attributes(data)
+        rescue Excon::Errors::NotFound
+          nil
+        end
+
         def bootstrap(options={})
           server = service.create(options)
           server.wait_for { ready? }
