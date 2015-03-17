@@ -347,6 +347,11 @@ module Fog
           attributes[:tags].map { |i| i['tag']['name'] } if attributes[:tags]
         end
 
+        def get_active_tickets
+          return service.get_bare_metal_active_tickets(id).body if bare_metal?
+          service.get_virtual_guest_active_tickets(id).body
+        end
+
         private
 
         def network_connection

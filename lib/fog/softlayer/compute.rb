@@ -47,6 +47,7 @@ module Fog
       request :delete_vm
       request :delete_vm_tags
       request :describe_tags
+      request :get_bare_metal_active_tickets
       request :get_bare_metal_create_options
       request :get_bare_metal_server
       request :get_bare_metal_server_by_ip
@@ -56,6 +57,7 @@ module Fog
       request :get_key_pairs
       request :get_references_by_tag_name
       request :get_tag
+      request :get_virtual_guest_active_tickets
       request :get_virtual_guest_by_ip
       request :get_virtual_guest_create_options
       request :get_vm_tags
