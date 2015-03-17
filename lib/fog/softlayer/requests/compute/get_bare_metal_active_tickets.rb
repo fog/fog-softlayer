@@ -22,7 +22,7 @@ module Fog
             }
           else
             response.status = 200
-            response.body = []
+            response.body = get_active_tickets
           end
           response
         end
@@ -31,6 +31,47 @@ module Fog
       class Real
         def get_bare_metal_active_tickets(id)
           request(:hardware_server, "#{id.to_s}/getActiveTickets", :http_method => :GET)
+        end
+      end
+    end
+  end
+end
+
+module Fog
+  module Compute
+    class Softlayer
+      class Mock
+        def get_active_tickets
+          [
+            {
+              "accountId"=>1,
+              "assignedUserId"=>1,
+              "billableFlag"=>nil,
+              "changeOwnerFlag"=>false,
+              "createDate"=>"2015-03-17T07:42:42-05:00",
+              "groupId"=>1,
+              "id"=>1,
+              "lastEditDate"=>"2015-03-17T07:42:43-05:00",
+              "lastEditType"=>"AUTO",
+              "locationId"=>nil,
+              "modifyDate"=>"2015-03-17T07:42:43-05:00",
+              "notifyUserOnUpdateFlag"=>true,
+              "originatingIpAddress"=>"10.10.10.10",
+              "priority"=>0,
+              "responsibleBrandId"=>1,
+              "serverAdministrationBillingAmount"=>nil,
+              "serverAdministrationBillingInvoiceId"=>nil,
+              "serverAdministrationFlag"=>0,
+              "serverAdministrationRefundInvoiceId"=>nil,
+              "serviceProviderId"=>1,
+              "serviceProviderResourceId"=>1,
+              "statusId"=>1,
+              "subjectId"=>1,
+              "title"=>"API Question - Testing API",
+              "totalUpdateCount"=>1,
+              "userEditableFlag"=>true
+            }
+          ]
         end
       end
     end
