@@ -73,11 +73,11 @@ module Fog
         end
         
         def get_bm_create_options
-          service.get_bare_metal_create_options
+          service.get_bare_metal_create_options.body
         end
 
         def get_vm_create_options
-          service.get_virtual_guest_create_options
+          service.get_virtual_guest_create_options.body
         end
       end
     end
