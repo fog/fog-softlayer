@@ -63,6 +63,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(200) {response.status}
     end
 
+    tests("#get_virtual_guest_users(#{@vm_id})") do
+      response = @sl_connection.get_virtual_guest_users(@vm_id)
+      data_matches_schema(Array) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#power_on_vm(#{@vm_id})") do
       response = @sl_connection.power_on_vm(@vm_id)
       data_matches_schema(true) {response.body}
@@ -131,6 +137,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     tests("#get_virtual_guest_by_ip('1.1.1.1')") do
       response = @sl_connection.get_virtual_guest_by_ip('1.1.1.1')
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#get_virtual_guest_users('99999999999999')") do
+      response = @sl_connection.get_virtual_guest_users(99999999999999)
       data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
       data_matches_schema(404) {response.status}
     end

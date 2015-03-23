@@ -312,9 +312,16 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
    @sl.servers.get_vm_create_options
    ```
 
- 1. Get all active tickets of a server.
+1. Get all active tickets of a server.
 
   ```ruby
     server = @sl.servers.get(123456)
     server.get_active_tickets
   ```
+  
+1. Get all users of a server.
+
+  ```ruby
+    server = @sl.servers.get(123456)
+    server.get_users
+  ```  
