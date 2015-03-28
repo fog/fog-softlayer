@@ -5,7 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/core/collection'
 require 'fog/softlayer/models/network/datacenter'
 
 module Fog

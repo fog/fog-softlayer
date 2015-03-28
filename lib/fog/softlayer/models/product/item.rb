@@ -4,7 +4,6 @@
 #
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
-require 'fog/core/model'
 
 module Fog
   module Softlayer
