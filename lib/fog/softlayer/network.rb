@@ -5,8 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/core'
-
 module Fog
   module Network
     class Softlayer < Fog::Service

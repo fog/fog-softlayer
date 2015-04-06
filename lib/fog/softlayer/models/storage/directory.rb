@@ -5,7 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/core/model'
 require 'fog/softlayer/models/storage/files'
 
 module Fog

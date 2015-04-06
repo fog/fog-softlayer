@@ -5,7 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/core'
 require 'fog/softlayer/compute/shared'
 
 module Fog

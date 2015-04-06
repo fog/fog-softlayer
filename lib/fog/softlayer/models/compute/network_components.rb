@@ -5,7 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/core/collection'
 require 'fog/softlayer/models/compute/key_pair'
 
 module Fog
