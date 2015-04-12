@@ -2,7 +2,7 @@ module Fog
   module Storage
     class Softlayer
       class Mock
-        def put_container(name)
+        def put_container(name, public=false)
           @containers[name] = {} unless @containers[name]
           response = Excon::Response.new
           response.body = ''
@@ -18,12 +18,14 @@ module Fog
         # ==== Parameters
         # * name<~String> - Name for container, should be < 256 bytes and must not contain '/'
         #
-        def put_container(name)
-          request(
+        def put_container(name, public=false)
+          opts = {
             :expects  => [201, 202],
             :method   => 'PUT',
-            :path     => Fog::Softlayer.escape(name)
-          )
+            :path     => Fog::Softlayer.escape(name),
+          }
+          opts[:headers] = { 'X-Container-Read' => '.r:*' } if public
+          request(opts)
         end
 
       end

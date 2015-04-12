@@ -17,6 +17,7 @@ module Fog
 
         attribute :bytes, :aliases => 'X-Container-Bytes-Used'
         attribute :count, :aliases => 'X-Container-Object-Count'
+        attribute :public, :aliases => 'X-Container-Read'
 
         def destroy
           requires :key
@@ -45,7 +46,7 @@ module Fog
 
         def save
           requires :key
-          service.put_container(key)
+          service.put_container(key, @public)
           true
         end
 
