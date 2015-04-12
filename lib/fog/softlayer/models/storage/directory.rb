@@ -15,9 +15,9 @@ module Fog
 
         identity  :key, :aliases => 'name'
 
-        attribute :bytes, :aliases => 'X-Container-Bytes-Used'
-        attribute :count, :aliases => 'X-Container-Object-Count'
-        attribute :public, :aliases => 'X-Container-Read'
+        attribute :bytes,   :aliases => 'X-Container-Bytes-Used'
+        attribute :count,   :aliases => 'X-Container-Object-Count'
+        attribute :public,  :aliases => 'X-Container-Read'
 
         def destroy
           requires :key
@@ -37,8 +37,13 @@ module Fog
         end
 
         def public=(new_public)
-          @public = new_public
+          attributes[:public] = new_public
         end
+
+        def public
+          !!attributes[:public]
+        end
+        alias_method :public?, :public
 
         def public_url
           raise NotImplementedError
@@ -46,7 +51,7 @@ module Fog
 
         def save
           requires :key
-          service.put_container(key, @public)
+          service.put_container(key, public)
           true
         end
 
