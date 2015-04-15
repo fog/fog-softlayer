@@ -357,6 +357,11 @@ module Fog
           service.get_virtual_guest_users(id).body
         end
 
+        def get_upgrade_options
+          return service.get_bare_metal_upgrade_item_prices(id).body if bare_metal?
+          service.get_virtual_guest_upgrade_item_prices(id).body
+        end
+
         private
 
         def network_connection

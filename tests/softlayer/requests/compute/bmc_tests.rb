@@ -46,7 +46,13 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(Array) {response.body}
       data_matches_schema(200) {response.status}
     end
-    
+
+    tests("#get_bare_metal_upgrade_item_prices('#{@server_id})'") do
+      response = @sl_connection.get_bare_metal_upgrade_item_prices(@server_id)
+      data_matches_schema(Array) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#get_bare_metal_users('#{@server_id})'") do
       response = @sl_connection.get_bare_metal_users(@server_id)
       data_matches_schema(Array) {response.body}

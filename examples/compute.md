@@ -324,4 +324,11 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
   ```ruby
     server = @sl.servers.get(123456)
     server.get_users
-  ```  
+  ```
+
+1. Get all upgrade options of a server.
+
+  ```ruby
+    server = @sl.servers.get(123456)
+    server.get_upgrade_options
+  ```

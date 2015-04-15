@@ -63,6 +63,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(200) {response.status}
     end
 
+    tests("#get_virtual_guest_upgrade_item_prices(#{@vm_id})") do
+      response = @sl_connection.get_virtual_guest_upgrade_item_prices(@vm_id)
+      data_matches_schema(Array) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#get_virtual_guest_users(#{@vm_id})") do
       response = @sl_connection.get_virtual_guest_users(@vm_id)
       data_matches_schema(Array) {response.body}

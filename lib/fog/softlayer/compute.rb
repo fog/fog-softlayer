@@ -52,6 +52,7 @@ module Fog
       request :get_bare_metal_server_by_ip
       request :get_bare_metal_servers
       request :get_bare_metal_tags
+      request :get_bare_metal_upgrade_item_prices
       request :get_bare_metal_users
       request :get_key_pair
       request :get_key_pairs
@@ -60,6 +61,7 @@ module Fog
       request :get_virtual_guest_active_tickets
       request :get_virtual_guest_by_ip
       request :get_virtual_guest_create_options
+      request :get_virtual_guest_upgrade_item_prices
       request :get_virtual_guest_users
       request :get_vm_tags
       request :get_vm
