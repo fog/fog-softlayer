@@ -153,6 +153,18 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(404) {response.status}
     end
 
+    tests("#get_virtual_guest_active_tickets('99999999999999')") do
+      response = @sl_connection.get_virtual_guest_active_tickets(99999999999999)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#get_virtual_guest_upgrade_item_prices('99999999999999')") do
+      response = @sl_connection.get_virtual_guest_upgrade_item_prices(99999999999999)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
     tests("#power_on_vm('99999999999999')") do
       response = @sl_connection.power_on_vm(99999999999999)
       data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
