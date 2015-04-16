@@ -141,7 +141,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
    ```ruby
      opts = {
-     	:flavor_id => "m1.small",
+     	:flavor_id => "m1.medium",
      	:os_code => "UBUNTU_LATEST",
      	:name => "test1",
      	:datacenter => "ams01",
@@ -173,7 +173,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
    opts = {
      	:cpu => 8,
      	:ram => 16348,     	
-     	:disk => {'capacity' => 100 },
+     	:disk => {'capacity' => 500 },
      	:ephemeral_storage => true,
      	:domain => "not-my-default.com",
      	:name => "hostname",
