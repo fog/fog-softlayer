@@ -358,8 +358,15 @@ module Fog
         end
 
         def get_upgrade_options
-          return service.get_bare_metal_upgrade_item_prices(id).body if bare_metal?
+          raise Exception("Not implemented for BM") if bare_metal?
           service.get_virtual_guest_upgrade_item_prices(id).body
+        end
+
+        def update(update_attributes = {})
+          raise Exception("Not implemented for BM") if bare_metal?
+          prices = get_item_prices_id(update_attributes)
+          order = generate_upgrade_order(prices, update_attributes[:time])
+          service.place_order(order).body
         end
 
         private
@@ -476,6 +483,38 @@ module Fog
           self.datacenter = service.softlayer_default_datacenter if service.softlayer_default_datacenter and attributes[:datacenter].nil?
         end
 
+        def get_item_prices_id_by_value(item_price_array, category, value)
+          item_price_array = item_price_array.select { |item_price| item_price["categories"].find { |category_hash| category_hash["categoryCode"] == category } }
+          item_price = item_price_array.find { |item_price| item_price['item']['capacity'].to_i == value }
+          item_price["id"]
+        end
+
+        def get_item_prices_id(update_attributes)
+          item_price_array = get_vm_upgrade_options
+          categories = {:cpu => "guest_core", :memory => "ram", :max_port_speed => "port_speed"}
+          prices = []
+          update_attributes.delete(:time)
+          update_attributes.each_pair { |key, value| prices << { :id => get_item_prices_id_by_value(item_price_array, categories[key], update_attributes[key]) } }
+          prices
+        end
+
+        def generate_upgrade_order(prices, time)
+          {
+            :complexType => 'SoftLayer_Container_Product_Order_Virtual_Guest_Upgrade',
+            :prices => prices,
+            :properties => [
+              {
+                :name => 'MAINTENANCE_WINDOW',
+                :value => time.present? ? time.iso8601 : Time.now.iso8601
+              }
+            ],
+            :virtualGuests => [
+              {
+                :id => id
+              }
+            ]
+          }
+        end
       end
     end
   end

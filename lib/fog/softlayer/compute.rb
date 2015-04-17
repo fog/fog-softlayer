@@ -73,6 +73,9 @@ module Fog
       request :reboot_vm
       request :update_key_pair
 
+      request_path 'fog/softlayer/requests/product'
+      request :place_order
+
       # The Mock Service allows you to run a fake instance of the Service
       # which makes no real connections.
       #

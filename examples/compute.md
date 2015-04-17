@@ -332,3 +332,16 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
     server = @sl.servers.get(123456)
     server.get_upgrade_options
   ```
+
+1. Update a server.
+
+  ```ruby
+    new_attributes = {
+      :cpu => 2,
+      :memory => 1, # this value is in GBs
+      :max_port_speed => 100, # this value is in MPBSs
+      :time => Time.now + 5.minutes # if you don't specify, time will be equal to now
+    }
+    server = @sl.servers.get(123456)
+    server.update(new_attributes)
+  ```
