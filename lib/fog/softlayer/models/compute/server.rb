@@ -445,7 +445,6 @@ module Fog
           attributes.delete(:ephemeral_storage)
         end
 
-
         ##
         # Expand a "flavor" into cpu, ram, and disk attributes
         def extract_flavor
