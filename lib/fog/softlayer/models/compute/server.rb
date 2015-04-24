@@ -490,7 +490,7 @@ module Fog
         end
 
         def get_item_prices_id(update_attributes)
-          item_price_array = get_vm_upgrade_options
+          item_price_array = get_upgrade_options
           categories = {:cpu => "guest_core", :memory => "ram", :max_port_speed => "port_speed"}
           prices = []
           update_attributes.delete(:time)
