@@ -299,7 +299,6 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		
 	```
 
-
 1. Get all options to create a bare metal.
 
    ```ruby
@@ -324,4 +323,68 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
   ```ruby
     server = @sl.servers.get(123456)
     server.get_users
-  ```  
+
+  ```
+1. Generate an order template for VM with flavor (simple).
+
+   ```ruby
+     opts = {
+     	:flavor_id => "m1.small",
+     	:image_id => "23f7f05f-3657-4330-8772-329ed2e816bc",
+     	:name => "test",
+     	:datacenter => "ams01"
+     }
+     new_server = @sl.servers.new(opts)
+     new_server.generate_order_template
+   ```
+
+1. Generate an order template for Bare Metal instance with flavor (simple).
+
+   ```ruby
+     opts = {
+     	:flavor_id => "m1.medium",
+     	:os_code => "UBUNTU_LATEST",
+     	:name => "test1",
+     	:datacenter => "ams01",
+     	:bare_metal => true
+     }
+     new_server = @sl.servers.new(opts)
+     new_server.generate_order_template
+   ```
+
+1. Generate an order template for VM without flavor.
+
+   ```ruby
+   	opts = {
+     	:cpu => 2,
+     	:ram => 2048,
+     	:disk => [{'device' => 0, 'diskImage' => {'capacity' => 100 } }],
+     	:ephemeral_storage => true,
+     	:domain => "not-my-default.com",
+     	:name => "hostname",
+     	:os_code => "UBUNTU_LATEST",
+     	:name => "test2",
+     	:datacenter => "ams01"
+     }
+     new_server = @sl.servers.new(opts)
+     new_server.generate_order_template
+   ```
+
+1. Generate an order template for Bare Metal Instance without a flavor
+
+   ```ruby
+   opts = {
+     	:cpu => 8,
+     	:ram => 16348,
+     	:disk => {'capacity' => 500 },
+     	:ephemeral_storage => true,
+     	:domain => "not-my-default.com",
+     	:name => "hostname",
+     	:os_code => "UBUNTU_LATEST",
+     	:name => "test2",
+     	:datacenter => "ams01",
+     	:bare_metal => true
+     }
+     new_server = @sl.servers.new(opts)
+     new_server.generate_order_template
+   ```

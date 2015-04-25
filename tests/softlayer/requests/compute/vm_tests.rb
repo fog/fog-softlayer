@@ -45,6 +45,13 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(200) { response.status }
     end
 
+    tests("#generate_virtual_guest_order_template('#{@vm}')") do
+      response = @sl_connection.generate_virtual_guest_order_template(@vm)
+      data_matches_schema(Hash) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
+
     tests"#get_virtual_guest_by_ip('#{@vm_ip}'))" do
       response = @sl_connection.get_virtual_guest_by_ip(@vm_ip)
       data_matches_schema(200) { response.status }
@@ -123,6 +130,13 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
     vm = @vm.dup; vm.delete('domain')
     tests("#create_vm('#{vm}')") do
       response = @sl_connection.create_vm(vm)
+      data_matches_schema('SoftLayer_Exception_MissingCreationProperty'){ response.body['code'] }
+      data_matches_schema(500){ response.status }
+    end
+
+    vm = @vm.dup; vm.delete('datacenter')
+    tests("#generate_virtual_guest_order_template('#{vm}')") do
+      response = @sl_connection.generate_virtual_guest_order_template(vm)
       data_matches_schema('SoftLayer_Exception_MissingCreationProperty'){ response.body['code'] }
       data_matches_schema(500){ response.status }
     end
