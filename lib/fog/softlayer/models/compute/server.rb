@@ -357,6 +357,13 @@ module Fog
           service.get_virtual_guest_users(id).body
         end
 
+        def generate_order_template
+          copy = self.dup
+          copy.pre_save
+          return service.get_bare_metal_users(copy.attributes).body if bare_metal?
+          service.get_virtual_guest_users(copy.attributes).body
+        end
+
         private
 
         def network_connection
