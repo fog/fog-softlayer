@@ -360,8 +360,8 @@ module Fog
         def generate_order_template
           copy = self.dup
           copy.pre_save
-          return service.get_bare_metal_users(copy.attributes).body if bare_metal?
-          service.get_virtual_guest_users(copy.attributes).body
+          return service.generate_bare_metal_order_template(copy.attributes).body if bare_metal?
+          service.generate_virtual_guest_order_template(copy.attributes).body
         end
 
         private
