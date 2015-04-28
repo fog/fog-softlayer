@@ -28,6 +28,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(201) { response.status }
     end
 
+    tests("#generate_bare_metal_order_template('#{@bmc}')") do
+      response = @sl_connection.generate_bare_metal_order_template(@bmc)
+      data_matches_schema(Hash) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests"#get_bare_metal_server_by_ip('#{@server_ip}'))" do
       response = @sl_connection.get_bare_metal_server_by_ip(@server_ip)
       data_matches_schema(200) { response.status }
@@ -95,6 +101,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     tests("#create_bare_metal_server('#{bmc}')") do
       response = @sl_connection.create_bare_metal_server(bmc)
+      data_matches_schema('SoftLayer_Exception_MissingCreationProperty'){ response.body['code'] }
+      data_matches_schema(500){ response.status }
+    end
+
+    tests("#generate_bare_metal_order_template('#{bmc}')") do
+      response = @sl_connection.generate_bare_metal_order_template(bmc)
       data_matches_schema('SoftLayer_Exception_MissingCreationProperty'){ response.body['code'] }
       data_matches_schema(500){ response.status }
     end

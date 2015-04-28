@@ -358,15 +358,22 @@ module Fog
         end
 
         def get_upgrade_options
-          raise Exception("Not implemented for BM") if bare_metal?
+          raise Exception("Need implementation for BM") if bare_metal?
           service.get_virtual_guest_upgrade_item_prices(id).body
         end
 
         def update(update_attributes = {})
-          raise Exception("Not implemented for BM") if bare_metal?
+          raise Exception("Need implementation for BM") if bare_metal?
           prices = get_item_prices_id(update_attributes)
           order = generate_upgrade_order(prices, update_attributes[:time])
           service.place_order(order).body
+        end
+
+        def generate_order_template
+          copy = self.dup
+          copy.pre_save
+          return service.get_bare_metal_users(copy.attributes).body if bare_metal?
+          service.get_virtual_guest_users(copy.attributes).body
         end
 
         private
