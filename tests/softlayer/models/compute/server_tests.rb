@@ -15,6 +15,7 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
         :name => 'test-vm',
         :domain => 'example.com',
         :datacenter => 'dal05',
+        :os_code => 'UBUNTU_LATEST',
         :bare_metal => false
     }
 
@@ -60,6 +61,11 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
       returns(true) { @bmc.bare_metal? }
     end
 
+    tests("#generate_order_template") do
+      data_matches_schema(Hash) { @vm.generate_order_template }
+      data_matches_schema(Hash) { @bmc.generate_order_template }
+    end
+
     tests("#save") do
       returns(true) { @vm.save }
     end
@@ -86,7 +92,6 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
       returns(true) { @vm.reboot(false) }
       returns(true) { @bmc.reboot(false) }
     end
-
   end
 
   tests ("failure") do

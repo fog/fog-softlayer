@@ -360,8 +360,8 @@ module Fog
         def generate_order_template
           copy = self.dup
           copy.pre_save
-          return service.get_bare_metal_users(copy.attributes).body if bare_metal?
-          service.get_virtual_guest_users(copy.attributes).body
+          return service.generate_bare_metal_order_template(copy.attributes).body if bare_metal?
+          service.generate_virtual_guest_order_template(copy.attributes).body
         end
 
         private
@@ -467,8 +467,8 @@ module Fog
 
         def validate_attributes
           requires :name, :domain, :cpu, :ram, :datacenter
-          requires_one :os_code, :image_id
-          requires_one :image_id, :disk
+          requires_one :os_code if self.attributes[:os_code].nil? # need this while os_code bug isn't fixed
+          requires_one :disk, :image_id
           bare_metal? and image_id and raise ArgumentError, "Bare Metal Cloud does not support booting from Image"
         end
 
