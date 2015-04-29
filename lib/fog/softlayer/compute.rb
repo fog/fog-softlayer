@@ -62,6 +62,7 @@ module Fog
       request :get_virtual_guest_active_tickets
       request :get_virtual_guest_by_ip
       request :get_virtual_guest_create_options
+      request :get_virtual_guest_upgrade_item_prices
       request :get_virtual_guest_users
       request :get_vm_tags
       request :get_vm
@@ -73,6 +74,8 @@ module Fog
       request :reboot_bare_metal_server
       request :reboot_vm
       request :update_key_pair
+
+      request :place_order, 'fog/softlayer/requests/product'
 
       # The Mock Service allows you to run a fake instance of the Service
       # which makes no real connections.

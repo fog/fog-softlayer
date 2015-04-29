@@ -30,6 +30,7 @@ module Fog
       request :get_package_item
       request :get_package_items
       request :get_packages
+      request :place_order
 
       # The Mock Service allows you to run a fake instance of the Service
       # which makes no real connections.

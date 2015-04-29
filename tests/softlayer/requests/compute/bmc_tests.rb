@@ -52,7 +52,7 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(Array) {response.body}
       data_matches_schema(200) {response.status}
     end
-    
+
     tests("#get_bare_metal_users('#{@server_id})'") do
       response = @sl_connection.get_bare_metal_users(@server_id)
       data_matches_schema(Array) {response.body}
@@ -126,7 +126,13 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
       data_matches_schema(404){ response.status }
     end
-    
+
+    tests("#get_bare_metal_active_tickets('#{bmc}')") do
+      response = @sl_connection.get_bare_metal_active_tickets(bmc)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404){ response.status }
+    end
+
     tests("#power_on_bare_metal_server('#{bmc}')") do
       response = @sl_connection.power_on_bare_metal_server(bmc)
       data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
