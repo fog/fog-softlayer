@@ -358,7 +358,7 @@ module Fog
         end
 
         def get_upgrade_options
-          raise Exception("Need implementation for BM") if bare_metal?
+          return service.get_bare_metal_upgrade_item_prices(id).body if bare_metal?
           service.get_virtual_guest_upgrade_item_prices(id).body
         end
 

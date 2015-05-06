@@ -94,6 +94,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(Hash) {response.body}
       data_matches_schema(200) {response.status}
     end
+
+    tests("#get_bare_metal_upgrade_item_prices('#{@server_id}')") do
+      response = @sl_connection.get_bare_metal_upgrade_item_prices(@server_id)
+      data_matches_schema(Array) {response.body}
+      data_matches_schema(200) {response.status}
+    end
   end
 
   tests('failure') do
@@ -163,5 +169,10 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(500) {response.status}
     end
 
+    tests("#get_bare_metal_upgrade_item_prices('99999999999999')'") do
+      response = @sl_connection.get_bare_metal_upgrade_item_prices(99999999999999)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
   end
 end
