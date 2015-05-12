@@ -68,6 +68,12 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
 
     tests("#save") do
       returns(true) { @vm.save }
+      returns(true) { @bmc.save }
+    end
+
+    tests("#get_upgrade_options") do
+      data_matches_schema(Array) { @vm.get_upgrade_options }
+      data_matches_schema(Array) { @bmc.get_upgrade_options }
     end
 
     tests("#start") do
@@ -132,8 +138,8 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
       @bmc.shutdown
     end
 
-    tests("#destroy").raises(ArgumentError) do
-      @bmc.destroy
+    tests("#destroy") do
+      data_matches_schema(String){ @bmc.destroy }
     end
 
     @vm.destroy

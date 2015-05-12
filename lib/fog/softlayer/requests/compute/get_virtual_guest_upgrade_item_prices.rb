@@ -13,7 +13,7 @@ module Fog
         # @return [Excon::Response]
         def get_virtual_guest_upgrade_item_prices(id)
           response = Excon::Response.new
-          found = self.get_vms.body.map{|server| server['id']}.include?(id)
+          found = self.get_vms.body.map{|server| server['id']}.include?(id.to_s)
           unless found
             response.status = 404
             response.body = {

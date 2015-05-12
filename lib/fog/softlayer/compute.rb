@@ -54,6 +54,7 @@ module Fog
       request :get_bare_metal_server_by_ip
       request :get_bare_metal_servers
       request :get_bare_metal_tags
+      request :get_bare_metal_upgrade_item_prices
       request :get_bare_metal_users
       request :get_key_pair
       request :get_key_pairs
