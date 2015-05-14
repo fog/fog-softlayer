@@ -37,7 +37,14 @@ module Fog
       request :put_static_obj_manifest
       request :post_set_meta_temp_url_key
 
+      module Integrity
+        def validate_username!(name)
+          name =~ /:/ and raise ArgumentError, "Invalid username format. If you are using a Storage specific username, use only the part after the colon."
+        end
+      end
+
       class Mock
+        include Integrity
 
         def self.data
           @data ||= Hash.new do |hash, key|
@@ -52,6 +59,7 @@ module Fog
         def initialize(options={})
           @softlayer_api_key = options[:softlayer_api_key]
           @softlayer_username = options[:softlayer_username]
+          validate_username! @softlayer_username
           @path = '/v1/AUTH_1234'
           @containers = {}
         end
@@ -77,12 +85,15 @@ module Fog
       end
 
       class Real
+        include Integrity
+
         attr_reader :auth_url
         attr_accessor :auth_token, :auth_expires
 
         def initialize(options={})
           @api_key = options[:softlayer_api_key]
           @username = options[:softlayer_username]
+          validate_username! @username
           @cluster = options[:softlayer_cluster]
           @storage_account = options[:softlayer_storage_account] || default_storage_account(options[:softlayer_username], options[:softlayer_api_key])
           @connection_options     = options[:connection_options] || {}
