@@ -530,18 +530,18 @@ module Fog
 
         def vm_upgrade_order_template(time)
           {
-              :complexType => 'SoftLayer_Container_Product_Order_Virtual_Guest_Upgrade',
-              :virtualGuests => [
-                  {
-                      :id => id
-                  }
-              ],
-              :properties => [
-                  {
-                      :name => 'MAINTENANCE_WINDOW',
-                      :value => time.present? ? time.iso8601 : Time.now.iso8601
-                  }
-              ]
+            :complexType => 'SoftLayer_Container_Product_Order_Virtual_Guest_Upgrade',
+            :virtualGuests => [
+              {
+                :id => id
+              }
+            ],
+            :properties => [
+              {
+                :name => 'MAINTENANCE_WINDOW',
+                :value => time.present? ? time.iso8601 : Time.now.iso8601
+              }
+            ]
           }
         end
 
