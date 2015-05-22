@@ -332,15 +332,33 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
     server.get_upgrade_options
   ```
 
-1. Update a server.
+1. Update a virtual guest server.
+Hash keys are the categories and the hash values are the capacity. You can retrieve them from upgrade options.
 
   ```ruby
     new_attributes = {
-      :cpu => 2,
-      :memory => 1, # this value is in GBs
-      :max_port_speed => 100, # this value is in MPBSs
+      :guest_core => 2,
+      :ram => 1, # this value is in GBs
+      :port_speed => 100, # this value is in MPBSs
       :time => Time.now + 5.minutes # if you don't specify, time will be equal to now
     }
+
+    server = @sl.servers.get(123456)
+    server.update(new_attributes)
+  ```
+
+1. Update a bare metal server.
+Hash keys are the categories and the hash values are the capacity. You can retrieve them from upgrade options.
+
+  ```ruby
+    new_attributes = {
+      :ram => 4, # this value is in GBs
+      :port_speed => 100, # this value is in MPBSs
+      :maintenance_window => Time.now + 5.minutes # if you don't specify, time will be equal to now
+    }
+
+    # you can see that
+
     server = @sl.servers.get(123456)
     server.update(new_attributes)
   ```
