@@ -18,7 +18,6 @@ Shindo.tests("Fog::Compute[:softlayer] | tag requests", ["softlayer"]) do
   test_tags = ['foo', 'bar', 'baz']
 
   tests('success') do
-
     tests("#create_vm_tags('#{@vm.id}', #{test_tags})") do
       returns(true, "returns true") { @sl_connection.create_vm_tags(@vm.id, test_tags).body}
       end
