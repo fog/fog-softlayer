@@ -33,7 +33,8 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
 
     tests("#create_vms('#{@vms}')") do
       response = @sl_connection.create_vms(@vms)
-      #data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER, {:allow_extra_keys => true}) { response.body.first }
+      data_matches_schema(Array) { response.body }
+      data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER, {:allow_extra_keys => true}) { response.body.first }
       data_matches_schema(200) { response.status }
     end
 
@@ -41,8 +42,14 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       response = @sl_connection.create_vm(@vm)
       @vm_id = response.body.first['id']
       @vm_ip = response.body.first['primaryIpAddress']
-      #data_matches_schema([Softlayer::Compute::Formats::VirtualGuest::SERVER], {:allow_extra_keys => true}) { response.body }
+      data_matches_schema([Softlayer::Compute::Formats::VirtualGuest::SERVER], {:allow_extra_keys => true}) { response.body }
       data_matches_schema(200) { response.status }
+    end
+
+    tests("#create_vm_tags('#{@vm}', [])") do
+      response = @sl_connection.create_vm_tags(@vm_id, [])
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
     end
 
     tests("#generate_virtual_guest_order_template('#{@vm}')") do
@@ -51,9 +58,20 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(200) {response.status}
     end
 
-
     tests"#get_virtual_guest_by_ip('#{@vm_ip}'))" do
       response = @sl_connection.get_virtual_guest_by_ip(@vm_ip)
+      data_matches_schema(200) { response.status }
+      data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { response.body }
+    end
+
+    tests"#get_vm('#{@vm_id}')" do
+      response = @sl_connection.get_vm(@vm_id)
+      data_matches_schema(200) { response.status }
+      data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { response.body }
+    end
+
+    tests"#get_vm_tags('#{@vm_id}')" do
+      response = @sl_connection.get_vm_tags(@vm_id)
       data_matches_schema(200) { response.status }
       data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { response.body }
     end
@@ -61,7 +79,8 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
     tests"#get_vms()" do
       response = @sl_connection.get_vms
       data_matches_schema(200) { response.status }
-      #data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { vm }
+      data_matches_schema(Array) { response.body }
+      data_matches_schema(Softlayer::Compute::Formats::VirtualGuest::SERVER) { response.body.first }
     end
 
     tests("#get_virtual_guest_active_tickets(#{@vm_id})") do
@@ -118,6 +137,12 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(200) {response.status}
     end
 
+    tests("#delete_vm_tags('#{@vm_id})', []") do
+      response = @sl_connection.delete_vm_tags(@vm_id, [])
+      data_matches_schema(true) {response.body}
+      data_matches_schema(200) {response.status}
+    end
+
     tests("#get_virtual_guest_create_options()") do
       response = @sl_connection.get_virtual_guest_create_options
       data_matches_schema(Hash) {response.body}
@@ -155,8 +180,30 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       @sl_connection.create_vm(@vms)
     end
 
+    tests("#get_vm('99999999999999)") do
+      response = @sl_connection.get_vm('99999999999999')
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#get_vm_tags('99999999999999)") do
+      response = @sl_connection.get_vm_tags('99999999999999')
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
     tests("#get_virtual_guest_by_ip('1.1.1.1')") do
       response = @sl_connection.get_virtual_guest_by_ip('1.1.1.1')
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#create_vm_tags('99999999999999')") do
+      raises(ArgumentError) { raise ArgumentError.new }
+    end
+
+    tests("#create_vm_tags('99999999999999', [])") do
+      response = @sl_connection.create_vm_tags(99999999999999, [])
       data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
       data_matches_schema(404) {response.status}
     end
@@ -215,5 +262,14 @@ Shindo.tests("Fog::Compute[:softlayer] | server requests", ["softlayer"]) do
       data_matches_schema(500) {response.status}
     end
 
+    tests("#delete_vm_tags('99999999999999', [])'") do
+      response = @sl_connection.delete_vm_tags(99999999999999)
+      data_matches_schema('SoftLayer_Exception_ObjectNotFound'){ response.body['code'] }
+      data_matches_schema(404) {response.status}
+    end
+
+    tests("#delete_vm_tags('99999999999999')") do
+      raises(ArgumentError) { raise ArgumentError.new }
+    end
   end
 end

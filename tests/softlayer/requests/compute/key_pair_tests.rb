@@ -24,7 +24,6 @@ Shindo.tests("Fog::Compute[:softlayer] | key_pair requests", ["softlayer"]) do
 
 
   tests('success') do
-
     tests("#create_key_pair") do
       key = @sl_connection.create_key_pair(:key => @key_gen.call, :label => 'test-key-tmp')
       @kp2 = @sl_connection.key_pairs.get(key.body['id'])
@@ -51,11 +50,9 @@ Shindo.tests("Fog::Compute[:softlayer] | key_pair requests", ["softlayer"]) do
       returns(true) { @sl_connection.delete_key_pair(@kp1.id).body }
       returns(1) { @sl_connection.get_key_pairs.body.count }
     end
-
   end
 
   tests('failure') do
-
     tests("#get_key_pair").raises(ArgumentError) do
       @sl_connection.get_key_pair
     end
@@ -71,9 +68,5 @@ Shindo.tests("Fog::Compute[:softlayer] | key_pair requests", ["softlayer"]) do
     tests("#delete_key_pair(#{@kp1.id}") do
       returns(404) { @sl_connection.delete_key_pair(@kp1.id).status }
     end
-
-
-
   end
-
 end
