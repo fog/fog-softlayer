@@ -29,6 +29,10 @@ module Fog
           @routable_subnets ||= service.request(:location_datacenter, "#{id}/get_bound_subnets").body
         end
 
+        def get_avaliable_maintenance_windows(begin_date, end_date, slots_number)
+          service.get_maintenance_windows(id, begin_date, end_date, slots_number).body
+        end
+
         def save
           raise "Not possible."
         end

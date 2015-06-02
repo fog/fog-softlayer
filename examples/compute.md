@@ -354,10 +354,8 @@ Hash keys are the categories and the hash values are the capacity. You can retri
     new_attributes = {
       :ram => 4, # this value is in GBs
       :port_speed => 100, # this value is in MPBSs
-      :maintenance_window => Time.now + 5.minutes # if you don't specify, time will be equal to now
+      :maintenance_window => 1111 # should see examples/network "Get a datacenter maintenance windows."
     }
-
-    # you can see that
 
     server = @sl.servers.get(123456)
     server.update(new_attributes)

@@ -275,3 +275,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		# You can't delete a network if it has actively routed addresses...
 	```
 	
+1. Get a datacenter maintenance windows.
+
+	```ruby
+	dc = @sl.datacenters.by_name('YOUR_DATACENTER')
+	dc.get_maintenance_windows(begin_date, end_date, slots_number) # dates need be a Datetime
+	```
