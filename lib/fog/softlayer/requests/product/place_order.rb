@@ -7,7 +7,6 @@
 module Fog
   module Softlayer
     class Product
-
       class Mock
         def place_order(order_template)
           response = Excon::Response.new
@@ -16,21 +15,6 @@ module Fog
           return response
         end
 
-      end
-
-      class Real
-        def place_order(order_template)
-          request(:product_order, :place_order, :body => order_template, :http_method => :POST)
-        end
-      end
-    end
-  end
-end
-
-module Fog
-  module Product
-    class Softlayer
-      class Mock
         def place_order_mock
           {
               "orderDate"=>"2015-04-17T11:12:12-06:00",
@@ -251,6 +235,12 @@ module Fog
                   }
               }
           }
+        end
+      end
+
+      class Real
+        def place_order(order_template)
+          request(:product_order, :place_order, :body => order_template, :http_method => :POST)
         end
       end
     end

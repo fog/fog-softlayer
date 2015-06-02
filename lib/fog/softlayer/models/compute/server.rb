@@ -362,7 +362,8 @@ module Fog
           service.get_virtual_guest_upgrade_item_prices(id).body
         end
 
-        def update(update_attributes = {})
+        def update(update_attributes)
+          raise ArgumentError if update_attributes.nil?
           product_connection
           prices = get_item_prices_id(update_attributes)
           order = generate_upgrade_order(prices, update_attributes[:time] || update_attributes[:maintenance_window])
@@ -387,6 +388,13 @@ module Fog
         end
 
         def product_connection
+          if Fog.mock?
+            @product_conn = Fog::Softlayer::Product.new(
+                :provider => :softlayer,
+                :softlayer_username => service.instance_variable_get(:@credentials)[:username],
+                :softlayer_api_key => service.instance_variable_get(:@credentials)[:api_key]
+            )
+          end
           @product_conn ||= Fog::Softlayer::Product.new(
               :provider => :softlayer,
               :softlayer_username => service.instance_variable_get(:@softlayer_username),
@@ -501,7 +509,7 @@ module Fog
         def get_item_prices_id_by_value(item_price_array, category, value)
           item_prices = item_price_array.select { |item_price| item_price["categories"].find { |category_hash| category_hash["categoryCode"] == category } }
           item_price = item_prices.find { |item_price| item_price['item']['capacity'] == value.to_s }
-          item_price.present? ? item_price["id"] : ""
+          item_price.nil? ? "" : item_price["id"]
         end
 
         def get_item_prices_id(update_attributes)
@@ -539,7 +547,7 @@ module Fog
             :properties => [
               {
                 :name => 'MAINTENANCE_WINDOW',
-                :value => time.present? ? time.iso8601 : Time.now.iso8601
+                :value => (time.nil? || time.empty?) ? Time.now.iso8601 : time.iso8601
               }
             ]
           }
