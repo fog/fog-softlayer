@@ -76,6 +76,18 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
       data_matches_schema(Array) { @bmc.get_upgrade_options }
     end
 
+    tests("#update(opts") do
+      bm_opts = {
+          :ram => 4
+      }
+      vm_opts = {
+          :ram => 4,
+          :maintenance_window => 1111
+      }
+      data_matches_schema(Hash) { @vm.update(vm_opts) }
+      data_matches_schema(Hash) { @bmc.update(bm_opts) }
+    end
+
     tests("#start") do
       returns(true) { @vm.start }
       returns(true) { @bmc.start }
@@ -140,9 +152,12 @@ Shindo.tests("Fog::Compute[:softlayer] | Server model", ["softlayer"]) do
 
     tests("#destroy") do
       data_matches_schema(String){ @bmc.destroy }
+      data_matches_schema(String){ @vm.destroy }
     end
 
-    @vm.destroy
-
+    tests("#update") do
+      raises(ArgumentError) { @vm.update }
+      raises(ArgumentError) { @bmc.update }
+    end
   end
 end

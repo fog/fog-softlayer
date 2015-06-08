@@ -50,7 +50,7 @@ module Fog
       request :get_datacenters
       request :get_datacenter_routers
       request :get_references_by_tag_name
-
+      request :get_maintenance_windows
 
       request :create_network_tags
       request :delete_network_tags

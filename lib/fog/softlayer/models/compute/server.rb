@@ -362,11 +362,12 @@ module Fog
           service.get_virtual_guest_upgrade_item_prices(id).body
         end
 
-        def update(update_attributes = {})
-          raise Exception("Need implementation for BM") if bare_metal?
+        def update(update_attributes)
+          raise ArgumentError if update_attributes.nil?
+          product_connection
           prices = get_item_prices_id(update_attributes)
-          order = generate_upgrade_order(prices, update_attributes[:time])
-          service.place_order(order).body
+          order = generate_upgrade_order(prices, update_attributes[:time] || update_attributes[:maintenance_window])
+          @product_conn.place_order(order).body
         end
 
         def generate_order_template
@@ -380,6 +381,21 @@ module Fog
 
         def network_connection
           @network_conn ||= Fog::Network.new(
+              :provider => :softlayer,
+              :softlayer_username => service.instance_variable_get(:@softlayer_username),
+              :softlayer_api_key =>  service.instance_variable_get(:@softlayer_api_key)
+          )
+        end
+
+        def product_connection
+          if Fog.mock?
+            @product_conn = Fog::Softlayer::Product.new(
+                :provider => :softlayer,
+                :softlayer_username => service.instance_variable_get(:@credentials)[:username],
+                :softlayer_api_key => service.instance_variable_get(:@credentials)[:api_key]
+            )
+          end
+          @product_conn ||= Fog::Softlayer::Product.new(
               :provider => :softlayer,
               :softlayer_username => service.instance_variable_get(:@softlayer_username),
               :softlayer_api_key =>  service.instance_variable_get(:@softlayer_api_key)
@@ -491,36 +507,55 @@ module Fog
         end
 
         def get_item_prices_id_by_value(item_price_array, category, value)
-          item_price_array = item_price_array.select { |item_price| item_price["categories"].find { |category_hash| category_hash["categoryCode"] == category } }
-          item_price = item_price_array.find { |item_price| item_price['item']['capacity'].to_i == value }
-          item_price["id"]
+          item_prices = item_price_array.select { |item_price| item_price["categories"].find { |category_hash| category_hash["categoryCode"] == category } }
+          item_price = item_prices.find { |item_price| item_price['item']['capacity'] == value.to_s }
+          item_price.nil? ? "" : item_price["id"]
         end
 
         def get_item_prices_id(update_attributes)
           item_price_array = get_upgrade_options
-          categories = {:cpu => "guest_core", :memory => "ram", :max_port_speed => "port_speed"}
-          prices = []
           update_attributes.delete(:time)
-          update_attributes.each_pair { |key, value| prices << { :id => get_item_prices_id_by_value(item_price_array, categories[key], update_attributes[key]) } }
-          prices
+          update_attributes.delete(:maintenance_window)
+          update_attributes.map { |key, value| { :id => get_item_prices_id_by_value(item_price_array, key.to_s, value) } }
         end
 
-        def generate_upgrade_order(prices, time)
+        def bm_upgrade_order_template(value)
           {
-            :complexType => 'SoftLayer_Container_Product_Order_Virtual_Guest_Upgrade',
-            :prices => prices,
-            :properties => [
+            :complexType => 'SoftLayer_Container_Product_Order_Hardware_Server_Upgrade',
+            :hardware => [
               {
-                :name => 'MAINTENANCE_WINDOW',
-                :value => time.present? ? time.iso8601 : Time.now.iso8601
+                :id => id
               }
             ],
+            :properties => [
+              {
+                :name => 'MAINTENANCE_WINDOW_ID',
+                :value => value
+              }
+            ]
+          }
+        end
+
+        def vm_upgrade_order_template(time)
+          {
+            :complexType => 'SoftLayer_Container_Product_Order_Virtual_Guest_Upgrade',
             :virtualGuests => [
               {
                 :id => id
               }
+            ],
+            :properties => [
+              {
+                :name => 'MAINTENANCE_WINDOW',
+                :value => (time.nil? || time.empty?) ? Time.now.iso8601 : time.iso8601
+              }
             ]
           }
+        end
+
+        def generate_upgrade_order(prices, value)
+          return bm_upgrade_order_template(value).merge({ :prices => prices }) if bare_metal?
+          vm_upgrade_order_template(value).merge({ :prices => prices })
         end
       end
     end
