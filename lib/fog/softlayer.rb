@@ -13,6 +13,10 @@ require File.expand_path('../softlayer/ext/string', __FILE__)
 require File.expand_path('../softlayer/ext/hash', __FILE__) unless {}.respond_to? :deep_merge
 
 module Fog
+  module Account
+    autoload :Softlayer, File.expand_path('../softlayer/account', __FILE__)
+  end
+
   module Compute
     autoload :Softlayer, File.expand_path('../softlayer/compute', __FILE__)
   end
@@ -38,6 +42,7 @@ module Fog
     SL_API_URL = 'api.softlayer.com/rest/v3' unless defined? SL_API_URL
     SL_STORAGE_AUTH_URL = 'objectstorage.softlayer.net/auth/v1.0' unless defined? SL_STORAGE_AUTH_URL
 
+    service(:account, 'Account')
     service(:compute, 'Compute')
     service(:dns, 'DNS')
     service(:network, 'Network')
