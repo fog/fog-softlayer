@@ -8,4 +8,5 @@
 * Matt Eldridge <matt.eldridge@us.ibm.com>
 * Paulo Henrique Lopes Ribeiro <paulo@majority.co>
 * Paulo Henrique Lopes Ribeiro <plribeiro3000@gmail.com>
+* Thomas Ingram <code@ravinggenius.com>
 * geemus <geemus@gmail.com>
