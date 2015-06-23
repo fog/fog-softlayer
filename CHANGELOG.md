@@ -1,3 +1,95 @@
+# v0.4.7
+
+__features__
+
+* Improve management on Bare Metal, upgrading and updating machines
+  (supports also maintenance windows) @mfbmina 
+
+* Initial support for [Brand
+  Service](http://sldn.softlayer.com/reference/services/SoftLayer_Brand),
+actually creating new brand records @mfbmina 
+
+__fixes__
+
+* Validate SoftLayer username format @ravinggenius 
+
+# v0.4.6
+
+__features__
+
+* Generate order template for Bare Metal and Virtual Machines
+
+* Get upgrade options (and prices!) for machines @mfbmina
+
+* Retrieve maintenance windows on datacenter @mfbmina
+
+__fixes__
+
+No fixes! :wink:
+
+# v0.4.5
+
+__fixes__
+
+Load value of @public when getting a container @cphrmky
+
+# v0.4.4
+
+__features__
+
+Finish implementation that allow creation of public object storage
+containers/directories @cphrmky
+
+__fixes__
+
+No fixes! :wink:
+
+# v0.4.3
+
+__fixes__
+
+Add missing parameter to get_vm and get_vms requests @cphrmky
+
+# v0.4.2
+
+__features__
+
+* Get server details using IP Address @mfbmina
+
+* Get Bare Metal and Virtual Machines create options @mfbmina
+
+* Get active tickets for server @mfbmina
+
+* Get all users of a server @mfbmina
+
+# v0.4.1
+
+__features__
+
+* Implemented stop, start and reboot operations for virtual and bare
+  metal servers @mafabra
+
+* Initial support on ordering SoftLayer Products @fernandes
+
+* Support setting network link speed when creating a compute instance
+  @cphrmky
+
+* Support sshable? from fog-core @cphrmky
+
+* Set user metadata
+
+__fixes__
+
+* Decreased cores on tiny template @urasoko
+
+* Fix for API user with `@` character @fernandes
+
+* Set correct headers @plribeiro3000
+
+* Fix bug on SLAPI request @cphrmky
+
+* Avoid overwriting Hash#deep_merge @amatsuda
+
 ## 0.3.10 2014-07-22
 * Added support for Global IP addresses
   * Create.
