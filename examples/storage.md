@@ -83,6 +83,11 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 1. Get a signed [temporary] url for a file/object
 
 	```ruby
+	  ### NOTE 
+	  ## Be sure you have set a meta_temp_url_key for your account at least once before
+	  ## @sl.post_set_meta_temp_url_key('someSortaSecretStuffHere')
+	  ### /NOTE
+	  
 	  file = @sl.directories.get('a-container').files.get('data.txt')
 	  file.url(Time.now + 300) # url expires in 5 minutes
 	  # => "https://dal05.objectstorage.softlayer.net:443/v1/AUTH_1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a/a-container/data.txt?temp_url_sig=1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a&temp_url_expires=1401901023"
