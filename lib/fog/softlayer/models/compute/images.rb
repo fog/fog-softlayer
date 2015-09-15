@@ -23,6 +23,12 @@ module Fog
           self
         end
 
+        # Returns an array of all private images for current account.
+        def private
+          load(service.request(:account, :getPrivateBlockDeviceTemplateGroups).body)
+          self
+        end
+
         # Used to retrieve an image
         def get(uuid)
           self.class.new(:service => service).all.detect {|image| image.id == uuid}
