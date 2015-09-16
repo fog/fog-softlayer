@@ -46,6 +46,7 @@ module Fog
         attribute :private_network_only,    :aliases => 'privateNetworkOnlyFlag'
         attribute :user_data,               :aliases => 'userData'
         attribute :uid,                     :aliases => 'globalIdentifier'
+        attribute :provision_script,        :aliases => 'postInstallScriptUri'
 
         def initialize(attributes = {})
           # Forces every request inject bare_metal parameter
@@ -67,7 +68,7 @@ module Fog
         def bare_metal?
           bare_metal
         end
-        
+
         def bare_metal
           @bare_metal
         end
@@ -220,6 +221,14 @@ module Fog
 
         def user_data
           attributes[:user_data]
+        end
+
+        def provision_script=(value)
+          attributes[:provision_script] = value
+        end
+
+        def provision_script
+          attributes[:provision_script]
         end
 
         def network_components
@@ -435,6 +444,7 @@ module Fog
               :key_pairs => :sshKeys,
               :private_network_only => :privateNetworkOnlyFlag,
               :user_data => :userData,
+              :provision_script => :postInstallScriptUri,
               :network_components => :networkComponents,
           }
 
@@ -466,7 +476,7 @@ module Fog
               true
           end
         end
-        
+
         ##
         # Remove model attributes that aren't expected by the SoftLayer API
         def clean_attributes
@@ -494,7 +504,7 @@ module Fog
 
         def validate_attributes
           requires :name, :domain, :cpu, :ram, :datacenter
-          requires_one :os_code if self.attributes[:os_code].nil? # need this while os_code bug isn't fixed
+         # requires_one :os_code if self.attributes[:os_code].nil? # need this while os_code bug isn't fixed
           requires_one :disk, :image_id
           bare_metal? and image_id and raise ArgumentError, "Bare Metal Cloud does not support booting from Image"
         end
