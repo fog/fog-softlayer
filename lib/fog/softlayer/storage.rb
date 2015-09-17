@@ -5,11 +5,13 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
+require 'base64'
+
 module Fog
   module Storage
     class Softlayer < Fog::Service
       requires :softlayer_username, :softlayer_api_key, :softlayer_cluster
-      recognizes :persistent, :softlayer_storage_account, :softlayer_temp_url_key
+      recognizes :persistent, :softlayer_storage_account, :softlayer_temp_url_key, :softlayer_bluemix_objstor_auth_url
 
       model_path 'fog/softlayer/models/storage'
       model       :directory
@@ -97,6 +99,7 @@ module Fog
           @cluster = options[:softlayer_cluster]
           @storage_account = options[:softlayer_storage_account] || default_storage_account(options[:softlayer_username], options[:softlayer_api_key])
           @connection_options     = options[:connection_options] || {}
+          @bluemix_objstor_auth_url = options[:softlayer_bluemix_objstor_auth_url] || nil
           authenticate
           @persistent = options[:persistent] || false
           @connection = Fog::Core::Connection.new("#{@scheme}://#{@host}:#{@port}", @persistent, @connection_options)
@@ -104,7 +107,7 @@ module Fog
         end
 
         def auth_url
-          "https://#{@cluster}.#{Fog::Softlayer::SL_STORAGE_AUTH_URL}"
+          @bluemix_objstor_auth_url.nil? ? "https://#{@cluster}.#{Fog::Softlayer::SL_STORAGE_AUTH_URL}" : "#{@bluemix_objstor_auth_url}/#{@storage_account}"
         end
 
         def reload
@@ -141,13 +144,23 @@ module Fog
         private
 
         def _auth_headers
-          {
-              :headers => {
-                  'User-Agent' => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}",
-                  'X-Auth-User' => "#{@storage_account}:#{@username}",
-                  'X-Auth-Key'  => @api_key
-              }
-          }
+          unless @bluemix_objstor_auth_url.nil?
+            puts "Bluemix Object Store v1 Authentication Header Required ..."
+            {
+                :headers => {
+                    'User-Agent' => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}",
+                    'Authorization' => "Basic " + Base64.strict_encode64("#{@username}" + ':' + "#{@api_key}")
+                }
+            }
+          else
+            {
+                :headers => {
+                    'User-Agent' => "Fog SoftLayer Adapter #{Fog::Softlayer::VERSION}",
+                    'X-Auth-User' => "#{@storage_account}:#{@username}",
+                    'X-Auth-Key'  => @api_key
+                }
+            }
+          end
         end
 
         def _build_params(params)
