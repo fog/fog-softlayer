@@ -66,7 +66,8 @@ module Fog
       end
 
       def self.sanitize_username(username)
-        username.gsub!(/@/, '%40')
+      #  gets error can't modify frozen String
+      #  username.gsub!(/@/, '%40')
         username
       end
 
