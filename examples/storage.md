@@ -10,6 +10,23 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	@sl = Fog::Storage[:softlayer]
 ```
 
+#### Create a connection within a Bluemix Application to Bluemix v1 Object Storage
+
+```ruby
+	require 'fog/softlayer'
+	objstor_service = JSON.parse(ENV['VCAP_SERVICES'])["objectstorage"].first["credentials"]
+	bluemix_app_name = JSON.parse(ENV["VCAP_APPLICATION"])["name"]
+
+	@sl = Fog::Storage.new({
+	   :provider => 'softlayer',
+	   :softlayer_username => objstor_service['username'].to_s,
+	   :softlayer_api_key => objstor_service['password'].to_s,
+	   :softlayer_storage_account => bluemix_app_name, 
+	   :softlayer_bluemix_objstor_auth_url => objstor_service['auth_uri'].to_s,
+	   :softlayer_cluster => 'dal05'
+	})
+```
+
 #### Use the Models
 1. List directories/containers.
 
