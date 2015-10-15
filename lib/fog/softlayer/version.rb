@@ -7,6 +7,6 @@
 
 module Fog
   module Softlayer
-    VERSION = "0.4.7"
+    VERSION = "1.0.0"
   end
 end
