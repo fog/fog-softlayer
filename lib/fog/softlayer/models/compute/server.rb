@@ -504,7 +504,7 @@ module Fog
 
         def validate_attributes
           requires :name, :domain, :cpu, :ram, :datacenter
-          requires_one :os_code if self.attributes[:os_code].nil? # need this while os_code bug isn't fixed
+          requires_one :os_code, :image_id
           requires_one :disk, :image_id
           bare_metal? and image_id and raise ArgumentError, "Bare Metal Cloud does not support booting from Image"
         end
