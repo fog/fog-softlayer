@@ -353,7 +353,7 @@ module Fog
         end
 
         def tags
-          attributes[:tags].map { |i| i['tag']['name'] } if attributes[:tags]
+          attributes[:tags].map { |i| i['tag']['name'] if i['tag'] }.compact if attributes[:tags]
         end
 
         def get_active_tickets
