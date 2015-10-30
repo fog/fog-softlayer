@@ -20,7 +20,7 @@ module Fog
           super
         end
 
-        def all(filters = filters)
+        def all(filters = self.filters)
           raise ArgumentError, "Filters argument for #{self.class.name}##{__method__} must be Array." unless filters.is_a?(Array)
           self.filters = filters
           data = service.describe_tags.body

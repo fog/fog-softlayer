@@ -20,7 +20,7 @@ module Fog
           super
         end
 
-        def all(filters = filters)
+        def all(filters = self.filters)
           self.filters = filters
           ips = service.get_ip_addresses.body
 
