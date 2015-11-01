@@ -20,7 +20,7 @@ module Fog
           super
         end
 
-        def all(filters = filters)
+        def all(filters = self.filters)
           self.filters = filters
           load(service.get_datacenters.body)
         end
