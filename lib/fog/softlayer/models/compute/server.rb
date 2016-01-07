@@ -186,11 +186,13 @@ module Fog
           raise ArgumentError, "Argument #{local_variables.first.to_s} for #{self.class.name}##{__method__} must be Array." unless keys.is_a?(Array)
           attributes[:key_pairs] = []
           keys.map do |key|
-            key = self.symbolize_keys(key) if key.is_a?(Hash)
-            unless key.is_a?(Fog::Compute::Softlayer::KeyPair) or (key.is_a?(Hash) and key[:id])
-              raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Compute::Softlayer::KeyPair"
-            end
-            key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Compute::Softlayer::KeyPair)
+            ## This was nice but causing an intolerable number of requests on an account with lots of keys.
+            ## ToDo: something better...
+            #key = self.symbolize_keys(key) if key.is_a?(Hash)
+            #unless key.is_a?(Fog::Compute::Softlayer::KeyPair) or (key.is_a?(Hash) and key[:id])
+            #  raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Compute::Softlayer::KeyPair"
+            #end
+            #key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Compute::Softlayer::KeyPair)
             attributes[:key_pairs] << key
           end
         end
