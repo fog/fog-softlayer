@@ -36,6 +36,21 @@ Shindo.tests("Fog::Storage[:softlayer] | Directory model", ["softlayer"]) do
       data_matches_schema([Fog::Storage::Softlayer::Directory]) { @storage.directories.all }
     end
 
+    tests("#public_url") do
+      data_matches_schema(String) do
+        directory = @storage.directories.create(:key => @test_dir1)
+        service = directory.service
+        def service.cluster
+          @cluster ||= %w[
+            AMS01 CHE01 DAL05 FRA02
+            HKG02 LON02 MEL01 MEX01
+            MON01 PAR01 SAO01 SJC01
+            SNG01 SYD01 TOK02 TOR01
+          ].sample
+        end
+        directory.public_url
+      end
+    end
   end
 
 

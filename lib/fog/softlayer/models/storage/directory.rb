@@ -46,7 +46,10 @@ module Fog
         alias_method :public?, :public
 
         def public_url
-          raise NotImplementedError
+          requires :key
+          cluster = service.cluster.downcase
+          key = Fog::Softlayer.escape(self.key)
+          "http://17532.http.#{cluster}.cdn.softlayer.net/#{key}"
         end
 
         def save

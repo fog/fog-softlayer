@@ -89,7 +89,7 @@ module Fog
       class Real
         include Integrity
 
-        attr_reader :auth_url
+        attr_reader :auth_url, :cluster
         attr_accessor :auth_token, :auth_expires
 
         def initialize(options={})
@@ -309,4 +309,3 @@ module Fog
     end
   end
 end
-
