@@ -170,7 +170,7 @@ module Fog
         # @return [Integer]
         def global_ipv4_price_code
           request(:product_package, '0/get_item_prices', :query => 'objectMask=mask[id,item.description,categories.id]').body.map do |item|
-            item['id'] if item['categories'][0]['id'] == global_ipv4_cat_code
+            item['id'] if item.has_key?('categories') && !item['categories'][0].nil? && item['categories'][0]['id'] == global_ipv4_cat_code
           end.compact.first
         end
 
