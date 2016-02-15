@@ -29,6 +29,7 @@ module Fog
         attribute :ephemeral_storage,        :aliases => 'localDiskFlag'
         attribute :key_pairs,                :aliases => 'sshKeys'
         attribute :network_components
+        attribute :fixed_configuration_preset, :aliases => 'fixedConfigurationPreset'
 
         # Times
         attribute :created_at,              :aliases => ['createDate', 'provisionDate'], :type => :time
@@ -121,6 +122,7 @@ module Fog
 
         def pre_save
           extract_flavor
+          self.bare_metal = true if attributes[:fixed_configuration_preset] and not bare_metal?
           validate_attributes
           if self.vlan
             attributes[:vlan] = { :networkVlan => { :id => self.vlan.id } }
@@ -137,6 +139,10 @@ module Fog
               component[:maxSpeed] = component.delete(:max_speed) if component[:max_speed]
               component
             end
+          end
+
+          if attributes[:fixed_configuration_preset].is_a? String
+              attributes[:fixedConfigurationPreset] = {:keyName => attributes.delete(:fixed_configuration_preset)}
           end
 
           remap_attributes(attributes, attributes_mapping)
@@ -343,7 +349,7 @@ module Fog
           copy = self.dup
           copy.pre_save
 
-          data = if bare_metal?
+          data = if copy.bare_metal?
             service.create_bare_metal_server(copy.attributes).body
           else
             service.create_vm(copy.attributes).body.first
@@ -384,8 +390,47 @@ module Fog
         def generate_order_template
           copy = self.dup
           copy.pre_save
-          return service.generate_bare_metal_order_template(copy.attributes).body if bare_metal?
+          return service.generate_bare_metal_order_template(copy.attributes).body if copy.bare_metal?
           service.generate_virtual_guest_order_template(copy.attributes).body
+        end
+
+        def wait_for_id(timeout=14400, delay=30)
+          # Cannot use self.wait_for because it calls reload which requires
+          # self.id which is not initially available for bare metal.
+          filterStr = Fog::JSON.encode({
+            "hardware" => {
+              "hostname" => {
+                "operation" => self.name,
+              },
+              "domain" => {
+                "operation" => self.domain,
+              },
+              "globalIdentifier" => {
+                "operation" => self.uid,
+              },
+            }
+          })
+
+          Fog.wait_for(timeout, delay) do
+            res = service.request(:account, 'getHardware', :query => {
+              :objectMask => 'mask[id,fullyQualifiedDomainName,provisionDate,hardwareStatus,lastTransaction[elapsedSeconds,transactionStatus[friendlyName]],operatingSystem[id,passwords[password,username]]]',
+              :objectFilter => filterStr,
+            })
+
+            server = res.body.first
+
+            yield server if block_given?
+
+            if server and server["provisionDate"]
+                attributes[:id] = server['id']
+                true
+            else
+                false
+            end
+          end
+
+          self.reload
+          true
         end
 
         private
@@ -455,7 +500,8 @@ module Fog
               :cpu  =>   :processorCoreAmount,
               :ram  =>   :memoryCapacity,
               :disk =>   :hardDrives,
-              :bare_metal => :bareMetalInstanceFlag
+              :bare_metal => :bareMetalInstanceFlag,
+              :fixed_configuration_preset => :fixedConfigurationPreset,
             }
           else
             {
@@ -470,12 +516,13 @@ module Fog
         end
 
         def bare_metal=(set)
+          return @bare_metal if set == @bare_metal
           raise Exception, "Bare metal flag has already been set" unless @bare_metal.nil?
           @bare_metal = case set
             when false, 'false', 0, nil, ''
-              false
+              attributes[:bare_metal] = false
             else
-              true
+              attributes[:bare_metal] = true
           end
         end
 
@@ -485,6 +532,7 @@ module Fog
           attributes.delete(:bare_metal)
           attributes.delete(:flavor_id)
           attributes.delete(:ephemeral_storage)
+          attributes.delete(:tags) if bare_metal?
         end
 
         ##
@@ -505,9 +553,14 @@ module Fog
         end
 
         def validate_attributes
-          requires :name, :domain, :cpu, :ram, :datacenter
-          requires_one :os_code, :image_id
-          requires_one :disk, :image_id
+          requires :name, :domain, :datacenter
+          if attributes[:fixed_configuration_preset]
+              requires :os_code
+          else
+              requires :cpu, :ram
+              requires_one :os_code, :image_id
+              requires_one :disk, :image_id
+          end
           bare_metal? and image_id and raise ArgumentError, "Bare Metal Cloud does not support booting from Image"
         end
 
