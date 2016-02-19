@@ -1,3 +1,8 @@
+# v1.1.0
+__features__
+
+* Add support for pre-configured bare metal with fast provisioning times.
+
 # v0.4.7
 
 __features__
