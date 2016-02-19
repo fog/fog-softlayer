@@ -150,6 +150,24 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
      @sl.servers.create(opts)
      new_server.id # => 1338
    ```
+   
+1. Provision a *preset* Bare Metal instance (instant provisioning).
+    1. First get a list of available preset configuration keys:
+
+        ```ruby
+        
+        ``` 
+
+    ```ruby
+        opts = {  
+            :domain => 'example.com',  
+            :name => 'my-test',  
+            :flavor_id => 'm1.small', 
+            :fixed_configuration_preset => '50_128GB_4X800GBSSD_RAID10',
+            :os_code => 'UBUNTU_LATEST',  
+            :datacenter => 'wdc01'
+        }
+    ```
 
 1. Provision a new VM without flavor.
 

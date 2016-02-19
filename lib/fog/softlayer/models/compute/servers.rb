@@ -78,6 +78,10 @@ module Fog
         def get_vm_create_options
           service.get_virtual_guest_create_options.body
         end
+
+        def get_available_preset_codes
+          service.get_available_preset_codes.body['fixedConfigurationPresets'].map { |item| { :desc => item['preset']['description'], :key => item['preset']['keyName'] } }
+        end
       end
     end
   end

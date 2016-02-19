@@ -48,6 +48,7 @@ module Fog
       request :describe_tags
       request :generate_bare_metal_order_template
       request :generate_virtual_guest_order_template
+      request :get_available_preset_codes
       request :get_bare_metal_active_tickets
       request :get_bare_metal_create_options
       request :get_bare_metal_server
