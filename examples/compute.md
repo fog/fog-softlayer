@@ -155,6 +155,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
     1. First get a list of available preset configuration keys:
 
         ```ruby
+          @sl.get_bare_metal_create_options.body["fixedConfigurationPresets"].each {|item| puts item["preset"]};nil
         
         ``` 
 
@@ -162,11 +163,16 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
         opts = {  
             :domain => 'example.com',  
             :name => 'my-test',  
-            :flavor_id => 'm1.small', 
             :fixed_configuration_preset => '50_128GB_4X800GBSSD_RAID10',
             :os_code => 'UBUNTU_LATEST',  
             :datacenter => 'wdc01'
         }
+        new_server = @sl.servers.create(opts)
+        new_server.id # => 0
+        new_server.wait_for_id do |details|
+          puts details.inspect
+        end
+     new_server.id # => 1234
     ```
 
 1. Provision a new VM without flavor.
