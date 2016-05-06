@@ -135,8 +135,8 @@ module Fog
           end
           if self.network_components
             self.network_components = self.network_components.map do |component|
-              component[:maxSpeed] = component.delete(:speed) if component[:speed]
-              component[:maxSpeed] = component.delete(:max_speed) if component[:max_speed]
+              component['maxSpeed'] = component.delete('speed') if component['speed']
+              component['maxSpeed'] = component.delete('max_speed') if component['max_speed']
               component
             end
           end
