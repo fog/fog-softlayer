@@ -131,7 +131,7 @@ module Fog
             attributes[:private_vlan] = { :networkVlan => { :id => self.private_vlan.id } }
           end
           if self.key_pairs
-            attributes[:key_pairs].map! { |key| { :id => key.id } }
+            attributes[:key_pairs].map! { |key| { :id => key.respond_to?(:id) ? key.id : key } }
           end
           if self.network_components
             self.network_components = self.network_components.map do |component|
