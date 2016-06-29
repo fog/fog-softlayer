@@ -263,9 +263,19 @@ module Fog
           end
         end
 
+        def active_transaction
+          tx = if bare_metal?
+            service.request(:hardware_server, "#{id}/getActiveTransaction").body
+          else
+             service.request(:virtual_guest, "#{id}/getActiveTransaction").body
+          end
+        end
+
         def ready?
           begin
-            if bare_metal?
+            if active_transaction
+              false
+            elsif bare_metal?
               state == "on"
             else
               state == "Running"
