@@ -264,10 +264,10 @@ module Fog
         end
 
         def active_transaction
-          tx = if bare_metal?
+          if bare_metal?
             service.request(:hardware_server, "#{id}/getActiveTransaction").body
           else
-             service.request(:virtual_guest, "#{id}/getActiveTransaction").body
+            service.request(:virtual_guest, "#{id}/getActiveTransaction").body
           end
         end
 
