@@ -20,6 +20,7 @@ module Fog
         attribute :summary
         attribute :transaction_id,  :aliases => 'transactionId'
         attribute :user_record_id,  :aliases => 'userRecordId'
+        attribute :account_id,  :aliases => 'accountId'
 
         def public?
           public_flag == 1
