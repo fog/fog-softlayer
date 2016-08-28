@@ -39,8 +39,8 @@ module Fog
     autoload :Product, File.expand_path('../softlayer/product', __FILE__)
     autoload :Slapi, File.expand_path('../softlayer/slapi', __FILE__)
 
-    SL_API_URL = 'api.softlayer.com/rest/v3' unless defined? SL_API_URL
-    SL_STORAGE_AUTH_URL = 'objectstorage.softlayer.net/auth/v1.0' unless defined? SL_STORAGE_AUTH_URL
+    SL_API_URL = ENV['SL_API_URL'] ? ENV['SL_API_URL'] : 'api.softlayer.com/rest/v3' unless defined? SL_API_URL
+    SL_STORAGE_AUTH_URL = ENV['SL_STORAGE_AUTH_URL'] ? ENV['SL_STORAGE_AUTH_URL'] : 'objectstorage.softlayer.net/auth/v1.0' unless defined? SL_STORAGE_AUTH_URL
 
     service(:account, 'Account')
     service(:compute, 'Compute')
