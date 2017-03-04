@@ -1,5 +1,5 @@
 ### `fog-softlayer` - SoftLayer module for fog.
-[![Gem Version](https://badge.fury.io/rb/fog-softlayer.png)](http://badge.fury.io/rb/fog-softlayer)
+[![Gem Version](https://badge.fury.io/rb/fog-softlayer.svg)](http://badge.fury.io/rb/fog-softlayer)
 [![Build Status](https://api.travis-ci.org/fog/fog-softlayer.svg)](https://travis-ci.org/fog/fog-softlayer)
 [![Dependency Status](https://gemnasium.com/fog/fog-softlayer.svg)](https://gemnasium.com/fog/fog-softlayer)
 
