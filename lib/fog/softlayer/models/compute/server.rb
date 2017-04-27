@@ -216,7 +216,7 @@ module Fog
         end
 
         def ram=(set)
-          if set.is_a?(Array) and set.first['hardwareComponentModel']
+          if set.is_a?(Array) and !set.empty? and set.first['hardwareComponentModel']
             set = 1024 * set.first['hardwareComponentModel']['capacity'].to_i
           end
           attributes[:ram] = set
