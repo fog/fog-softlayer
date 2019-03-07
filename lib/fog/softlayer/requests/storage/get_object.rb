@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Mock
         def get_object(container, object, &block)
           if @containers[container] && @containers[container][object]

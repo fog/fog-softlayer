@@ -8,8 +8,8 @@
 require 'fog/softlayer/models/compute/flavor'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       ## SoftLayer doesn't actually have "flavors", these are just for portability/convenience,
       # they map directly to OpenStack defaults.
@@ -58,13 +58,13 @@ module Fog
 
       class Flavors < Fog::Collection
 
-        model Fog::Compute::Softlayer::Flavor
+        model Fog::Softlayer::Compute::Flavor
 
         # Returns an array of all flavors that have been created
         #
         # Fog::Softlayer.flavors.all
         def all
-          load(Fog::Compute::Softlayer::FLAVORS)
+          load(Fog::Softlayer::Compute::FLAVORS)
           self
         end
 

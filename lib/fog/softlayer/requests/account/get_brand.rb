@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Mock
         # Get a Brand
         # @param [Integer] identifier

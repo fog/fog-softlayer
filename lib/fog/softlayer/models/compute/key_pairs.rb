@@ -8,10 +8,10 @@
 require 'fog/softlayer/models/compute/key_pair'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class KeyPairs < Fog::Collection
-        model Fog::Compute::Softlayer::KeyPair
+        model Fog::Softlayer::Compute::KeyPair
 
         def all
           data = service.get_key_pairs.body
@@ -22,7 +22,7 @@ module Fog
           if key_pair = service.get_key_pair(id).body
             new(key_pair)
           end
-        rescue Fog::Network::Softlayer::NotFound
+        rescue Fog::Softlayer::Network::NotFound
           nil
         end
 

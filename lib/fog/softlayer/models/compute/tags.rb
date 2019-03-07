@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/compute/tag'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class Tags < Fog::Collection
         attribute :filters
 
-        model Fog::Compute::Softlayer::Tag
+        model Fog::Softlayer::Compute::Tag
 
         def initialize(attributes)
           self.filters ||= []

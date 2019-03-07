@@ -5,11 +5,9 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/compute/shared'
-
 module Fog
-  module Account
-    class Softlayer < Fog::Service
+  module Softlayer
+    class Account < Fog::Service
       # Client credentials
       requires :softlayer_username, :softlayer_api_key
 

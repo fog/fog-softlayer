@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/network/subnet'
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Subnets < Fog::Collection
         attribute :filters
 
-        model Fog::Network::Softlayer::Subnet
+        model Fog::Softlayer::Network::Subnet
 
         def all
           load(service.list_subnets.body)
@@ -23,7 +23,7 @@ module Fog
           if subnet = service.get_subnet(id).body
             new(subnet)
           end
-        rescue Fog::Network::Softlayer::NotFound
+        rescue Fog::Softlayer::Network::NotFound
           nil
         end
       end

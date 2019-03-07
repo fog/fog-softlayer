@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
 
       class File < Fog::Model
 

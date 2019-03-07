@@ -5,8 +5,8 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Mock
 
@@ -33,7 +33,7 @@ module Fog
         #   Defaults to false, pass true for a single-tenant VM.
         # @return [Excon::Response]
         def create_vm(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_vm expects argument of type Hash" unless opts.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_vm expects argument of type Hash" unless opts.kind_of?(Hash)
           opts = [opts]
           self.create_vms(opts)
         end
@@ -42,7 +42,7 @@ module Fog
 
       class Real
         def create_vm(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_vm expects argument of type Hash" unless opts.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_vm expects argument of type Hash" unless opts.kind_of?(Hash)
           opts = [[opts]] # don't ask...
           self.create_vms(opts)
         end

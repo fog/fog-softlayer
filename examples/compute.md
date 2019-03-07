@@ -40,11 +40,11 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	prod_fe_servers = @sl.servers.tagged_with(['production', 'frontend'])
-	# => [ <Fog::Compute::Softlayer::Server>,
-	#	<Fog::Compute::Softlayer::Server>,
-	#	<Fog::Compute::Softlayer::Server>,
-	#	<Fog::Compute::Softlayer::Server>,
-	#	<Fog::Compute::Softlayer::Server>,]		
+	# => [ <Fog::Softlayer::Compute::Server>,
+	#	<Fog::Softlayer::Compute::Server>,
+	#	<Fog::Softlayer::Compute::Server>,
+	#	<Fog::Softlayer::Compute::Server>,
+	#	<Fog::Softlayer::Compute::Server>,]
 	```
    
 1. Get a server's public/frontend VLAN
@@ -52,14 +52,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 	server = @sl.servers.get(12345)
 	server.vlan
-	# => <Fog::Network::Softlayer::Network
+	# => <Fog::Softlayer::Network::Network
     #	id=123456,
 	#   name='frontend-staging-vlan',
 	#   modify_date="2014-02-22T12:42:31-06:00",
 	#   note=nil,
 	#   tags=['sparkle', 'motion'],
 	#   type="STANDARD",
-	#   datacenter=    <Fog::Network::Softlayer::Datacenter
+	#   datacenter=    <Fog::Softlayer::Network::Datacenter
 	#     id=168642,
 	#     long_name="San Jose 1",
 	#     name="sjc01"
@@ -74,14 +74,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 	server = @sl.servers.get(12345)
 	server.private_vlan
-	# =>  <Fog::Network::Softlayer::Network
+	# =>  <Fog::Softlayer::Network::Network
 	#    id=123456,
 	#    name='backend-staging-vlan',
 	#    modify_date="2014-02-22T12:42:33-06:00",
 	#    note=nil,
 	#    tags=[],
 	#    type="STANDARD",
-	#    datacenter=    <Fog::Network::Softlayer::Datacenter
+	#    datacenter=    <Fog::Softlayer::Network::Datacenter
 	#	    id=168642,
 	#    	long_name="San Jose 1",
 	#    	name="sjc01"
@@ -212,9 +212,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	the_first_key = @sl.key_pairs.by_label('my-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	the_second_key = @sl.key_pairs.by_label('my-other-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	
 	opts = { 
 		:flavor_id => 'm1.small', 
@@ -224,7 +224,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		:key_pairs => [ the_first_key, the_second_key ]
 	}
 	@sl.servers.create(opts)
-	# => <Fog::Compute::Softlayer::Server>
+	# => <Fog::Softlayer::Compute::Server>
 ```
 
 
@@ -239,7 +239,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 	# I want to launch another server to hold docker containers into my existing staging VLANs
 	# I'll start by getting a staging server so I can use its vlans as a reference.
-	staging_server = @sl.servers.tagged_with(['staging', 'docker']).first # => <Fog::Compute::Softlayer::Server>
+	staging_server = @sl.servers.tagged_with(['staging', 'docker']).first # => <Fog::Softlayer::Compute::Server>
 	
 	opts = {
 	  :flavor_id => 'm1.large', 
@@ -247,12 +247,12 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	  :domain => 'staging.example.com',
 	  :datacenter => 'ams01', # This needs to be the same datacenter as the target VLAN of course.
 	  :name => 'additional-docker-host',
-	  :vlan => staging.server.vlan, # Passing in a <Fog::Network::Softlayer::Network> object.
+	  :vlan => staging.server.vlan, # Passing in a <Fog::Softlayer::Network::Network> object.
 	  :private_vlan => staging.server.private_vlan.id, # Passing in an Integer (the id of a network/vlan) works too. 
 	}
 
 	new_staging_server = @sl.servers.create(opts)
-	# => <Fog::Compute::Softlayer::Server>
+	# => <Fog::Softlayer::Compute::Server>
 	
 	
 	```
@@ -270,7 +270,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	}
 	
 	private_vm = @sl.servers.create(opts)
-	# => <Fog::Compute::Softlayer::Server>
+	# => <Fog::Softlayer::Compute::Server>
 	```
 1. Provision a Server with 1Gbps network components.
 
@@ -285,7 +285,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	}
 	
 	private_vm = @sl.servers.create(opts)
-	# => <Fog::Compute::Softlayer::Server>
+	# => <Fog::Softlayer::Compute::Server>
 	```
 
 1. Provision a Server with user metadata.

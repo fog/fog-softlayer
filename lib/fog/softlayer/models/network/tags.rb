@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/network/tag'
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Tags < Fog::Collection
         attribute :filters
 
-        model Fog::Network::Softlayer::Tag
+        model Fog::Softlayer::Network::Tag
 
         def initialize(attributes)
           self.filters ||= []

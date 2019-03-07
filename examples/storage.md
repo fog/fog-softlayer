@@ -84,7 +84,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
   ```ruby
    @sl.directories.get('a-container').files
    # => [
-   #    <Fog::Storage::Softlayer::File
+   #    <Fog::Softlayer::Storage::File
    #  key="a-container/data.txt",
    #  content_length=43,
    #  content_type="text/plain",

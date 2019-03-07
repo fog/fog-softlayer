@@ -7,7 +7,7 @@
 require "minitest/autorun"
 require "fog/softlayer"
 
-describe Fog::Compute::Softlayer do
+describe Fog::Softlayer::Compute do
   describe "when global config is available" do
     before do
 
@@ -23,7 +23,7 @@ describe Fog::Compute::Softlayer do
       end
 
       Fog.stub :credentials, @credential_guard do
-        @service = Fog::Compute::Softlayer.new(@arguments)
+        @service = Fog::Softlayer::Compute.new(@arguments)
       end
     end
 
@@ -37,7 +37,7 @@ describe Fog::Compute::Softlayer do
     it "raises an error" do
       Fog.stub :credentials, {} do
         assert_raises ArgumentError do
-          Fog::Compute::Softlayer.new({})
+          Fog::Softlayer::Compute.new({})
         end
       end
     end

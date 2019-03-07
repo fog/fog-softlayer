@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/storage/directory'
 
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
 
       class Directories < Fog::Collection
 
-        model Fog::Storage::Softlayer::Directory
+        model Fog::Softlayer::Storage::Directory
 
         def all
           data = service.get_containers.body
@@ -34,7 +34,7 @@ module Fog
             directory.files << directory.files.new(file)
           end
           directory
-        rescue Fog::Storage::Softlayer::NotFound
+        rescue Fog::Softlayer::Storage::NotFound
           nil
         end
 

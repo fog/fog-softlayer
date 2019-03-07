@@ -5,8 +5,8 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module DNS
-    class Softlayer
+  module Softlayer
+    class DNS
 
       class Mock
         def create_domain(opts)

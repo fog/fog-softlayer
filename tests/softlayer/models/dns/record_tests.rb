@@ -40,7 +40,7 @@ Shindo.tests("Fog::DNS[:softlayer] | Record model", ["softlayer"]) do
     
     tests("#get") do
       @record_get = @service.records.get(@record.id)
-      returns(Fog::DNS::Softlayer::Record) { @record_get.class }
+      returns(Fog::Softlayer::DNS::Record) { @record_get.class }
       
       tests("after updating the record") do
         @record_get.value = "192.168.10.1"

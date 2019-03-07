@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Real
 
         # Create a new dynamic large object manifest

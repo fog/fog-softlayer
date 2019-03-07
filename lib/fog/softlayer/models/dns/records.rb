@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/dns/record'
 
 module Fog
-  module DNS
-    class Softlayer
+  module Softlayer
+    class DNS
       class Records < Fog::Collection
         attribute :domain
 
-        model Fog::DNS::Softlayer::Record
+        model Fog::Softlayer::DNS::Record
 
         def all
           requires :domain

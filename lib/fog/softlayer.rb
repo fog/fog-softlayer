@@ -13,28 +13,14 @@ require File.expand_path('../softlayer/ext/string', __FILE__)
 require File.expand_path('../softlayer/ext/hash', __FILE__) unless {}.respond_to? :deep_merge
 
 module Fog
-  module Account
-    autoload :Softlayer, File.expand_path('../softlayer/account', __FILE__)
-  end
-
-  module Compute
-    autoload :Softlayer, File.expand_path('../softlayer/compute', __FILE__)
-  end
-
-  module DNS
-    autoload :Softlayer, File.expand_path('../softlayer/dns', __FILE__)
-  end
-
-  module Network
-    autoload :Softlayer, File.expand_path('../softlayer/network', __FILE__)
-  end
-
-  module Storage
-    autoload :Softlayer, File.expand_path('../softlayer/storage', __FILE__)
-  end
-
   module Softlayer
     extend Fog::Provider
+
+    autoload :Account, File.expand_path('../softlayer/account', __FILE__)
+    autoload :Compute, File.expand_path('../softlayer/compute', __FILE__)
+    autoload :DNS, File.expand_path('../softlayer/dns', __FILE__)
+    autoload :Network, File.expand_path('../softlayer/network', __FILE__)
+    autoload :Storage, File.expand_path('../softlayer/storage', __FILE__)
 
     autoload :Product, File.expand_path('../softlayer/product', __FILE__)
     autoload :Slapi, File.expand_path('../softlayer/slapi', __FILE__)

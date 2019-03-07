@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/compute/server'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Servers < Fog::Collection
 
-        model Fog::Compute::Softlayer::Server
+        model Fog::Softlayer::Compute::Server
 
         def all
           data = service.list_servers

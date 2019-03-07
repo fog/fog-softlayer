@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Mock
         def get_maintenance_windows(location_id, begin_date, end_date, slots_number)
           raise ArgumentError, "Arguments for #{self.class.name}##{__method__} must be present." if begin_date.nil? || end_date.nil? || location_id.nil? || slots_number.nil?
@@ -29,8 +29,8 @@ module Fog
 end
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Mock
         def get_windows
           [

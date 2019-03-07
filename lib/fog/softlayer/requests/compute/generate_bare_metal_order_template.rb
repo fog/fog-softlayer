@@ -5,14 +5,14 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class Mock
         # Generate an order template for a Bare Metal
         # @param [Integer] order_template
         # @return [Excon::Response]
         def generate_bare_metal_order_template(order_template)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_vms expects argument of type Hash" unless order_template.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_vms expects argument of type Hash" unless order_template.kind_of?(Hash)
           response = Excon::Response.new
           required = %w{hostname domain processorCoreAmount memoryCapacity hourlyBillingFlag operatingSystemReferenceCode}
           begin
@@ -41,8 +41,8 @@ module Fog
 end
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class Mock
         def order_template_mock
           {

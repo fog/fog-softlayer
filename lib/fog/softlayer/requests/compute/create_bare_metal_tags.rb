@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Mock
         def create_bare_metal_tags(id, tags = [])

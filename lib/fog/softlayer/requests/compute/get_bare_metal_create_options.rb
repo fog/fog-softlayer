@@ -5,8 +5,8 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class Mock
         # Gets all Bare Metal buy options
         # @return [Excon::Response]
@@ -28,8 +28,8 @@ module Fog
 end
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class Mock
         def bare_metal_options
           {

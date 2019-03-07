@@ -9,11 +9,11 @@ require 'fog/softlayer'
 @sl = Fog::Network[:softlayer]
 ```
 
-Global IP addresses are accessed through the `Fog::Network::Softlayer::Ip` model.  Unlike "normal" IP addresses they can be specifically created and destroyed (non-global IP addresses are created/destroyed via a subnet).
+Global IP addresses are accessed through the `Fog::Softlayer::Network::Ip` model.  Unlike "normal" IP addresses they can be specifically created and destroyed (non-global IP addresses are created/destroyed via a subnet).
 
    ```ruby
     global_ips = @network.ips.select { |ip| ip.global? }
-    # => [ <Fog::Network::Softlayer::Ip
+    # => [ <Fog::Softlayer::Network::Ip
     #  id=123456789,
     #  subnet_id=123456,
     #  address="203.0.113.5",
@@ -26,7 +26,7 @@ Global IP addresses are accessed through the `Fog::Network::Softlayer::Ip` model
     #  note=nil,
     #  assigned_to=nil
     # >,
-	# <Fog::Network::Softlayer::Ip
+	# <Fog::Softlayer::Network::Ip
     #  id=123456790,
     #  subnet_id=123457,
     #  address="203.0.113.6",
@@ -35,7 +35,7 @@ Global IP addresses are accessed through the `Fog::Network::Softlayer::Ip` model
     #  network=false,
     #  reserved=false,
     #  global_id=1235,
-    #  destination_ip= <Fog::Network::Softlayer::Ip
+    #  destination_ip= <Fog::Softlayer::Network::Ip
     #    id=123458,
     #    subnet_id=123456,
     #    address="203.0.113.7",
@@ -61,7 +61,7 @@ Route an unrouted global IP to a specific server:
 
 ```ruby
 global_ip = @network.ips.select { |ip| ip.global? && !ip.routed? }.first
-# => <Fog::Network::Softlayer::Ip
+# => <Fog::Softlayer::Network::Ip
 #  id=123456789,
 #  subnet_id=123456,
 #  address="203.0.113.5",
@@ -78,14 +78,14 @@ global_ip.routed? # => false
 
 
 @compute = Fog::Compute[:softlayer]
-dest_server = @compute.servers.tagged_with(['production', 'frontend', 'hkg']).first # => <Fog::Compute::Softlayer::Server>
-dest_ip = @network.ips.by_address(dest_server.public_ip_address) # => <Fog::Network::Softlayer::Ip>
+dest_server = @compute.servers.tagged_with(['production', 'frontend', 'hkg']).first # => <Fog::Softlayer::Compute::Server>
+dest_ip = @network.ips.by_address(dest_server.public_ip_address) # => <Fog::Softlayer::Network::Ip>
 
 
 global_ip.route(dest_ip) # => true
 
 global_ip.reload
-# => <Fog::Network::Softlayer::Ip
+# => <Fog::Softlayer::Network::Ip
 #  id=123456789,
 #  subnet_id=123456,
 #  address="203.0.113.5",
@@ -94,7 +94,7 @@ global_ip.reload
 #  network=false,
 #  reserved=false,
 #  global_id=1234,
-#  destination_ip= <Fog::Network::Softlayer::Ip
+#  destination_ip= <Fog::Softlayer::Network::Ip
 #    id=123458,
 #    subnet_id=123456,
 #    address="203.0.113.8",
@@ -121,11 +121,11 @@ That same address to a different server:
 global_ip = @network.ips.by_address('203.0.113.5')
 global_ip.destination.address # => 203.0.113.8
 
-london_server = @compute.servers.tagged_with(['production', 'frontend', 'lon']).first # => <Fog::Compute::Softlayer::Server>
-dest_ip = @network.ips.by_address(london_server.public_ip_address) # => <Fog::Network::Softlayer::Ip>
+london_server = @compute.servers.tagged_with(['production', 'frontend', 'lon']).first # => <Fog::Softlayer::Compute::Server>
+dest_ip = @network.ips.by_address(london_server.public_ip_address) # => <Fog::Softlayer::Network::Ip>
 
 global_ip.route(dest_ip) # => true
-global_ip.reload # => <Fog::Network::Softlayer::Ip>
+global_ip.reload # => <Fog::Softlayer::Network::Ip>
 global_ip.destination.address # => 203.0.113.9
 ```
 
@@ -135,7 +135,7 @@ global_ip = @network.ips.by_address('203.0.113.5')
 global_ip.routed? # => true
 
 global_ip.unroute # => true
-global_ip.reload # => <Fog::Network::Softlayer::Ip>
+global_ip.reload # => <Fog::Softlayer::Network::Ip>
 
 global_ip.routed? # => false
 ```
@@ -143,12 +143,12 @@ global_ip.routed? # => false
 Create new IPv4:
 *Note:* these methods are blocking and can take several seconds to respond.
 ```ruby
-@network.create_new_global_ipv4 # => <Fog::Network::Softlayer::Ip>
+@network.create_new_global_ipv4 # => <Fog::Softlayer::Network::Ip>
 ```
 
 Create new IPv6:
 ```ruby
-@network.create_new_global_ipv6 # => <Fog::Network::Softlayer::Ip>
+@network.create_new_global_ipv6 # => <Fog::Softlayer::Network::Ip>
 ```
 
 Destroy a global IP address:

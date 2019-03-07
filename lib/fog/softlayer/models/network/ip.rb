@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Ip < Fog::Model
         identity :id
 
@@ -42,8 +42,8 @@ module Fog
 
         def destination_ip=(ip)
           if ip.is_a?(Hash)
-            attributes[:destination_ip] = Fog::Network::Softlayer::Ip.new(ip)
-          elsif ip.is_a?(Fog::Network::Softlayer::Ip) or ip.nil?
+            attributes[:destination_ip] = Fog::Softlayer::Network::Ip.new(ip)
+          elsif ip.is_a?(Fog::Softlayer::Network::Ip) or ip.nil?
             attributes[:destination_ip] = ip
           else
             raise ArgumentError, "Invalid argument type in #{self.class.name}##{__method__}."
@@ -77,7 +77,7 @@ module Fog
 
         def route(dest_ip)
           requires :global_id
-          raise ArgumentError, "Invalid argument type in #{self.class.name}##{__method__}." unless dest_ip.is_a?(Fog::Network::Softlayer::Ip)
+          raise ArgumentError, "Invalid argument type in #{self.class.name}##{__method__}." unless dest_ip.is_a?(Fog::Softlayer::Network::Ip)
           raise ArgumentError, "The destination IP may not be the network address of the destination subnet" if dest_ip.network?
           raise ArgumentError, "The destination IP may not be the gateway address of the destination subnet" if dest_ip.gateway?
           raise ArgumentError, "The destination IP may not be the broadcast address of the destination subnet" if dest_ip.broadcast?

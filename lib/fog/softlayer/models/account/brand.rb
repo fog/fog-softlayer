@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Brand < Fog::Model
         identity  :id, :type => :integer
         attribute :catalog_id, :aliases => 'catalogId', :type => :integer

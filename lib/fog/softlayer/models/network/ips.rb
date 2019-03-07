@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/network/ip'
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Ips < Fog::Collection
         attribute :filters
 
-        model Fog::Network::Softlayer::Ip
+        model Fog::Softlayer::Network::Ip
 
         def initialize(attributes)
           self.filters ||= {}
@@ -50,7 +50,7 @@ module Fog
 
           new(ip) if ip
 
-        rescue Fog::Network::Softlayer::NotFound
+        rescue Fog::Softlayer::Network::NotFound
           nil
         end
 

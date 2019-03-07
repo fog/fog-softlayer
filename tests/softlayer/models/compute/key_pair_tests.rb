@@ -32,7 +32,7 @@ Shindo.tests("Fog::Compute[:softlayer] | KeyPair model", ["softlayer"]) do
     end
 
     tests("#create(:label => 'test-key-2', :key => #{@key_gen.call}") do
-      data_matches_schema(Fog::Compute::Softlayer::KeyPair) { @sl_connection.key_pairs.create(:label => 'test-key-2', :key => @key_gen.call)}
+      data_matches_schema(Fog::Softlayer::Compute::KeyPair) { @sl_connection.key_pairs.create(:label => 'test-key-2', :key => @key_gen.call)}
     end
 
     tests("#destroy") do

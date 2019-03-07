@@ -15,14 +15,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
    ```ruby
     nets = @sl.networks
-    # => [ <Fog::Network::Softlayer::Network
+    # => [ <Fog::Softlayer::Network::Network
     #  	id=123456,
     #	name="some-optional-name",
     #	modify_date="2014-06-25T17:10:57-05:00",
     #	note=nil,
     #	tags=["sparkle", "motion", "public"],
     #	type="STANDARD",
-    #	datacenter=	<Fog::Network::Softlayer::Datacenter
+    #	datacenter=	<Fog::Softlayer::Network::Datacenter
     #		id=12345,
     #		long_name="Washington, DC 1",
     #		name="wdc01"
@@ -30,14 +30,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
     #	network_space="PUBLIC"
     #	router={"hostname"=>"fcr02.wdc01", "id"=>40378, "datacenter"=>{"id"=>37473, "longName"=>"Washington, DC 1", "name"=>"wdc01"}}
     #	>,
-    #	<Fog::Network::Softlayer::Network
+    #	<Fog::Softlayer::Network::Network
     #	id=123457,
     #	name="some-other-optional-name",
     #	modify_date="2014-06-25T17:11:57-05:00",
     #	note=nil,
     #	tags=["sparkle", "motion", "private"],
     #	type="STANDARD",
-    #	datacenter=	<Fog::Network::Softlayer::Datacenter
+    #	datacenter=	<Fog::Softlayer::Network::Datacenter
     #		id=12345,
     #		long_name="Washington, DC 1",
     #		name="wdc01"
@@ -52,14 +52,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	net = @sl.networks.get(123456)
-	# => <Fog::Network::Softlayer::Network
+	# => <Fog::Softlayer::Network::Network
     #	id=123456,
     #	name="some-name",
     #	modify_date="2014-06-25T17:10:57-05:00",
     #	note=nil,
     #	tags=["sparkle", "motion", "public"],
     #	type="STANDARD",
-    #	datacenter=	<Fog::Network::Softlayer::Datacenter
+    #	datacenter=	<Fog::Softlayer::Network::Datacenter
     #		id=12345,
     #		long_name="Washington, DC 1",
     #		name="wdc01"
@@ -73,14 +73,14 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	@sl.networks.by_name('some-name')
-	# => <Fog::Network::Softlayer::Network
+	# => <Fog::Softlayer::Network::Network
     #	id=123456,
     #	name="some-name",
     #	modify_date="2014-06-25T17:10:57-05:00",
     #	note=nil,
     #	tags=["sparkle", "motion", "public"],
     #	type="STANDARD",
-    #	datacenter=	<Fog::Network::Softlayer::Datacenter
+    #	datacenter=	<Fog::Softlayer::Network::Datacenter
     #		id=12345,
     #		long_name="Washington, DC 1",
     #		name="wdc01"
@@ -94,9 +94,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	prod_backend_nets = @sl.networks.tagged_with(['production', 'private'])
-	# => [<Fog::Network::Softlayer::Network>,
-	#	<Fog::Network::Softlayer::Network>,
-	#	<Fog::Network::Softlayer::Network>,
+	# => [<Fog::Softlayer::Network::Network>,
+	#	<Fog::Softlayer::Network::Network>,
+	#	<Fog::Softlayer::Network::Network>,
 	#	]    	
 	```
 	
@@ -123,7 +123,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 		net = @sl.networks.get(123456)
 		net.subnets
-		# => [  <Fog::Network::Softlayer::Subnet
+		# => [  <Fog::Softlayer::Network::Subnet
 	    # id=123456,
 	    # name=nil,
 	    # network_id="37.58.125.72",
@@ -136,7 +136,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	    # gateway=nil,
     	# datacenter="ams01"
 	  # >,
-	   # <Fog::Network::Softlayer::Subnet
+	   # <Fog::Softlayer::Network::Subnet
 	    # id=123457,
     	# name=nil,
 	    # network_id="81.95.147.148",
@@ -157,12 +157,12 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		net = @sl.networks.get(123456)
 		# Here I'm selecting the primary subnet...
 		subnet = net.subnets.select { |vlan| vlan.type == "PRIMARY" }.first
-		# => <Fog::Network::Softlayer::Subnet
+		# => <Fog::Softlayer::Network::Subnet
 	    # id=123457,
 	    # ...
 	    # >
 	    addys = subnet.addresses
-	    # => [  <Fog::Network::Softlayer::Ip
+	    # => [  <Fog::Softlayer::Network::Ip
    		 # id=19222174,
 	     # subnet_id=630962,
 	     # address="37.58.125.72",
@@ -173,7 +173,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	     # note=nil,
 	     # assigned_to=nil
 		 # >,
-		# <Fog::Network::Softlayer::Ip
+		# <Fog::Softlayer::Network::Ip
    		 #  id=19222174,
 		 #  subnet_id=630962,
 		 #  address="37.58.125.73",
@@ -184,7 +184,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		 #  note=nil,
 		 #  assigned_to=nil
 		 #  >,
-		# <Fog::Network::Softlayer::Ip
+		# <Fog::Softlayer::Network::Ip
    		 #  id=19222174,
 		 #  subnet_id=630962,
 		 #  address="37.58.125.74",
@@ -195,7 +195,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		 #  note=nil,
 		 #  assigned_to={"fullyQualifiedDomainName"=>"hostname.example.com", "id"=>281730}
 		 #  >,
-		# <Fog::Network::Softlayer::Ip
+		# <Fog::Softlayer::Network::Ip
    		 #  id=19222174,
 		 #  subnet_id=630962,
 		 #  address="37.58.125.75",

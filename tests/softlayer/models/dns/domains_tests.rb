@@ -14,7 +14,7 @@ Shindo.tests("Fog::DNS[:softlayer] | Domains model", ["softlayer"]) do
     tests("#create") do
       name = "fog-domain-"+SecureRandom.random_number(36**12).to_s(36).rjust(12, "0") + ".com"
       @domain = @service.domains.create(name)
-      returns(Fog::DNS::Softlayer::Domain) { @service.domains.get(@domain.id).class }
+      returns(Fog::Softlayer::DNS::Domain) { @service.domains.get(@domain.id).class }
       returns(@domain.name, "returns the object with correct name") { @service.domains.get(@domain.id).name }
       @domain.destroy
     end
@@ -33,7 +33,7 @@ Shindo.tests("Fog::DNS[:softlayer] | Domains model", ["softlayer"]) do
       # Tests if we get the 3 domains we created
       @domains = @service.domains.all
       @domains.each do |domain|
-        returns(Fog::DNS::Softlayer::Domain, "returns a "+domain.name) { domain.class }
+        returns(Fog::Softlayer::DNS::Domain, "returns a "+domain.name) { domain.class }
       end
       
       # Check ifs domains we created are included
@@ -56,12 +56,12 @@ Shindo.tests("Fog::DNS[:softlayer] | Domains model", ["softlayer"]) do
     @domain = @service.domains.create(name)
     
     tests("#get") do
-      returns(Fog::DNS::Softlayer::Domain) { @service.domains.get(@domain.id).class }
+      returns(Fog::Softlayer::DNS::Domain) { @service.domains.get(@domain.id).class }
       returns(@domain.name, "returns the object with correct name") { @service.domains.get(@domain.id).name }
     end
     
     tests("#get_by_name") do
-      returns(Fog::DNS::Softlayer::Domain) { @service.domains.get_by_name(@domain.name).class }
+      returns(Fog::Softlayer::DNS::Domain) { @service.domains.get_by_name(@domain.name).class }
       returns(@domain.name, "returns the object with correct name") { @service.domains.get_by_name(@domain.name).name }
     end
     

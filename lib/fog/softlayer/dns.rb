@@ -5,11 +5,9 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/compute/shared'
-
 module Fog
-  module DNS
-    class Softlayer < Fog::Service
+  module Softlayer
+    class DNS < Fog::Service
       class MissingRequiredParameter < Fog::Errors::Error; end
 
       # Client credentials

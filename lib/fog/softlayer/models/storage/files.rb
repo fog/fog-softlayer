@@ -8,8 +8,8 @@
 require 'fog/softlayer/models/storage/file'
 
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
 
       class Files < Fog::Collection
 
@@ -19,7 +19,7 @@ module Fog
         attribute :path
         attribute :prefix
 
-        model Fog::Storage::Softlayer::File
+        model Fog::Softlayer::Storage::File
 
         def all(options = {})
           requires :directory
@@ -66,7 +66,7 @@ module Fog
             :key  => key
           })
           new(file_data)
-        rescue Fog::Storage::Softlayer::NotFound
+        rescue Fog::Softlayer::Storage::NotFound
           nil
         end
 
@@ -89,7 +89,7 @@ module Fog
             :key => key
           })
           new(file_data)
-        rescue Fog::Storage::Softlayer::NotFound
+        rescue Fog::Softlayer::Storage::NotFound
           nil
         end
 

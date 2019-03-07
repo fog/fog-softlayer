@@ -8,8 +8,8 @@
 require 'fog/softlayer/models/dns/records'
 
 module Fog
-  module DNS
-    class Softlayer
+  module Softlayer
+    class DNS
 
       class Domain < Fog::Model
 
@@ -27,7 +27,7 @@ module Fog
         def records(reload = false)
           @records = nil if reload
           @records ||= begin
-            Fog::DNS::Softlayer::Records.new(
+            Fog::Softlayer::DNS::Records.new(
               :domain       => self,
               :service      => service
             )
@@ -36,7 +36,7 @@ module Fog
         
         def create_record(opts = {})
           opts.merge!({:domain_id => self.id, :service => service})
-          record = Fog::DNS::Softlayer::Record.new(opts)
+          record = Fog::Softlayer::DNS::Record.new(opts)
           record.save
           records(true)
           record

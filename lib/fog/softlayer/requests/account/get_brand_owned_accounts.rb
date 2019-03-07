@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Mock
         # Get all accounts who are owned by brand.
         # @param [Integer] identifier
@@ -39,8 +39,8 @@ end
 
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Mock
         def mocked_accounts
           [

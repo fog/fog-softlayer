@@ -8,8 +8,8 @@
 require 'fog/softlayer/models/storage/files'
 
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
 
       class Directory < Fog::Model
 
@@ -29,7 +29,7 @@ module Fog
 
         def files
           @files ||= begin
-            Fog::Storage::Softlayer::Files.new(
+            Fog::Softlayer::Storage::Files.new(
               :directory    => self,
               :service   => service
             )
