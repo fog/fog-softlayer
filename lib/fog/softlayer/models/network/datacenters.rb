@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/network/datacenter'
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Datacenters < Fog::Collection
         attribute :filters
 
-        model Fog::Network::Softlayer::Datacenter
+        model Fog::Softlayer::Network::Datacenter
 
         def initialize(attributes)
           self.filters ||= {}
@@ -28,7 +28,7 @@ module Fog
         def get(id)
           data = service.request(:location_datacenter, "#{id}/get_object").body
             new.merge_attributes(data)
-        rescue Fog::Network::Softlayer::NotFound
+        rescue Fog::Softlayer::Network::NotFound
           nil
         end
 

@@ -8,8 +8,8 @@
 require 'fog/compute/models/server'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Server < Fog::Compute::Server
 
@@ -166,8 +166,8 @@ module Fog
         end
 
         def private_vlan=(value)
-          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
-            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
+          unless value.is_a?(Integer) or value.is_a?(Fog::Softlayer::Network::Network)
+            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Softlayer::Network::Network."
           end
           value = network_connection.networks.get(value) if value.is_a?(Integer)
           attributes[:private_vlan] = value
@@ -195,10 +195,10 @@ module Fog
             ## This was nice but causing an intolerable number of requests on an account with lots of keys.
             ## ToDo: something better...
             #key = self.symbolize_keys(key) if key.is_a?(Hash)
-            #unless key.is_a?(Fog::Compute::Softlayer::KeyPair) or (key.is_a?(Hash) and key[:id])
-            #  raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Compute::Softlayer::KeyPair"
+            #unless key.is_a?(Fog::Softlayer::Compute::KeyPair) or (key.is_a?(Hash) and key[:id])
+            #  raise ArgumentError, "Elements of keys array for #{self.class.name}##{__method__} must be a Hash with key 'id', or Fog::Softlayer::Compute::KeyPair"
             #end
-            #key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Compute::Softlayer::KeyPair)
+            #key = service.key_pairs.get(key[:id]) unless key.is_a?(Fog::Softlayer::Compute::KeyPair)
             attributes[:key_pairs] << key
           end
         end
@@ -208,8 +208,8 @@ module Fog
         end
 
         def vlan=(value)
-          unless value.is_a?(Integer) or value.is_a?(Fog::Network::Softlayer::Network)
-            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Network::Softlayer::Network."
+          unless value.is_a?(Integer) or value.is_a?(Fog::Softlayer::Network::Network)
+            raise ArgumentError, "vlan argument for #{self.class.name}##{__method__} must be Integer or Fog::Softlayer::Network::Network."
           end
           value = network_connection.networks.get(value) if value.is_a?(Integer)
           attributes[:vlan] = value
@@ -249,7 +249,7 @@ module Fog
 
         def public_network_components
           if attributes['frontendNetworkComponents']
-            attributes['frontendNetworkComponents'].map { |n| Fog::Compute::Softlayer::NetworkComponent.new(n) }
+            attributes['frontendNetworkComponents'].map { |n| Fog::Softlayer::Compute::NetworkComponent.new(n) }
           else
             []
           end
@@ -257,7 +257,7 @@ module Fog
 
         def private_network_components
           if attributes['backendNetworkComponents']
-            attributes['backendNetworkComponents'].map { |n| Fog::Compute::Softlayer::NetworkComponent.new(n) }
+            attributes['backendNetworkComponents'].map { |n| Fog::Softlayer::Compute::NetworkComponent.new(n) }
           else
             []
           end

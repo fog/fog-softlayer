@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Mock
         def copy_object(source_container, source_object, target_container, target_object, options={})
           response = Excon::Response.new

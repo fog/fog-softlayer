@@ -11,10 +11,10 @@ Shindo.tests('Fog::Storage[:softlayer]', ['softlayer']) do
       mocking = Fog.mocking?
       Fog.unmock!
       # Stubs Real Connection
-      class Fog::Storage::Softlayer::Real
+      class Fog::Softlayer::Storage::Real
         def initialize(_options = {});end
       end
-      @service = Fog::Storage::Softlayer.new(softlayer_username: 'name',
+      @service = Fog::Softlayer::Storage::new(softlayer_username: 'name',
                                              softlayer_api_key: 'key',
                                              softlayer_cluster: 'cluster',
                                              softlayer_storage_account: 'account')

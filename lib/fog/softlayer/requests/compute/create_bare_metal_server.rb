@@ -5,8 +5,8 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Mock
 
@@ -33,7 +33,7 @@ module Fog
         #   Defaults to false, pass true for a single-tenant VM.
         # @return [Excon::Response]
         def create_bare_metal_server(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_bare_metal_server expects argument of type Hash" unless opts.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_bare_metal_server expects argument of type Hash" unless opts.kind_of?(Hash)
           response = Excon::Response.new
           required = %w{hostname domain processorCoreAmount memoryCapacity hourlyBillingFlag operatingSystemReferenceCode}
 
@@ -76,7 +76,7 @@ module Fog
       class Real
 
         def create_bare_metal_server(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_bare_metal_server expects argument of type Hash" unless opts.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_bare_metal_server expects argument of type Hash" unless opts.kind_of?(Hash)
           request(:hardware_server, :create_object, :body => opts, :http_method => :POST)
         end
 

@@ -5,8 +5,8 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Mock
 
@@ -33,7 +33,7 @@ module Fog
         #   Defaults to false, pass true for a single-tenant VM.
         # @return [Excon::Response]
         def create_vms(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_vms expects argument of type Array" unless opts.kind_of?(Array)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_vms expects argument of type Array" unless opts.kind_of?(Array)
           response = Excon::Response.new
           required = %w{hostname domain startCpus maxMemory hourlyBillingFlag localDiskFlag}
 
@@ -87,7 +87,7 @@ module Fog
 
       class Real
         def create_vms(opts)
-          raise ArgumentError, "Fog::Compute::Softlayer#create_vms expects argument of type Array" unless opts.kind_of?(Array)
+          raise ArgumentError, "Fog::Softlayer#Compute::create_vms expects argument of type Array" unless opts.kind_of?(Array)
           request(:virtual_guest, :create_objects, :body => opts, :http_method => :POST)
         end
       end

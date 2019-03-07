@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Network
-    class Softlayer < Fog::Service
+  module Softlayer
+    class Network < Fog::Service
 
       requires :softlayer_username, :softlayer_api_key
 

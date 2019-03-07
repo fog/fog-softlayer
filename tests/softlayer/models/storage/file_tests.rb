@@ -18,25 +18,25 @@ Shindo.tests("Fog::Storage[:softlayer] | File model", ["softlayer"]) do
     @test_file3 = 'test-object-3'
 
     tests("#create") do
-      data_matches_schema(Fog::Storage::Softlayer::File) { @test_dir1.files.create(:key => @test_file1) }
-      data_matches_schema(Fog::Storage::Softlayer::File) { @test_dir1.files.create(:key => @test_file2) }
+      data_matches_schema(Fog::Softlayer::Storage::File) { @test_dir1.files.create(:key => @test_file1) }
+      data_matches_schema(Fog::Softlayer::Storage::File) { @test_dir1.files.create(:key => @test_file2) }
     end
 
     tests("#all") do
       schema = [
-          Fog::Storage::Softlayer::File,
-          Fog::Storage::Softlayer::File
+          Fog::Softlayer::Storage::File,
+          Fog::Softlayer::Storage::File
       ]
       data_matches_schema(schema) { @test_dir1.files.all }
     end
 
     tests("#get") do
-      data_matches_schema(Fog::Storage::Softlayer::File) { @test_dir1.files.get(@test_file1) }
+      data_matches_schema(Fog::Softlayer::Storage::File) { @test_dir1.files.get(@test_file1) }
     end
 
     tests("#copy") do
-      data_matches_schema(Fog::Storage::Softlayer::File) { @test_dir1.files.get(@test_file1).copy(@test_dir2, @test_file1)}
-      data_matches_schema(Fog::Storage::Softlayer::File) { @test_dir2.files.get(@test_file1) }
+      data_matches_schema(Fog::Softlayer::Storage::File) { @test_dir1.files.get(@test_file1).copy(@test_dir2, @test_file1)}
+      data_matches_schema(Fog::Softlayer::Storage::File) { @test_dir2.files.get(@test_file1) }
     end
 
     tests("#destroy") do

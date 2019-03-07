@@ -15,12 +15,12 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
    ```ruby
 	kp1 = @sl.key_pairs.create(:label => 'my-new-key', :key => 'ssh-rsa AAAAxbU2lx...')
-   # => <Fog::Compute::Softlayer::KeyPair>
+   # => <Fog::Softlayer::Compute::KeyPair>
 	kp2 = @sl.key_pairs.new
 	kp2.label = 'my-new-new-key'
 	kp2.key = 'ssh-rsa AAAAxbU2lx...'
 	kp2.save
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
    ```
 
 1. Get
@@ -28,11 +28,11 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 	# By id:
 	kp = @sl.key_pairs.get(123456)
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 
 	# By label:
 	kp = @sl.key_pairs.by_label('my-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	```
 
 
@@ -40,7 +40,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	kp = @sl.key_pairs.by_label('my-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	kp.destroy
 	```
 
@@ -50,9 +50,9 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	the_first_key = @sl.key_pairs.by_label('my-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	the_second_key = @sl.key_pairs.by_label('my-other-new-key')
-	# => <Fog::Compute::Softlayer::KeyPair>
+	# => <Fog::Softlayer::Compute::KeyPair>
 	
 	opts = { 
 		:flavor_id => 'm1.small', 
@@ -62,7 +62,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 		:key_pairs => [ the_first_key, the_second_key ]
 	}
 	@sl.servers.create(opts)
-	# => <Fog::Compute::Softlayer::Server>
+	# => <Fog::Softlayer::Compute::Server>
 ```
 
 1. Look at the key pairs on a server.
@@ -70,6 +70,6 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 	```ruby
 	server = @sl.servers.get(12345)
 	server.key_pairs
-	# => [ <Fog::Compute::Softlayer::Server>,
-	# <Fog::Compute::Softlayer::Server>]
+	# => [ <Fog::Softlayer::Compute::Server>,
+	# <Fog::Softlayer::Compute::Server>]
 	```

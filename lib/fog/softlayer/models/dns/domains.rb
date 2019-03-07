@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/compute/server'
 
 module Fog
-  module DNS
-    class Softlayer
+  module Softlayer
+    class DNS
 
       class Domains < Fog::Collection
 
-        model Fog::DNS::Softlayer::Domain
+        model Fog::Softlayer::DNS::Domain
 
         def all
           data = service.get_domains.body

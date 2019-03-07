@@ -72,7 +72,7 @@ or using the service:
 
 ##### Update Operations
 
-After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain variable
+After this point we consider you have a Fog::Softlayer::DNS::Domain on @domain variable
 
 * Update Record Entry
 
@@ -84,7 +84,7 @@ After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain v
 
 ##### Destroy Operations
 
-After this point we consider you have a Fog::DNS::Softlayer::Domain on @domain variable
+After this point we consider you have a Fog::Softlayer::DNS::Domain on @domain variable
 
 * Destroy Domain
 

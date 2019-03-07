@@ -5,8 +5,6 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/compute/shared'
-
 module Fog
   module Softlayer
     class Product < Fog::Service

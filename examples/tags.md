@@ -43,24 +43,24 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 1. Get servers tagged by a single tag.
 
    ```ruby
-   	@sl.servers.tagged_with(['foo']) # => [<Fog::Compute::Softlayer::Server>, <Fog::Compute::Softlayer::Server>, ...]
+   	@sl.servers.tagged_with(['foo']) # => [<Fog::Softlayer::Compute::Server>, <Fog::Softlayer::Compute::Server>, ...]
    ```
 
 1. Get servers tagged by multiple tags (tag OR tag OR ...).
 
    ```ruby
-   	@sl.servers.tagged_with(['foo','bar']) # => [<Fog::Compute::Softlayer::Server>, <Fog::Compute::Softlayer::Server>, ...]
+   	@sl.servers.tagged_with(['foo','bar']) # => [<Fog::Softlayer::Compute::Server>, <Fog::Softlayer::Compute::Server>, ...]
    ```
 
 1. List all tags on account that have been assigned to a server.
 
    ```ruby
-   	  @sl.tags.all # => [<Fog::Compute::Softlayer::Tag>, <Fog::Compute::Softlayer::Tag>, ...]
+   	  @sl.tags.all # => [<Fog::Softlayer::Compute::Tag>, <Fog::Softlayer::Compute::Tag>, ...]
      ```
 1. Anatomy of a Tag object.
 
 	```ruby
-	<Fog::Compute::Softlayer::Tag
+	<Fog::Softlayer::Compute::Tag
     id=32850, # SoftLayer assigned ID
     name="sparkle", # the tag itself
     referenceCount=2, # number of SL API objects that "have" this tag
@@ -73,7 +73,7 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	tag = @sl.tags.get(32850)
-	tag.references # => [<Fog::Compute::Softlayer::Server>, <Fog::Compute::Softlayer::Server>, ...]
+	tag.references # => [<Fog::Softlayer::Compute::Server>, <Fog::Softlayer::Compute::Server>, ...]
 	```
 	
 #### Create a connection to SoftLayer Network Service
@@ -117,24 +117,24 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 1. Get networks tagged by a single tag.
 
    ```ruby
-   	@sl.networks.tagged_with(['foo']) # => [<Fog::Network::Softlayer::Network>, <Fog::Network::Softlayer::Network>, ...]
+   	@sl.networks.tagged_with(['foo']) # => [<Fog::Softlayer::Network::Network>, <Fog::Softlayer::Network::Network>, ...]
    ```
 
 1. Get networks tagged by multiple tags (tag OR tag OR ...).
 
    ```ruby
-   	@sl.networks.tagged_with(['foo','bar']) # => [<Fog::Network::Softlayer::Network>, <Fog::Network::Softlayer::Network>, ...]
+   	@sl.networks.tagged_with(['foo','bar']) # => [<Fog::Softlayer::Network::Network>, <Fog::Softlayer::Network::Network>, ...]
    ```
 
 1. List all tags on account that have been assigned to a network.
 
    ```ruby
-   	  @sl.tags.all # => [<Fog::Network::Softlayer::Network>, <Fog::Network::Softlayer::Network>, ...]
+   	  @sl.tags.all # => [<Fog::Softlayer::Network::Network>, <Fog::Softlayer::Network::Network>, ...]
      ```
 1. Anatomy of a Tag object.
 
 	```ruby
-	<Fog::Network::Softlayer::Tag
+	<Fog::Softlayer::Network::Tag
     id=32850, # SoftLayer assigned ID
     name="sparkle", # the tag itself
     referenceCount=2, # number of SL API objects that "have" this tag
@@ -147,6 +147,6 @@ If you are unfamiliar with fog, we recommend reading our [getting started](getti
 
 	```ruby
 	tag = @sl.tags.get(32850)
-	tag.references # => [<Fog::Network::Softlayer::Network>, <Fog::Network::Softlayer::Network>, ...]
+	tag.references # => [<Fog::Softlayer::Network::Network>, <Fog::Softlayer::Network::Network>, ...]
 	```
 

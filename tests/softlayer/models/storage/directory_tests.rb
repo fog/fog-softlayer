@@ -15,25 +15,25 @@ Shindo.tests("Fog::Storage[:softlayer] | Directory model", ["softlayer"]) do
     @storage = Fog::Storage[:softlayer]
 
     tests("#create") do
-      data_matches_schema(Fog::Storage::Softlayer::Directory) { @storage.directories.create(:key => @test_dir1) }
+      data_matches_schema(Fog::Softlayer::Storage::Directory) { @storage.directories.create(:key => @test_dir1) }
     end
 
     tests("#get") do
-      data_matches_schema(Fog::Storage::Softlayer::Directory) { @storage.directories.get(@test_dir1) }
+      data_matches_schema(Fog::Softlayer::Storage::Directory) { @storage.directories.get(@test_dir1) }
     end
 
     tests("#all") do
       @storage.directories.create(:key => @test_dir2)
       schema = [
-          Fog::Storage::Softlayer::Directory,
-          Fog::Storage::Softlayer::Directory
+          Fog::Softlayer::Storage::Directory,
+          Fog::Softlayer::Storage::Directory
       ]
       data_matches_schema(schema) { @storage.directories.all }
     end
 
     tests("#destroy") do
       data_matches_schema(true) { @storage.directories.get(@test_dir1).destroy }
-      data_matches_schema([Fog::Storage::Softlayer::Directory]) { @storage.directories.all }
+      data_matches_schema([Fog::Softlayer::Storage::Directory]) { @storage.directories.all }
     end
 
     tests("#public_url") do

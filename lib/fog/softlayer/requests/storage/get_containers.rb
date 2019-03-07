@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Mock
         def get_containers(options = {})
           response = Excon::Response.new

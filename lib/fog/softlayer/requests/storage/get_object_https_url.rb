@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Mock
         def get_object_https_url(container, object, expires, options = {})
           "https://cluster.objectstorage.softlayer.net:443/v1/AUTH_abcdefghijklmnopqrstuvwxyz/#{container}/#{object}?temp_url_sig=1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a&temp_url_expires=1111111111111"

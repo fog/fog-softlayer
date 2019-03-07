@@ -1,6 +1,6 @@
 module Fog
-  module Storage
-    class Softlayer
+  module Softlayer
+    class Storage
       class Mock
         def put_container(name, public=false)
           @containers[name] = {} unless @containers[name]

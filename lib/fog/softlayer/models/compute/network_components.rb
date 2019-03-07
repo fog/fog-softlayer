@@ -8,10 +8,10 @@
 require 'fog/softlayer/models/compute/key_pair'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
       class NetworkComponents < Fog::Collection
-        model Fog::Compute::Softlayer::NetworkComponent
+        model Fog::Softlayer::Compute::NetworkComponent
 
         # just a stub
 

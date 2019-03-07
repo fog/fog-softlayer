@@ -13,11 +13,11 @@ Shindo.tests("Fog::Compute[:softlayer] | Image model", ["softlayer"]) do
 
     tests("#all") do
       @image = @service.images.all.first
-      returns(Fog::Compute::Softlayer::Image) { @image.class }
+      returns(Fog::Softlayer::Compute::Image) { @image.class }
     end
 
     tests("#get") do
-      returns(Fog::Compute::Softlayer::Image) { @service.images.get(@image.id).class }
+      returns(Fog::Softlayer::Compute::Image) { @service.images.get(@image.id).class }
     end
 
   end

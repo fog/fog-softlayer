@@ -12,11 +12,11 @@ Shindo.tests("Fog::Compute[:softlayer] | Flavor model", ["softlayer"]) do
     @service = Fog::Compute[:softlayer]
 
     tests("#all") do
-      returns(Fog::Compute::Softlayer::Flavor) { @service.flavors.all.first.class }
+      returns(Fog::Softlayer::Compute::Flavor) { @service.flavors.all.first.class }
     end
 
     tests("#get") do
-      returns(Fog::Compute::Softlayer::Flavor) { @service.flavors.get('m1.tiny').class }
+      returns(Fog::Softlayer::Compute::Flavor) { @service.flavors.get('m1.tiny').class }
     end
 
   end

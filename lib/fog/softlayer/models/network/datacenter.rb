@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Datacenter < Fog::Model
         identity :id
 

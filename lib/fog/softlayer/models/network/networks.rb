@@ -8,10 +8,10 @@
 require 'fog/softlayer/models/network/network'
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
       class Networks < Fog::Collection
-        model Fog::Network::Softlayer::Network
+        model Fog::Softlayer::Network::Network
 
         def all
           data = service.list_networks.body
@@ -22,7 +22,7 @@ module Fog
           if network = service.get_network(id).body
             new(network)
           end
-        rescue Fog::Network::Softlayer::NotFound
+        rescue Fog::Softlayer::Network::NotFound
           nil
         end
 

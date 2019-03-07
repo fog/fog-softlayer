@@ -8,10 +8,10 @@
 require 'fog/softlayer/models/account/brand'
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Brands < Fog::Collection
-        model Fog::Account::Softlayer::Brand
+        model Fog::Softlayer::Account::Brand
 
         def all
           data = service.get_account_owned_brands

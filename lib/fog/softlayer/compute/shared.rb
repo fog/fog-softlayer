@@ -7,7 +7,7 @@
 
 module Fog
   module Softlayer
-    module Compute
+    class Compute
 
       # The Shared module consists of code that was duplicated between the Real
       # and Mock implementations.

@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Network
-    class Softlayer
+  module Softlayer
+    class Network
 
       class Mock
         def create_network_tags(id, tags = [])

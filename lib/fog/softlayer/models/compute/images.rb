@@ -8,12 +8,12 @@
 require 'fog/softlayer/models/compute/image'
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Images < Fog::Collection
 
-        model Fog::Compute::Softlayer::Image
+        model Fog::Softlayer::Compute::Image
 
         # Returns an array of all public images.
         #

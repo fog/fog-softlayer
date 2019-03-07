@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module Compute
-    class Softlayer
+  module Softlayer
+    class Compute
 
       class Mock
         def create_vm_tags(id, tags = [])

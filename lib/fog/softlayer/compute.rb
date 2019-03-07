@@ -5,11 +5,12 @@
 # LICENSE: MIT (http://opensource.org/licenses/MIT)
 #
 
-require 'fog/softlayer/compute/shared'
 
 module Fog
-  module Compute
-    class Softlayer < Fog::Service
+  module Softlayer
+    class Compute < Fog::Service
+      require 'fog/softlayer/compute/shared'
+
       class MissingRequiredParameter < Fog::Errors::Error; end
 
       # Client credentials

@@ -8,8 +8,8 @@
 require 'base64'
 
 module Fog
-  module Storage
-    class Softlayer < Fog::Service
+  module Softlayer
+    class Storage < Fog::Service
       requires :softlayer_username, :softlayer_api_key, :softlayer_cluster
       recognizes :persistent, :softlayer_storage_account, :softlayer_temp_url_key, :softlayer_bluemix_objstor_auth_url
 
@@ -134,7 +134,7 @@ module Fog
           rescue Excon::Errors::HTTPStatusError => error
             raise case error
               when Excon::Errors::NotFound
-                Fog::Storage::Softlayer::NotFound.slurp(error)
+                Fog::Softlayer::Storage::NotFound.slurp(error)
               else
                 error
             end

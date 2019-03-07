@@ -6,8 +6,8 @@
 #
 
 module Fog
-  module DNS
-    class Softlayer
+  module Softlayer
+    class DNS
       class Record < Fog::Model
         identity  :id
         attribute :domain_id,     :aliases => "domainId"

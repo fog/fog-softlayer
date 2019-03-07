@@ -6,14 +6,14 @@
 #
 
 module Fog
-  module Account
-    class Softlayer
+  module Softlayer
+    class Account
       class Mock
         # Create a Brand
         # @param [Hash] attributes
         # @return [Excon::Response]
         def create_brand(attributes)
-          raise ArgumentError, "Fog::Account::Softlayer#create_brand expects argument of type Hash" unless attributes.kind_of?(Hash)
+          raise ArgumentError, "Fog::Softlayer#Account::create_brand expects argument of type Hash" unless attributes.kind_of?(Hash)
           response = Excon::Response.new
           required = %w{keyName longName name account}
           if Fog::Softlayer.valid_request?(required, attributes)
