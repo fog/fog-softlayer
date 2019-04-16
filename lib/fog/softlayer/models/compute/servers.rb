@@ -41,7 +41,7 @@ module Fog
         ## Get a SoftLayer server by ip.
         #
         def get_by_ip(ip)
-          return nil if ip.blank?
+          return nil if ip.to_s.empty?
           response = service.get_virtual_guest_by_ip(ip)
           bare_metal = false
           if response.status == 404 # we didn't find it as a VM, look for a BMC server
