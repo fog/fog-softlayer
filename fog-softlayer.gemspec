@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency('minitest')
   spec.add_development_dependency('rake')
-  spec.add_development_dependency('rbvmomi')
+  spec.add_development_dependency('rbvmomi', '~> 3.0')
   spec.add_development_dependency('yard')
   spec.add_development_dependency('thor')
   spec.add_development_dependency('rbovirt', '0.0.24')
